@@ -1,0 +1,14 @@
+{
+  "name": "qltl",
+  "version": "1.0.0",
+  "description": "Đồ án - Hệ thống quản lý tài liệu của công ty --\r link Latex : https://www.overleaf.com/7627536894rtqbnyndnfrd",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
