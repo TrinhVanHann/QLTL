@@ -5,14 +5,17 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon --inspect index.js",
-    "watch": "node-sass --watch resources/scss/app.scss public/css/app.css",
+    "watch": "node-sass --watch resources/scss/ -o public/css/",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^16.3.1",
     "express": "^4.18.2",
-    "express-handlebars": "^7.1.2"
+    "express-handlebars": "^7.1.2",
+    "formidable": "^3.5.1",
+    "googleapis": "^126.0.1"
   },
   "devDependencies": {
     "morgan": "^1.10.0",

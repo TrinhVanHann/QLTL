@@ -1,3 +1,268 @@
-h1 {
-    color: red
+* {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-decoration: none;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 62.5%;
+} 
+
+@keyframes dropdown {
+    from {
+        transform: scaleY(0);
+    }
+    to {
+        transform: scaleY(100%);
+    }
+}
+
+//------------ header css ----------------
+.header{
+    background-color: rgb(141, 203, 229);
+    padding: 0px 50px 10px;
+}
+
+.container {
+    width: 100%;
+    display: block;
+}
+
+.header-title {
+    color: rgb(113, 12, 12);
+    font-size: 2rem;
+    line-height: 40px;
+}
+
+
+.nav-list {
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+}
+
+.nav-item {
+
+}
+
+.nav-item-link {
+    font-size: 1.8rem;
+    text-decoration: none;
+    color: black;
+}
+
+.nav-item-search {
+    position: relative;
+    background-color: white;
+    display: block;
+    height: 30px;
+    border-radius: 15px;
+    padding-left: 8px;
+    overflow: hidden;
+}
+
+.nav-item-search-input {
+    height: 30px;
+    border: none;
+    outline: none;
+    font-size: 1.6rem;
+}
+.nav-item-search i {
+    position: absolute;
+    font-size: 1.6rem;
+    top: 6px;
+    right: 8px
+}
+
+// -------------- Sidebar --------------
+.sidebar {
+    background-color: #a9bfc4;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100vh;
+}
+.user{
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+}
+.user-information{
+    height: 60px;
+    display: flex;
+    align-items: center;
+}
+.user-avatar{
+    margin-right: 10px;
+    border-top-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+.user-text{
+    display: flex;
+    flex-direction: column;
+}
+.user-name{
+    font-size: 1.6rem;
+    line-height: 20px;
+}
+.user-postion{
+    font-size: 1.6rem;
+    line-height: 20px;
+}
+.user-department{
+    font-size: 1.6rem;
+    line-height: 20px;
+}
+.user-message{
+    font-size: 1.6rem;
+    line-height: 20px;
+    margin: 4px;
+}
+.user-message i {
+    font-size: 1.4rem;
+    color: white;
+}
+.user-notification{
+    font-size: 1.6rem;
+    line-height: 20px;
+    margin: 4px
+}
+.user-notification i {
+    font-size: 1.6rem;
+    color: white;
+}
+
+.category{
+overflow: hidden;
+}
+.category-article{
+
+}
+.category-article-title{
+    line-height: 40px;
+    font-size: 1.6rem;
+    display: block;
+    background-color: rgb(9, 84, 224);
+    color: white;
+    padding-left: 20px;
+}
+.category-article-list{
+    display: none;
+}
+.category-article-item {
+    background-color: white;
+    height: 40px;
+    border-bottom: 2px solid #eee;
+    font-size: 1.8rem;
+    line-height: 40px;
+    padding-left: 40px;
+    text-decoration: none;
+    display: block;
+}
+.category-article-item:hover {
+    background-color: #eee;
+    cursor: pointer;
+}
+.category-article-item:last-child {
+    border: none;
+}
+
+.checkbox {
+    display: none;
+}
+
+.category-article .checkbox:checked ~ .category-article-list {
+    display: block;
+}
+
+// --------- Content -----------
+
+// --- Action bar
+.action-bar{
+    display: flex;
+    height: 40px;
+    align-items: center;
+    background-color: #ccc;
+}
+.checkbox-group {
+    display: block;
+    margin-right: auto;
+    margin-left: 10px;
+}
+.checkbox-group label {
+    font-size: 1.6rem;
+}
+.action-btn {
+    height: 30px;
+    margin: 4px;
+    padding: 0px 8px;
+}
+// --- Filter bar 
+.filter-bar{
+    display: flex;
+    align-items: center;
+    background-color: #eee;
+}
+.filter-select {
+    height: 30px;
+    font-size: 1.4rem;
+    margin: 0px 4px;
+    max-width: 150px;
+}
+
+.filter-select:last-child {
+    margin-right: auto;
+}
+
+.find-input {
+    height: 30px;
+    font-size: 1.4rem;
+    margin: 0px 4px;
+    max-width: 150px;
+    min-width: 0px;
+}
+// --- Folder
+.list-folder{
+
+}
+.folder{
+    border-bottom: 2px solid #eee;
+    display: flex;
+    padding: 10px 10px;
+}
+.checkbox-folder{
+    display: flex;
+    align-items: self-start;
+}
+.checkbox-folder input {
+    margin-top: 10px;
+}
+.checkbox-folder label img {
+    margin-left: 10px;
+    width: 40px;
+}
+.folder-information{
+    display: block;
+    margin-left: 20px;
+    margin-right: auto;
+}
+.folder-name{
+    font-size: 1.6rem;
+    color: blue;
+    line-height: 24px;
+}
+.folder-description{
+    font-size: 1.4rem;
+    line-height: 20px;
+}
+.folder-operation{
+    display: flex;
+    justify-content: center;
+}
+.folder-operation a {
+    display: block;
+    font-size: 1.4rem;
+    margin: auto 4px;
 }

@@ -1,1 +1,107 @@
-<h1>HOME</h1>
+<div class="grid">
+    <div class="row sm-gutter">
+        <div class="col l-2">
+            <div class="sidebar">
+                <div class="user">
+                    <div class="user-information">
+                        <img src="/imgs/avatar-user.png" class="user-avatar" alt="..">
+                        <div class="user-text">
+                            <div class="user-name">
+                                Trịnh Văn Hân
+                            </div>
+                            <div class="user-postion">
+                                Nhân viên
+                            </div>
+                            <div class="user-department">
+                                IT
+                            </div>
+                        </div>
+                    </div>
+                    <div class="user-message">
+                        <i class="fa-solid fa-envelope"></i> Tin nhắn
+                    </div>
+                    <div class="user-notification">
+                        <i class="fa-solid fa-bell"></i> Thông báo
+                    </div>
+                </div>
+                <div class="category">
+                    <div class="category-article">
+                        <label for="checkbox-1" class="category-article-title">
+                            <i class="fa-solid fa-caret-right"></i>
+                            Quản lý công việc
+                        </label>
+                        <input type="checkbox" id="checkbox-1" class="checkbox">
+                        <div class="category-article-list">
+                                <a href="" class="category-article-item">Tài liệu của tôi</a>
+                                <a href="" class="category-article-item">Chia sẻ</a>
+                        </div>
+                    </div>
+                    <div class="category-article">
+                        <label for="checkbox-2" class="category-article-title">
+                            <i class="fa-solid fa-caret-right"></i>
+                            Quản lý tài liệu
+                        </label>
+                        <input type="checkbox" id="checkbox-2" class="checkbox">
+                        <div class="category-article-list">
+                                <a href="" class="category-article-item">Tài liệu của tôi</a>
+                                <a href="" class="category-article-item">Chia sẻ</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col l-7">
+            <div class="action-bar">
+                <div class="checkbox-group">
+                    <input type="checkbox" id="choose-all">
+                    <label for="choose-all">Chọn</label>
+                </div>
+                <button class="action-btn">
+                    Tải lên thư mục
+                </button>
+                <button class="action-btn">
+                    Tải lên
+                </button>
+                <button class="action-btn">
+                    Xóa
+                </button>
+                <button class="action-btn">
+                    Di chuyển
+                </button>
+            </div>
+            <div class="filter-bar">
+                <select name="document-type" class="filter-select">
+                    <option value="" selected>--Loại tài liệu--</option>
+                </select>
+                <select name="sort" id="" class="filter-select">
+                    <option value="sort-date" selected>Sắp xếp theo ngày</option>
+                </select>
+                <input type="text" class="find-input" placeholder="Từ ngày">
+                <input type="text" class="find-input" placeholder="Đến ngày">
+                <input type="text" class="find-input" placeholder="Tìm theo tên, mô tả">
+                <button class="action-btn">Tìm</button>
+            </div>
+            <ul class="list-folder">
+                <li class="folder">
+                    <div class="checkbox-folder">
+                        <input type="checkbox" id="choose-folder">
+                        <label for="choose-folder">
+                            <img src="/imgs/folder.png" alt="">
+                        </label>
+                    </div>
+                    <div class="folder-information">
+                        <p class="folder-name">Tên thư mục</p>
+                        <p class="folder-description">Hiện có: 0 thư mục 0 tệp</p>
+                        <p class="folder-description">Tài khoản: Trịnh Văn Hân</p>
+                    </div>
+                    <div class="folder-operation">
+                        <a href="">Tải về</a>
+                        <a href="">Xem</a>
+                        <a href="">Sửa</a>
+                        <a href="">Xóa</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
