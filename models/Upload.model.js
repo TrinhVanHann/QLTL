@@ -38,16 +38,16 @@ var that = module.exports = {
             console.error(error);
         }
     },
-    uploadFile: async () => {
+    uploadFile: async (file) => {
         try {
             const createFile = await drive.files.create({
                 requestBody: {
-                    name: "iloveyou_cr7.jpg",
-                    mimeType: 'image/jpg'
+                    name: file.originalname,
+                    mimeType: file.mimetype
                 },
                 media: {
-                    mimeType: 'image/jpg',
-                    body: fs.createReadStream(path.join(__dirname, '/../cr7.jpg'))
+                    mimeType: file.mimetype,
+                    body: fs.createReadStream(file.path)
                 }
             })
             const fileId = createFile.data.id;

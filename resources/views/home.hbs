@@ -59,7 +59,7 @@
                 <button class="action-btn">
                     Tải lên thư mục
                 </button>
-                <button class="action-btn">
+                <button class="action-btn" id="upload-btn">
                     Tải lên
                 </button>
                 <button class="action-btn">
@@ -105,3 +105,95 @@
         </div>
     </div>
 </div>
+
+<div class="modal">
+    <div class="modal-overlay">
+        <form method="POST" action="/files/action/upload" enctype="multipart/form-data" class="upload-file-form standard-form">
+            <h2 class="form-header">Upload tài liệu</h2>
+            <div class="form-quit"><i class="fa-solid fa-xmark"></i></div>
+            <div class="drop-container" id="drop-container">
+                Kéo file vào đây
+            </div>
+            <input type="file" name="file" id="upload-file-input" multiple>
+            <table class="table upload-file-table hidden">
+                <tr>
+                    <th>Tên tài liệu</th>
+                    <th>Loại tài liệu</th>
+                    <th>Kích thước</th>
+                    <th>
+                        <input type="checkbox" id="deleteAll">
+                        <label for="deleteAll">Xóa</label>
+                    </th>
+                </tr>
+
+            </table>
+            <div class="form-login-btn-group">
+                <label for="upload-file-input" class="custom-file-upload">Tải thêm</label>
+                <button type="submit" class="action-btn">Lưu lại</button>
+                <button class="action-btn" id="cancel-btn">Hủy</button>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        let uploadBtn = $('.action-btn#upload-btn')
+        let uploadFileForm = $('.upload-file-form')
+        let cancelBtn = $('.action-btn#cancel-btn')
+        let formQuit = $('.form-quit')
+        let dropContainer = document.querySelector('.drop-container')
+        let uploadFileTable = $('.upload-file-table')
+        let fileInput = document.querySelector('#upload-file-input')
+
+        //----------------Handle event----------------
+        
+        // Handle upload file button and upload file form
+
+        uploadBtn.click(function(e){
+            uploadFileForm.closest('.modal').addClass('active')
+        })
+        cancelBtn.click(function(e){
+            cancelBtn.closest('.modal').removeClass('active')
+            uploadFileTable.remo
+        })
+        formQuit.click(function(e){
+            uploadFileForm.closest('.modal').removeClass('active')
+        })
+        dropContainer.ondragover = dropContainer.ondragenter = function(e) {
+            e.preventDefault();
+        }
+        dropContainer.ondrop = function(e) {
+            e.preventDefault();
+            fileInput.files = e.dataTransfer.files;
+            if(fileInput.files){
+
+                dropContainer.style.display = 'none'
+                renderUploadTable(fileInput)
+                uploadFileTable.removeClass('hidden')
+            }
+        }
+        fileInput.onchange = function(e){
+            const selectedFiles = e.target.files
+            if(selectedFiles){
+                dropContainer.style.display = 'none'
+                renderUploadTable(fileInput)
+                uploadFileTable.removeClass('hidden')
+            }
+        }
+        function renderUploadTable(fileInput){
+           for( var i = 0; i < fileInput.files.length; i++) {
+                const newRow = $(`<tr>`)
+                newRow.append(`<td>${fileInput.files[i].name}</td>`)
+                newRow.append(`<td>${fileInput.files[i].type}</td>`)
+                newRow.append(`<td>${Math.round(fileInput.files[i].size/1024)}KB</td>`)
+                newRow.append(`<td><input type="checkbox" name="uploadfileIds[]"></td>`)
+                uploadFileTable.append(newRow)
+           }
+        }
+
+        functon deleteRow(table){
+            table.deleteRow()
+        }
+
+    })
+</script>

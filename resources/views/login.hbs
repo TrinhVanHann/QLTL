@@ -1,17 +1,32 @@
-<form method="POST" action="">
-    <div class="form-group">
-        <label for="inputUsername" class="form-label">Tên đăng nhập</label>
-        <input type="email" class="form-control" id="inputEmail" name="username">
+<div class="modal active">
+    <div class="modal-overlay">
+        <form method="POST" action="" class="form-login">
+            <h1 class="form-login-title">ĐĂNG NHẬP</h1>
+            <div class="form-login-container">
+                <div class="form-login-group">
+                    <label for="inputUsername" class="form-login-label">Tên đăng nhập</label>
+                    <input type="email" class="form-login-control" id="inputUsername" name="username">
+                </div>
+                <div class="form-login-group">
+                    <label for="inputPassword" class="form-login-label">Mật khẩu</label>
+                    <input type="email" class="form-login-control" id="inputPassword" name="password">
+                </div>
+                <div class="form-login-group">
+                    <label class="form-login-label">Hình thức đăng nhập</label>
+                    <select name="account-type" class="form-login-select">
+                        <option value="admin" selected>Tài khoản hệ thống</option>
+                        <option value="user">Tài khoản nhân viên</option>
+                    </select>
+                </div>
+                <p class="form-login-text">
+                    Bạn có muốn đổi mật khẩu? 
+                    <a href="">Đổi tại đây</a>
+                </p>
+                <div class="form-login-btn-group">
+                    <button type="submit" class="form-login-btn">Đăng nhập</button>
+                    {{!-- <button class="form-login-btn form-login-btn-cancel">Hủy</button> --}}
+                </div>
+            </div>
+        </form>
     </div>
-    <div class="form-group">
-        <label for="inputPassword" class="form-label">Mật khẩu</label>
-        <input type="email" class="form-control" id="inputPassword" name="password">
-    </div>
-    <div class="form-group">
-        <label class="form-label">Hình thức đăng nhập</label>
-        <select name="account-type">
-            <option value="admin" selected>Tài khoản hệ thống</option>
-            <option value="user">Tài khoản nhân viên</option>
-        </select>
-    </div>
-</form>
+</div>

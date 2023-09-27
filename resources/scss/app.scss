@@ -10,6 +10,48 @@ html {
     font-size: 62.5%;
 } 
 
+.standard-form {
+    width: 300px;
+    position: relative;
+    margin: auto;
+    --growth-from: 0.7;
+    --growth-to: 1;
+    animation: growth linear 0.1s;
+    background-color: white;
+    border: 1px solid black;
+}
+
+.table {
+    border-collapse: collapse;
+    width: 100%;
+}
+.table tr:first-child {
+    border-bottom: 2px solid #4e4c4c;
+}
+.table tr {
+    border-bottom: 1px solid #717070;
+    display: flex;
+}
+.table tr th,td {
+    width: 120px;
+    margin: 0px 4px;
+    line-height: 20px;
+    height: 20px;
+    font-size: 1.4rem;
+    text-align: center;
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.table tr th:first-child,td:first-child {
+    width: 200px;
+}
+
+.table.hidden {
+    display: none;
+}
+
+
 @keyframes dropdown {
     from {
         transform: scaleY(0);
@@ -24,6 +66,7 @@ html {
     background-color: rgb(141, 203, 229);
     padding: 0px 50px 10px;
 }
+
 
 .container {
     width: 100%;
@@ -43,9 +86,6 @@ html {
     justify-content: space-between;
 }
 
-.nav-item {
-
-}
 
 .nav-item-link {
     font-size: 1.8rem;
@@ -137,9 +177,7 @@ html {
 .category{
 overflow: hidden;
 }
-.category-article{
 
-}
 .category-article-title{
     line-height: 40px;
     font-size: 1.6rem;
@@ -224,9 +262,7 @@ overflow: hidden;
     min-width: 0px;
 }
 // --- Folder
-.list-folder{
 
-}
 .folder{
     border-bottom: 2px solid #eee;
     display: flex;
@@ -253,7 +289,7 @@ overflow: hidden;
     color: blue;
     line-height: 24px;
 }
-.folder-description{
+.folder-description{ 
     font-size: 1.4rem;
     line-height: 20px;
 }
@@ -265,4 +301,58 @@ overflow: hidden;
     display: block;
     font-size: 1.4rem;
     margin: auto 4px;
+}
+// --- Upload file form
+.upload-file-form.standard-form {
+    width: 600px;
+    position: relative;
+}
+.form-quit {
+    position: absolute;
+    font-size: 1.8rem;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    top: 0px;
+    right: 0px;
+}
+.form-quit:hover {
+    background-color: #c6c5c5;
+}
+.form-header {
+    text-align: center;
+    line-height: 30px;
+    font-size: 1.8rem;
+    border-bottom: 5px solid rgb(0, 208, 255);
+}
+
+.drop-container {
+    border: 3px dashed gray;
+    height: 100px;
+    margin: 10px 20px;
+    font-size: 2.4rem;
+    text-align: center;
+    color: #989696;
+    font-family: Arial, sans-serif;
+}
+
+#upload-file-input {
+    display: none;
+}
+
+.custom-file-upload {
+    margin: 4px;
+    padding: 0px 8px;
+    font-size: 1.4rem;
+    line-height: 30px;
+    background-color: rgb(22, 109, 231);
+    border: 1px solid black;
+    border-radius: 2px;
+    color: white
+}
+
+.custom-file-upload:hover {
+    background-color:rgb(17, 85, 180);
+    cursor: pointer;
 }
