@@ -37,16 +37,38 @@
     animation: growth linear 0.1s;
     background-color: white;
     border: 1px solid black;
-}
-.form-login-container {
-    margin: 20px;
+    padding: 20px;
 }
 .form-login-title{
     font-size: 1.8rem;
     text-decoration: bold;
     text-align: center;
-    margin-top: 10px;
 }
+.form-login-group {
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.form-login-group i {
+    display: none; 
+    position: absolute;
+    top: 60%;
+    right: 4px;
+    width: 30px;
+    height: 24px;
+    text-align: center;
+    font-size: 1.3rem;
+    color: rgb(107, 107, 107)
+}
+.form-login-group i.active {
+    display: block;
+}
+
+.form-login-group i:hover {
+    color: rgb(53, 53, 53);
+    cursor: pointer;
+}
+
 .form-login-label{
     font-size: 1.6rem;
     line-height: 24px;
@@ -55,7 +77,6 @@
 } 
 .form-login-control{
     height: 20px;
-    margin-bottom: 10px;
     height: 24px;
     font-size: 1.6rem;
     width: 100%
@@ -75,7 +96,7 @@
 .form-login-btn-group {
     display: flex;
     justify-content: end;
-    margin: 30px 20px; 
+    margin-top: 20px; 
 }
 
 .form-login-btn {
@@ -102,3 +123,8 @@
     background-color: rgb(156, 154, 154);
 }
 
+.form-login-message {
+    font-size: 1.2rem;
+    color: red;
+    line-height: 16px;
+}

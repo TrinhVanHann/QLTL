@@ -105,7 +105,15 @@
         </div>
     </div>
 </div>
-
+{{!-- fileInput.onchange = function(e){
+            const selectedFiles = e.target.files
+            if(selectedFiles){
+                console.log(fileInput.value)
+                dropContainer.style.display = 'none'
+                renderUploadTable(fileInput)
+                uploadFileTable.removeClass('hidden')
+            }
+        } --}}
 <div class="modal">
     <div class="modal-overlay">
         <form method="POST" action="/files/action/upload" enctype="multipart/form-data" class="upload-file-form standard-form">
@@ -144,7 +152,6 @@
         let dropContainer = document.querySelector('.drop-container')
         let uploadFileTable = $('.upload-file-table')
         let fileInput = document.querySelector('#upload-file-input')
-
         //----------------Handle event----------------
         
         // Handle upload file button and upload file form
@@ -153,33 +160,35 @@
             uploadFileForm.closest('.modal').addClass('active')
         })
         cancelBtn.click(function(e){
+            e.preventDefault()
+            dropContainer.style.display = 'block'
+            fileInput.value = ''
+            deleteAllRow('.upload-file-table')
             cancelBtn.closest('.modal').removeClass('active')
-            uploadFileTable.remo
+            uploadFileTable.addClass('hidden')
         })
         formQuit.click(function(e){
+            e.preventDefault()
+            dropContainer.style.display = 'block'
+            fileInput.value = ''
+            deleteAllRow('.upload-file-table')
             uploadFileForm.closest('.modal').removeClass('active')
+            uploadFileTable.addClass('hidden')
         })
         dropContainer.ondragover = dropContainer.ondragenter = function(e) {
             e.preventDefault();
         }
-        dropContainer.ondrop = function(e) {
+        fileInput.onchange = dropContainer.ondrop = function(e) {
             e.preventDefault();
             fileInput.files = e.dataTransfer.files;
             if(fileInput.files){
+                dropContainer.style.display = 'none'
+                renderUploadTable(fileInput)
+                uploadFileTable.removeClass('hidden')
+            }
+        }
+        
 
-                dropContainer.style.display = 'none'
-                renderUploadTable(fileInput)
-                uploadFileTable.removeClass('hidden')
-            }
-        }
-        fileInput.onchange = function(e){
-            const selectedFiles = e.target.files
-            if(selectedFiles){
-                dropContainer.style.display = 'none'
-                renderUploadTable(fileInput)
-                uploadFileTable.removeClass('hidden')
-            }
-        }
         function renderUploadTable(fileInput){
            for( var i = 0; i < fileInput.files.length; i++) {
                 const newRow = $(`<tr>`)
@@ -191,8 +200,8 @@
            }
         }
 
-        functon deleteRow(table){
-            table.deleteRow()
+        function deleteAllRow(selector){
+            $(`${selector} tr:not(:first)`).remove()
         }
 
     })
