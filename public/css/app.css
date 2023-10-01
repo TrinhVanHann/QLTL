@@ -134,6 +134,27 @@ html {
   font-size: 1.6rem;
   line-height: 20px; }
 
+.user-page {
+  font-size: 1.6rem;
+  line-height: 20px;
+  margin: 4px; }
+
+.user-page i {
+  font-size: 1.4rem;
+  color: white; }
+
+.user-logout {
+  margin: 4px;
+  font-size: 1.6rem;
+  line-height: 20px; }
+
+.user-logout i {
+  font-size: 1.4rem;
+  color: white; }
+
+#logout-checkbox:checked ~ .modal {
+  display: block; }
+
 .user-message {
   font-size: 1.6rem;
   line-height: 20px;

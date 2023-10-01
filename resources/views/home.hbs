@@ -1,5 +1,5 @@
 <div class="grid">
-    <div class="row sm-gutter">
+    <div class="row no-gutters">
         <div class="col l-2 m-2 c-0">
             <div class="sidebar">
                 <div class="user">
@@ -7,7 +7,7 @@
                         <img src="/imgs/avatar-user.png" class="user-avatar" alt="..">
                         <div class="user-text">
                             <div class="user-name">
-                                Trịnh Văn Hân
+                                {{username}}
                             </div>
                             <div class="user-postion">
                                 Nhân viên
@@ -17,6 +17,26 @@
                             </div>
                         </div>
                     </div>
+                    <a class="user-page" href="/user">
+                        <i class="fa-solid fa-user"></i> Trang cá nhân
+                    </a>
+                    <label class="user-logout" for="logout-checkbox">
+                        <i class="fa-solid fa-right-from-bracket"></i> Đăng xuất
+                    </label>
+                    <input type="checkbox" id="logout-checkbox" style="display: none">
+                    <div class="modal " tabindex="-1">
+                        <div class="modal-overlay">
+                            <div class="standard-form">
+                            <h1 style="font-size: 2rem; margin-bottom: 12px">Đăng xuất</h1>
+                            <p style="font-size: 1.6rem">Bạn có chắc chắn muốn đăng xuất?</p>
+                            <div class="form-login-btn-group">
+                                <button class="action-btn logout-btn">Đăng xuất</button>
+                                <label type="button" class="action-btn" for="logout-checkbox" style="line-height: 30px; font-size: 1.4rem">Hủy</label>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="user-message">
                         <i class="fa-solid fa-envelope"></i> Tin nhắn
                     </div>
@@ -96,7 +116,6 @@
                     <div class="folder-file-information">
                         <p class="folder-file-name">{{this.name}}</p>
                         <p class="folder-file-description">Hiện có: {{this.folder_childs.length}} thư mục, {{this.file_childs.length}} tệp</p>
-                        <div class="folder-file-description">Tài khoản: {{username}}</div>
                     </div>
                     <div class="folder-file-operation">
                         <a href="">Tải về</a>
@@ -120,7 +139,6 @@
                     <div class="folder-file-information">
                         <p class="folder-file-name">{{this.name}}</p>
                         <p class="folder-file-description">Kích cỡ: {{this.size}}</p> 
-                        <p class="folder-file-description"></p>
                     </div>
                     <div class="folder-file-operation">
                         <a href="">Tải về</a>
@@ -168,6 +186,8 @@
 </div>
 
 
+
+
 <form method="POST" class="post-form">
     <input type="text" style="display: none" name="curFolderId" value="{{currentFolderId}}">
 </form>
@@ -187,6 +207,7 @@
         let folderList = $('.folder-list')
         
         let createFolderBtn = $('#create-folder-btn')
+        let logoutBtn = $('.logout-btn')
 
         
         
@@ -232,7 +253,10 @@
             }
         }
 
-        
+        // --------- Handle logout
+        logoutBtn.click(function(e){
+            logout()
+        })
         //------- Handle upload folder button and upload folder form --------
         createFolderBtn.click(function(e){
             postForm.attr('action','/folders/action/create')
@@ -265,7 +289,13 @@
             $(`${selector} tr:not(:first)`).remove()
         }
 
-        // --------- Folder ------------
+        function logout() {
+            deleteCookie("token");
+            window.location.href = "/login";
+        }
+        function deleteCookie(cookieName) {
+            document.cookie = cookieName + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        }
 
 
     })
