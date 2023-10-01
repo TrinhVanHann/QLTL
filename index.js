@@ -1,15 +1,21 @@
 const path = require('path')
 const express = require('express')
 const morgan = require('morgan')
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser')
 const { engine } = require('express-handlebars')
 const session = require('express-session')
 const app = express()
 const route = require('./routes/index')
+require("./config/db").connect();
 const port = 3000
 
 
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(morgan('combined'))
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(cookieParser())
 app.use(express.urlencoded({extended: true}))
 app.use(express.json())
 

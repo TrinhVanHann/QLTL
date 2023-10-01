@@ -1,8 +1,8 @@
 const express = require('express')
 const router = express.Router()
-const filesController = require('../controllers/FilesController')
+const foldersController = require('../controllers/FoldersController')
 const upload = require('../utils/multerUpload')
 
-router.post('/action/upload',upload.array('file'),filesController.upload)
+router.post('/action/create', foldersController.create)
 
 module.exports = router

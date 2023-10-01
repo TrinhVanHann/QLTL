@@ -1,21 +1,41 @@
 require('dotenv').config()
 const jwt = require('jsonwebtoken')
+const User = require('../models/Users')
+const Folder = require('../models/Folders')
+const { createFolder } = require('../models/Upload.model')
+const bcrypt = require('bcrypt')
 
 class LoginController{
     index(req, res, next){
         res.render('login')
     }
-    auth(req, res, next){
+
+    async auth(req, res, next){
         const { username, password } = req.body;
         const secretKey = process.env.SECRET_KEY
-        //Kiểm tra thông tin đăng nhập và tạo JWT nếu hợp lệ
-        if (true) {
-            const token = jwt.sign({ username }, secretKey, { expiresIn: '1h' });
-            res.redirect('/')
+
+        const user = await User.findOne({ username });
+        if (user && password === user.password) {
+            Folder.findOne({ name: username })
+            .then((folder) => {
+                const token = jwt.sign( 
+                    {
+                        user_id: user._id,
+                        root_id: folder._id
+                    },
+                    secretKey,
+                    { expiresIn: "2h" }
+                )
+                
+                return res.json({
+                    token: token
+                })
+            })
         }
         else {
             res.status(401).json({ message: 'Đăng nhập không thành công' });
         }
     }
+
 }
 module.exports = new LoginController

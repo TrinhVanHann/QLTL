@@ -229,47 +229,52 @@ html {
   max-width: 150px;
   min-width: 0px; }
 
-.folder {
+.folder, .file {
   border-bottom: 2px solid #eee;
   display: flex;
   padding: 10px 10px; }
 
-.checkbox-folder {
+.folder:hover, .file:hover {
+  background-color: #ccc;
+  cursor: pointer; }
+
+.checkbox-folder-file {
   display: flex;
   align-items: self-start; }
 
-.checkbox-folder input {
+.checkbox-folder-file input {
   margin-top: 10px; }
 
-.checkbox-folder label img {
+.checkbox-folder-file label img {
   margin-left: 10px;
   width: 40px; }
 
-.folder-information {
+.folder-file-information {
   display: block;
   margin-left: 20px;
   margin-right: auto; }
 
-.folder-name {
+.folder-file-name {
   font-size: 1.6rem;
   color: blue;
   line-height: 24px; }
 
-.folder-description {
+.folder-file-description {
   font-size: 1.4rem;
   line-height: 20px; }
 
-.folder-operation {
+.folder-file-operation {
   display: flex;
   justify-content: center; }
 
-.folder-operation a {
+.folder-file-operation a {
   display: block;
   font-size: 1.4rem;
   margin: auto 4px; }
 
 .upload-file-form.standard-form {
   width: 600px;
+  padding: 0;
   position: relative; }
 
 .form-quit {

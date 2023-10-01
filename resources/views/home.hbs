@@ -1,6 +1,6 @@
 <div class="grid">
     <div class="row sm-gutter">
-        <div class="col l-2">
+        <div class="col l-2 m-2 c-0">
             <div class="sidebar">
                 <div class="user">
                     <div class="user-information">
@@ -50,13 +50,13 @@
                 </div>
             </div>
         </div>
-        <div class="col l-7">
+        <div class="col l-7 m-10 c-12">
             <div class="action-bar">
                 <div class="checkbox-group">
                     <input type="checkbox" id="choose-all">
                     <label for="choose-all">Chọn</label>
                 </div>
-                <button class="action-btn">
+                <button class="action-btn" id="upload-folder-btn">
                     Tải lên thư mục
                 </button>
                 <button class="action-btn" id="upload-btn">
@@ -67,6 +67,9 @@
                 </button>
                 <button class="action-btn">
                     Di chuyển
+                </button>
+                <button class="action-btn" id="create-folder-btn">
+                    Tạo thư mục
                 </button>
             </div>
             <div class="filter-bar">
@@ -81,39 +84,58 @@
                 <input type="text" class="find-input" placeholder="Tìm theo tên, mô tả">
                 <button class="action-btn">Tìm</button>
             </div>
-            <ul class="list-folder">
-                <li class="folder">
-                    <div class="checkbox-folder">
-                        <input type="checkbox" id="choose-folder">
-                        <label for="choose-folder">
+            <ul class="folder-list">
+                {{#each folderList}}
+                <li class="folder" data-id="{{this._id}}">
+                    <div class="checkbox-folder-file">
+                        <input type="checkbox" id="choose-folder-file[]">
+                        <label for="choose-folder-file[]">
                             <img src="/imgs/folder.png" alt="">
                         </label>
                     </div>
-                    <div class="folder-information">
-                        <p class="folder-name">Tên thư mục</p>
-                        <p class="folder-description">Hiện có: 0 thư mục 0 tệp</p>
-                        <p class="folder-description">Tài khoản: Trịnh Văn Hân</p>
+                    <div class="folder-file-information">
+                        <p class="folder-file-name">{{this.name}}</p>
+                        <p class="folder-file-description">Hiện có: {{this.folder_childs.length}} thư mục, {{this.file_childs.length}} tệp</p>
+                        <div class="folder-file-description">Tài khoản: {{username}}</div>
                     </div>
-                    <div class="folder-operation">
+                    <div class="folder-file-operation">
                         <a href="">Tải về</a>
                         <a href="">Xem</a>
                         <a href="">Sửa</a>
                         <a href="">Xóa</a>
+                        <a href="">Thao tác khác</a>
                     </div>
                 </li>
+                {{/each}}
+            </ul>
+            <ul class="file-list">
+                {{#each fileList}}
+                <li class="file" data-id="{{this._id}}">
+                    <div class="checkbox-folder-file">
+                        <input type="checkbox" id="choose-folder-file">
+                        <label for="choose-folder-file">
+                            <img src="/imgs/pdf.png" alt="">
+                        </label>
+                    </div>
+                    <div class="folder-file-information">
+                        <p class="folder-file-name">{{this.name}}</p>
+                        <p class="folder-file-description">Kích cỡ: {{this.size}}</p> 
+                        <p class="folder-file-description"></p>
+                    </div>
+                    <div class="folder-file-operation">
+                        <a href="">Tải về</a>
+                        <a href="">Xem</a>
+                        <a href="">Sửa</a>
+                        <a href="">Xóa</a>
+                        <a href="">Thao tác khác</a>
+                    </div>
+                </li>
+                {{/each}}
             </ul>
         </div>
     </div>
 </div>
-{{!-- fileInput.onchange = function(e){
-            const selectedFiles = e.target.files
-            if(selectedFiles){
-                console.log(fileInput.value)
-                dropContainer.style.display = 'none'
-                renderUploadTable(fileInput)
-                uploadFileTable.removeClass('hidden')
-            }
-        } --}}
+
 <div class="modal">
     <div class="modal-overlay">
         <form method="POST" action="/files/action/upload" enctype="multipart/form-data" class="upload-file-form standard-form">
@@ -135,14 +157,21 @@
                 </tr>
 
             </table>
+            <input type="text" style="display: none" name="parentId" value="{{currentFolderId}}">
             <div class="form-login-btn-group">
                 <label for="upload-file-input" class="custom-file-upload">Tải thêm</label>
-                <button type="submit" class="action-btn">Lưu lại</button>
+                <button class="action-btn submit-upload-btn">Lưu lại</button>
                 <button class="action-btn" id="cancel-btn">Hủy</button>
             </div>
         </form>
     </div>
 </div>
+
+
+<form method="POST" class="post-form">
+    <input type="text" style="display: none" name="curFolderId" value="{{currentFolderId}}">
+</form>
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         let uploadBtn = $('.action-btn#upload-btn')
@@ -152,10 +181,18 @@
         let dropContainer = document.querySelector('.drop-container')
         let uploadFileTable = $('.upload-file-table')
         let fileInput = document.querySelector('#upload-file-input')
-        //----------------Handle event----------------
+        let submitUploadBtn = $('submit-upload-btn')
+        let postForm = $('.post-form')
+        let curFolderIdInput = $('input[name="curFolderId"]')
+        let folderList = $('.folder-list')
         
-        // Handle upload file button and upload file form
+        let createFolderBtn = $('#create-folder-btn')
 
+        
+        
+        //----------------Handle event----------------
+
+        //------ Handle upload file button and upload file form ---------
         uploadBtn.click(function(e){
             uploadFileForm.closest('.modal').addClass('active')
         })
@@ -178,7 +215,7 @@
         dropContainer.ondragover = dropContainer.ondragenter = function(e) {
             e.preventDefault();
         }
-        fileInput.onchange = dropContainer.ondrop = function(e) {
+        dropContainer.ondrop = function(e) {
             e.preventDefault();
             fileInput.files = e.dataTransfer.files;
             if(fileInput.files){
@@ -187,7 +224,31 @@
                 uploadFileTable.removeClass('hidden')
             }
         }
+        fileInput.onchange = function(e) {
+            if(fileInput.files){
+                dropContainer.style.display = 'none'
+                renderUploadTable(fileInput)
+                uploadFileTable.removeClass('hidden')
+            }
+        }
+
         
+        //------- Handle upload folder button and upload folder form --------
+        createFolderBtn.click(function(e){
+            postForm.attr('action','/folders/action/create')
+            postForm.submit()
+        })
+
+        //--------
+        folderList.dblclick(function(e){
+            if(!e.target.closest('.action-btn')){
+                const folderItem = e.target.closest('.folder')
+                postForm.action = '/'
+                curFolderIdInput.attr("value",folderItem.dataset.id)
+                postForm.submit()
+            }
+        }) 
+
 
         function renderUploadTable(fileInput){
            for( var i = 0; i < fileInput.files.length; i++) {
@@ -203,6 +264,9 @@
         function deleteAllRow(selector){
             $(`${selector} tr:not(:first)`).remove()
         }
+
+        // --------- Folder ------------
+
 
     })
 </script>

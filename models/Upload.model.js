@@ -38,23 +38,23 @@ var that = module.exports = {
             console.error(error);
         }
     },
-    uploadFile: async (file) => {
+    uploadFile: async (file, parentId) => {
         try {
             const createFile = await drive.files.create({
-                requestBody: {
+                resource: {
                     name: file.originalname,
-                    mimeType: file.mimetype
+                    parents: [parentId]
                 },
                 media: {
                     mimeType: file.mimetype,
                     body: fs.createReadStream(file.path)
-                }
+                },
+                fields: 'id'
             })
             const fileId = createFile.data.id;
-            console.log(createFile.data)
             const getUrl = await that.setFilePublic(fileId);
 
-            console.log(getUrl.data);
+            return fileId
 
         } catch (error) {
             console.error(error);
@@ -70,5 +70,24 @@ var that = module.exports = {
         } catch (error) {
             console.error(error);
         }
+    },
+    createFolder: async (name, parentId) => {
+        try {
+            const fileMetadata = {
+                name: name,
+                mimeType: 'application/vnd.google-apps.folder',
+                parents: [parentId]
+            };
+            const file = await drive.files.create({
+                resource: fileMetadata,
+                fields: 'id',
+            });
+            console.log('Folder Id:', file.data.id);
+            return file.data.id;
+            
+        } catch (err) {
+            // TODO(developer) - Handle error
+            throw err;
+        }  
     }
 }

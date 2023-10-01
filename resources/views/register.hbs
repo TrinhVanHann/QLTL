@@ -1,7 +1,7 @@
 <div class="modal active">
     <div class="modal-overlay">
-        <div class="form-login standard-form">
-            <h1 class="form-login-title">ĐĂNG NHẬP</h1>
+        <div class="form-register standard-form">
+            <h1 class="form-login-title">ĐĂNG KÝ</h1>
             <div class="form-login-group">
                 <label for="inputUsername" class="form-login-label">Tên đăng nhập</label>
                 <input type="text" class="form-login-control" id="inputUsername" name="username">
@@ -15,20 +15,12 @@
                 <span class="form-login-message"></span>
             </div>
             <div class="form-login-group">
-                <label class="form-login-label">Hình thức đăng nhập</label>
-                <select name="account-type" class="form-login-select">
-                    <option value="admin" selected>Tài khoản hệ thống</option>
-                    <option value="user">Tài khoản nhân viên</option>
-                </select>
+                <label for="inputRepassword" class="form-login-label">Nhập lại mật khẩu</label>
+                <input type="password" class="form-login-control" id="inputRepassword" name="repassword">
                 <span class="form-login-message"></span>
             </div>
-            <p class="form-login-text">
-                Bạn có muốn đổi mật khẩu? 
-                <a href="">Đổi tại đây</a>
-            </p>
             <div class="form-login-btn-group">
-                <button class="form-login-btn">Đăng nhập</button>
-                {{!-- <button class="form-login-btn form-login-btn-cancel">Hủy</button> --}}
+                <button class="form-login-btn">Đăng ký</button>
             </div>
         </div>
     </div>
@@ -181,6 +173,8 @@
             Validator.isRequired('#inputUsername'),
             Validator.isRequired('#inputPassword'),
             Validator.minLength('#inputPassword', 6),
+            Validator.isRequired('#inputRepassword'),
+            Validator.isConfirmed('#inputRepassword', document.querySelector('#inputPassword').value)
         ]
     })
 
@@ -225,7 +219,7 @@
 
         $('.form-login-btn').click(function(){
            $.ajax({
-                url: '/login/auth', 
+                url: '/register', 
                 method: 'POST', 
                 data: {
                     username: $('#inputUsername').val(),
@@ -237,7 +231,6 @@
                 setCookie('token',data.token, 1)
             })
             .catch(err => console.error(err))
-
         })
         // --------
 
