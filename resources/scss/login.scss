@@ -39,17 +39,17 @@
     border: 1px solid black;
     padding: 20px;
 }
-.form-login-title{
+.form-title{
     font-size: 1.8rem;
     text-decoration: bold;
     text-align: center;
 }
-.form-login-group {
+.form-group {
     margin-bottom: 10px;
     position: relative;
 }
 
-.form-login-group i {
+.form-group i {
     display: none; 
     position: absolute;
     top: 60%;
@@ -60,46 +60,46 @@
     font-size: 1.3rem;
     color: rgb(107, 107, 107)
 }
-.form-login-group i.active {
+.form-group i.active {
     display: block;
 }
 
-.form-login-group i:hover {
+.form-group i:hover {
     color: rgb(53, 53, 53);
     cursor: pointer;
 }
 
-.form-login-label{
+.form-label{
     font-size: 1.6rem;
-    line-height: 24px;
+    line-height: 24px; 
     display: block;
     text-decoration: bold;
 } 
-.form-login-control{
+.form-control{
     height: 20px;
     height: 24px;
     font-size: 1.6rem;
     width: 100%
 }
-.form-login-select {
+.form-select {
     height: 24px;
     font-size: 1.6rem;
 
     width: 100%;
 }
 
-.form-login-text {
+.form-text {
     margin-top: 10px;
     text-align: center;
     font-size: 1.4rem;
 }
-.form-login-btn-group {
+.form-btn-group {
     display: flex;
     justify-content: end;
     margin-top: 20px; 
 }
 
-.form-login-btn {
+.form-btn {
     text-align: center;
     font-size: 1.6rem;
     line-height: 24px;
@@ -110,20 +110,20 @@
     border: none;
     padding: 4px 10px;
 } 
-.form-login-btn:hover {
+.form-btn:hover {
     cursor: pointer;
     background-color: rgb(2, 76, 186);
 }
-.form-login-btn-cancel {
+.form-btn-cancel {
     background-color: rgb(205, 204, 204);
     color: black;
     margin-left: 4px;
 }
-.form-login-btn-cancel:hover {
+.form-btn-cancel:hover {
     background-color: rgb(156, 154, 154);
 }
 
-.form-login-message {
+.form-message {
     font-size: 1.2rem;
     color: red;
     line-height: 16px;

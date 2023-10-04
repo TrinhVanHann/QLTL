@@ -1,7 +1,6 @@
 const Folder = require('../models/Folders')
 const User = require('../models/Users')
 const File = require('../models/Files')
-
 class SiteController{
     index(req, res, next){
         let username
@@ -14,7 +13,7 @@ class SiteController{
         .then((User) => {
             username = User.username
             if(req.body.curFolderId) currentFolderId = req.body.curFolderId
-            else currentFolderId = rootId
+            else currentFolderId = rootId 
 
             return Promise.all([ Folder.find({ parent_id: currentFolderId }),
                                  File.find({ parent_id: currentFolderId }) ])

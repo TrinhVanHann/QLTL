@@ -7,7 +7,7 @@ const bcrypt = require('bcrypt')
 
 class RegisterController{
     index(req, res, next) {
-        res.render('register')
+        res.render('Login/register')
     }
     async auth(req, res, next){
         const { username, password } = req.body;
@@ -20,7 +20,6 @@ class RegisterController{
                 username: username,
                 password: password
             })
-            await newUser.save()
 
             createFolder(username)
                 .then((folderId) => {
@@ -32,6 +31,11 @@ class RegisterController{
                     return newFolder
                 })
                 .then((newFolder) => {
+                    newUser.folder_id = newFolder._id
+                    return newFolder
+                })
+                .then((newFolder) => {
+                    newUser.save()
                     newFolder.save()
 
                     const token = jwt.sign(

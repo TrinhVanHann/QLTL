@@ -21,7 +21,7 @@ class FoldersController{
         })
         .then((folder) => {
             folder.save()
-            res.redirect('/')
+            res.redirect('back')
         })
         .catch(next)
     }

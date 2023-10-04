@@ -7,7 +7,7 @@ const bcrypt = require('bcrypt')
 
 class LoginController{
     index(req, res, next){
-        res.render('login')
+        res.render('Login/login')
     }
 
     async auth(req, res, next){
@@ -26,8 +26,7 @@ class LoginController{
                     secretKey,
                     { expiresIn: "2h" }
                 )
-                
-                res.json({
+                return res.json({
                     token: token
                 })
             })
@@ -37,5 +36,24 @@ class LoginController{
         }
     }
 
+    change(req,res,next){
+        res.render('Login/changePassword')
+    }
+    updateChange(req, res, next){
+        User.findOne({username: req.body.username})
+            .then((user) => {
+                if(user.password === req.body.oldPassword){
+                    user.password = req.body.newPassword
+                    user.save()
+                }
+                else {
+                    res.status(401).json({ message: 'Tên đăng nhập hoặc mật khẩu của bạn không đúng' });
+                }
+            })
+            .then(() => {
+                res.redirect('/')
+            })
+            .catch(next)
+    }
 }
 module.exports = new LoginController

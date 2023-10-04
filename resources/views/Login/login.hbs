@@ -1,0 +1,107 @@
+<div class="modal active">
+    <div class="modal-overlay">
+        <div class="form-login standard-form">
+            <h1 class="form-title">ĐĂNG NHẬP</h1>
+            <div class="form-group">
+                <label for="inputUsername" class="form-label">Tên đăng nhập</label>
+                <input type="text" class="form-control" id="inputUsername" name="username">
+                <span class="form-message"></span>
+            </div>
+            <div class="form-group">
+                <label for="inputPassword" class="form-label">Mật khẩu</label>
+                <input type="password" class="form-control" id="inputPassword" name="password">
+                <i class="fa-solid fa-eye password-see"></i>
+                <i class="fa-solid fa-eye-slash password-unsee active"></i>
+                <span class="form-message"></span>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Hình thức đăng nhập</label>
+                <select name="account-type" class="form-select">
+                    <option value="admin" selected>Tài khoản hệ thống</option>
+                    <option value="user">Tài khoản nhân viên</option>
+                </select>
+                <span class="form-message"></span>
+            </div>
+            <p class="form-text">
+                Bạn có muốn đổi mật khẩu? 
+                <a href="/login/change">Đổi tại đây</a>
+            </p>
+            <div class="form-btn-group">
+                <button class="form-btn">Đăng nhập</button>
+                {{!-- <button class="form-btn form-login-btn-cancel">Hủy</button> --}}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    Validator({
+        form: '.form-login',
+        formGroupSelector: '.form-group',
+        errorSelector: '.form-message',
+        rules: [
+            Validator.isRequired('#inputUsername'),
+            Validator.isRequired('#inputPassword'),
+            Validator.minLength('#inputPassword', 6),
+        ]
+    })
+
+    document.addEventListener('DOMContentLoaded', function(e){
+        let passwordSee = $('.password-see')
+        let passwordUnsee = $('.password-unsee')
+        let passwordInput = $('#inputPassword')
+        console.log(passwordInput)
+        passwordSee.click(function(e){
+            passwordSee.removeClass('active')
+            passwordUnsee.addClass('active')
+            passwordInput.attr("type", "password")
+            
+        })
+        passwordUnsee.click(function(e){
+            passwordSee.addClass('active')
+            passwordUnsee.removeClass('active')
+            passwordInput.attr("type", "text")
+        })
+
+        function setCookie(cname, cvalue, exdays) {
+            const d = new Date();
+            d.setTime(d.getTime() + (exdays*24*60*60*1000));
+            let expires = "expires="+ d.toUTCString();
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+        }
+        function getCookie(cname) {
+            let name = cname + "=";
+            let decodedCookie = decodeURIComponent(document.cookie);
+            let ca = decodedCookie.split(';');
+            for(let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+
+        $('.form-btn').click(function(){
+           $.ajax({
+                url: '/login/auth', 
+                method: 'POST', 
+                data: {
+                    username: $('#inputUsername').val(),
+                    password: $('#inputPassword').val()
+                }
+                
+            })
+            .then(data => {
+                setCookie('token',data.token, 1)
+            })
+            .catch(err => console.error(err))
+
+        })
+        // --------
+
+    })
+</script>

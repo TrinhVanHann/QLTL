@@ -1,0 +1,23 @@
+<ul class="file-list">
+    {{#each fileList}}
+    <li class="file" data-id="{{this._id}}">
+        <div class="checkbox-folder-file">
+            <input type="checkbox" id="choose-folder-file">
+            <label for="choose-folder-file">
+                <img src="/imgs/pdf.png" alt="">
+            </label>
+        </div>
+        <div class="folder-file-information">
+            <p class="folder-file-name">{{this.name}}</p>
+            <p class="folder-file-description">Kích cỡ: {{this.size}}</p> 
+        </div>
+        <div class="folder-file-operation">
+            <a href="">Tải về</a>
+            <a href="">Xem</a>
+            <a href="">Sửa</a>
+            <a href="">Xóa</a>
+            <a href="">Thao tác khác</a>
+        </div>
+    </li>
+    {{/each}}
+</ul>

@@ -6,9 +6,12 @@ const folderSchema = new Schema({
     name: {type: String },
     parent_id: {type: String, default: 'none'},
     folder_childs: [String],
-    file_childs: [String]
+    file_childs: [String],
+    updatedAt: [Date],
+    createdAt: [Date]
 },{
-    _id: false
+    _id: false,
+    timestamps: true
 });
 
 module.exports = mongoose.model("Folder", folderSchema);

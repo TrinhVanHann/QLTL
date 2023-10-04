@@ -6,9 +6,12 @@ const fileSchema = new Schema({
     name: {type: String },
     parent_id: {type: String, default: 'none'},
     type: {type: String},
-    size: {type: Number} 
+    size: {type: Number},
+    updatedAt: [Date],
+    createdAt: [Date]
 },{
-    _id: false
+    _id: false,
+    timestamps: true
 });
 
 module.exports = mongoose.model("File", fileSchema);
