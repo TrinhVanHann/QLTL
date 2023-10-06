@@ -19,6 +19,16 @@
                 <input type="password" class="form-control" id="inputRepassword" name="repassword">
                 <span class="form-message"></span>
             </div>
+            <div class="form-group">
+                <label class="form-label">Hình thức đăng nhập</label>
+                <select name="account-type" class="form-select">
+                    <option value="admin" selected>Tài khoản hệ thống</option>
+                    <option value="user">Tài khoản bên ngoài</option>
+                    <option value="employee">Tài khoản nhân viên</option>
+                    <option value="manager">Tài khoản quản lý</option>
+                </select>
+                <span class="form-message"></span>
+            </div>
             <div class="form-btn-group">
                 <button class="form-btn">Đăng ký</button>
             </div>
@@ -27,7 +37,7 @@
 </div>
 <script>
     Validator({
-        form: '.form',
+        form: '.form-register',
         formGroupSelector: '.form-group',
         errorSelector: '.form-message',
         rules: [
@@ -84,9 +94,9 @@
                 method: 'POST', 
                 data: {
                     username: $('#inputUsername').val(),
-                    password: $('#inputPassword').val()
-                }
-                
+                    password: $('#inputPassword').val(),
+                    role: $('select[name="account-type"]').val()
+                }  
             })
             .then(data => {
                 setCookie('token',data.token, 1)

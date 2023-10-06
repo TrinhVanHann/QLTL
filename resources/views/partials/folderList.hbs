@@ -1,6 +1,6 @@
 <ul class="folder-list">
     {{#each folderList}}
-    <li class="folder" data-id="{{this._id}}">
+    <li class="folder" data-slug="{{this.slug}}">
         <div class="checkbox-folder-file">
             <input type="checkbox" id="choose-folder-file[]">
             <label for="choose-folder-file[]">
@@ -8,7 +8,8 @@
             </label>
         </div>
         <div class="folder-file-information">
-            <p class="folder-file-name">{{this.name}}</p>
+            <p class="folder-file-name" onclick="">{{this.name}}</p>
+            <input type="text" class="rename-folder-input" style="display: none" data-id="{{this._id}}">
             <p class="folder-file-description">Hiện có: {{this.folder_childs.length}} thư mục, {{this.file_childs.length}} tệp</p>
         </div>
         <div class="folder-file-operation">
@@ -21,3 +22,39 @@
     </li>
     {{/each}}
 </ul>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function(){
+        let folderNames = $('.folder-file-name')
+        let folderNameInput = $('.rename-folder-input')
+        folderNames.dblclick(function(e){
+            const target = $(e.target)
+            target.css({"display":"none"})
+            target.siblings('.rename-folder-input').css({"display":"block"}).val(target.text())
+        })
+        folderNameInput.blur(function(e){
+            handleRenamePost(e)
+        })
+        folderNameInput.keyup(function(e){
+            if(e.keyCode === 13){
+                handleRenamePost(e)
+            }
+        })
+
+        function handleRenamePost(e){
+            $.ajax({
+                url: '/folders/action/rename',
+                method: 'POST',
+                data: {
+                    newname: e.target.value,
+                    folder_id: e.target.dataset.id
+                }
+            })
+            .then(() => {
+                const target = $(e.target)
+                target.css({"display":"none"})
+                target.siblings('.folder-file-name').css({"display":"block"}).text(target.val())
+            })
+        }
+    })  
+</script>

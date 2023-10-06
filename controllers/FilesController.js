@@ -5,12 +5,15 @@ const File = require('../models/Files')
 const Folder = require('../models/Folders')
 
 class FilesController{
+    //POST /files/action/upload
     async upload(req, res, next){
       const files = req.files
       const parentId = req.body.parentId
       let uploadFileIds
+
       Promise.all(
         files.map(async (file) => {
+
           const fileId = await uploadFile(file, parentId);
           
           return fileId;

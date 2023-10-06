@@ -99,8 +99,6 @@
         let createFolderBtn = $('#create-folder-btn')
         let logoutBtn = $('.logout-btn')
 
-        
-        
         //----------------Handle event----------------
 
         //------ Handle upload file button and upload file form ---------
@@ -156,11 +154,9 @@
 
         //--------
         folderList.dblclick(function(e){
-            if(!e.target.closest('.action-btn')){
+            if(!e.target.closest('.action-btn')  && !e.target.closest('.folder-file-name')){
                 const folderItem = e.target.closest('.folder')
-                postForm.action = '/'
-                curFolderIdInput.attr("value",folderItem.dataset.id)
-                postForm.submit()
+                window.location.href = '/folders/' + folderItem.dataset.slug
             }
         }) 
 

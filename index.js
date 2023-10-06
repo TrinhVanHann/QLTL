@@ -19,14 +19,10 @@ app.use(cookieParser())
 app.use(express.urlencoded({extended: true}))
 app.use(express.json())
 
-app.use(session({
-  secret: 'your-secret-key',
-  resave: false,
-  saveUninitialized: true
-}));
 
 app.engine('hbs', engine({
-  extname: '.hbs'
+  extname: '.hbs',
+  helpers: require('./helpers/renderIcon')
 }));
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname,'resources/views'));

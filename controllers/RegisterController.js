@@ -6,42 +6,43 @@ const { createFolder } = require('../models/Upload.model')
 const bcrypt = require('bcrypt')
 
 class RegisterController{
+    //GET /register
     index(req, res, next) {
         res.render('Login/register')
     }
+
+    //POST /register
     async auth(req, res, next){
-        const { username, password } = req.body;
+        const { username, password, role } = req.body;
         const secretKey = process.env.SECRET_KEY
 
-        const user = await User.findOne({ username });
+        const user = await User.findOne({ username: username, role: role });
         if(!user){
             let rootId;
-            const newUser = await new User({
-                username: username,
-                password: password
-            })
-
             createFolder(username)
                 .then((folderId) => {
-                    rootId = folderId
                     const newFolder = new Folder({
-                        id: folderId,
+                        _id: folderId,
                         name: username,
                     })
                     return newFolder
                 })
                 .then((newFolder) => {
-                    newUser.folder_id = newFolder._id
-                    return newFolder
-                })
-                .then((newFolder) => {
-                    newUser.save()
                     newFolder.save()
-
+                    const newUser = new User({
+                        username: username,
+                        password: password,
+                        folder_id: newFolder._id
+                    })
+                    
+                    return newUser
+                })
+                .then((newUser) => {
+                    newUser.save()
                     const token = jwt.sign(
                         { 
                             user_id: newUser._id,
-                            root_id: rootId
+                            root_id: newUser.folder_id
                         },
                         secretKey,
                         { expiresIn: "24h" }

@@ -6,17 +6,19 @@ const { createFolder } = require('../models/Upload.model')
 const bcrypt = require('bcrypt')
 
 class LoginController{
+    // GET /login
     index(req, res, next){
         res.render('Login/login')
     }
 
+    // POST /login/auth
     async auth(req, res, next){
         const { username, password } = req.body;
         const secretKey = process.env.SECRET_KEY
 
         const user = await User.findOne({ username });
         if (user && password === user.password) {
-            Folder.findOne({ name: username })
+            Folder.findOne({ _id: user.folder_id })
             .then((folder) => {
                 const token = jwt.sign( 
                     {
@@ -36,9 +38,12 @@ class LoginController{
         }
     }
 
+    //GET /login/change
     change(req,res,next){
         res.render('Login/changePassword')
     }
+
+    //POST /login/change
     updateChange(req, res, next){
         User.findOne({username: req.body.username})
             .then((user) => {
@@ -52,7 +57,7 @@ class LoginController{
             })
             .then(() => {
                 res.redirect('/')
-            })
+            }) 
             .catch(next)
     }
 }

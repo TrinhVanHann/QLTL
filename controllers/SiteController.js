@@ -2,6 +2,7 @@ const Folder = require('../models/Folders')
 const User = require('../models/Users')
 const File = require('../models/Files')
 class SiteController{
+    //GET /
     index(req, res, next){
         let username
         let currentFolderId
@@ -22,11 +23,11 @@ class SiteController{
 
             if(folderList) folderList = folderList.map(folder => folder.toObject())
             if(fileList) fileList = fileList.map(file => file.toObject())
-
             res.render('home',{ folderList, fileList, username, currentFolderId })
         })
-        .catch(next)
+        .catch(next) 
     }
+    
 }
 
 module.exports = new SiteController

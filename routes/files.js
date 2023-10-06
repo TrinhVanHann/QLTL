@@ -5,4 +5,4 @@ const upload = require('../utils/multerUpload')
 
 router.post('/action/upload',upload.array('file'),filesController.upload)
 
-module.exports = router
+module.exports = router 

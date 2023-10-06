@@ -6,8 +6,7 @@ module.exports = function authenticateToken(req, res, next) {
 
   jwt.verify(token, process.env.SECRET_KEY, (err, decoded) => {
     if (err) return res.redirect('/login')
-    console.log([decoded])
     req.data = decoded
     next();
   });
-}
+} 

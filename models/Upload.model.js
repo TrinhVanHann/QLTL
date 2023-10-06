@@ -60,6 +60,20 @@ var that = module.exports = {
             console.error(error);
         }
     },
+    updateFile: async (file, fileId) => {
+        try {
+            const createFile = await drive.files.update({
+                fileId: fileId,
+                media: {
+                    body: fs.createReadStream(file.path)
+                }
+            })
+            
+            return fileId
+        } catch (error) {
+            console.error(error);
+        }
+    },
     deleteFile: async (fileId) => {
         try {
             console.log('Delete File:::', fileId);
@@ -82,8 +96,7 @@ var that = module.exports = {
                 resource: fileMetadata,
                 fields: 'id',
             });
-            console.log('Folder Id:', file.data.id);
-            return file.data.id;
+            return file.data.id
             
         } catch (err) {
             // TODO(developer) - Handle error
