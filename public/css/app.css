@@ -70,10 +70,21 @@ html {
   display: flex;
   justify-content: space-between; }
 
+.nav-item:last-child {
+  margin-left: auto; }
+
 .nav-item-link {
   font-size: 1.8rem;
   text-decoration: none;
+  margin: auto 4px; }
+
+.nav-item:first-child .nav-item-link {
+  font-size: 1.8rem;
+  margin-right: 16px;
   color: black; }
+
+.nav-item-link i {
+  font-size: 1.4rem; }
 
 .nav-item-search {
   position: relative;

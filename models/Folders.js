@@ -13,7 +13,6 @@ const folderSchema = new Schema({
     slug: { type: String, slug: "name", unique: true },
     updatedAt: [Date],
     createdAt: [Date],
-
 },{
     _id: false,
     timestamps: true

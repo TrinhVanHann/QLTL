@@ -1,8 +1,9 @@
 const path = require('path')
 const fs = require('fs')
-const { uploadFile } = require('../models/Upload.model')
+const { uploadFile, showFile } = require('../models/Upload.model')
 const File = require('../models/Files')
 const Folder = require('../models/Folders')
+const { tracebackFolder } = require('../middlewares/OperateFolder')
 
 class FilesController{
     //POST /files/action/upload
@@ -49,6 +50,23 @@ class FilesController{
       })
       .catch(next)
     }
-}
 
+    //GET /files/:slug
+    show(req, res, next) {
+      const preview = true
+      const showList = false
+      let curFile
+      File.findOne({slug: req.params.slug})
+      .then(file => {
+        curFile = file
+        return tracebackFolder(file)
+      })
+      .then(tracebackList => { 
+        const iframeSrc = `https://drive.google.com/file/d/${curFile._id}/preview`
+        res.render('home', {tracebackList, showList, preview, iframeSrc})
+      })
+      .catch(next)
+    }
+}
+ 
 module.exports = new FilesController

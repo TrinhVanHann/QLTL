@@ -61,4 +61,4 @@ class LoginController{
             .catch(next)
     }
 }
-module.exports = new LoginController
+module.exports = new LoginController 

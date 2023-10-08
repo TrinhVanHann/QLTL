@@ -46,7 +46,7 @@
                 url: '/folders/action/rename',
                 method: 'POST',
                 data: {
-                    newname: e.target.value,
+                    newname: e.target.value.trim(),
                     folder_id: e.target.dataset.id
                 }
             })

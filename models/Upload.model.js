@@ -99,8 +99,29 @@ var that = module.exports = {
             return file.data.id
             
         } catch (err) {
-            // TODO(developer) - Handle error
             throw err;
         }  
+    },
+    renameDocument: async function (fileId, newName) {
+        try {
+            await drive.files.update({
+                fileId: fileId,
+                resource: {
+                    name: newName
+                }
+            })
+        } catch (err) {
+            console.error('Error renaming file:', err.message);
+        }
+    },
+    showFile: async function (fileId) {
+        try {
+            const file = await drive.files.get({ fileId });
+            const iframeSrc = `https://drive.google.com/file/d/${FILE_ID}/preview`
+            return iframeSrc
+        }
+        catch (err){
+            console.error(err)
+        }
     }
 }
