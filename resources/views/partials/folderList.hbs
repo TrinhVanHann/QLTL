@@ -8,7 +8,7 @@
             </label>
         </div>
         <div class="folder-file-information">
-            <p class="folder-file-name" onclick="">{{this.name}}</p>
+            <p class="folder-file-name">{{this.name}}</p>
             <input type="text" class="rename-folder-input" style="display: none" data-id="{{this._id}}">
             <p class="folder-file-description">Hiện có: {{this.folder_childs.length}} thư mục, {{this.file_childs.length}} tệp</p>
         </div>
@@ -42,6 +42,10 @@
         })
 
         function handleRenamePost(e){
+            const target = $(e.target)
+            target.css({"display":"none"})
+            target.siblings('.folder-file-name').css({"display":"block"}).text(target.val())
+            
             $.ajax({
                 url: '/folders/action/rename',
                 method: 'POST',
@@ -49,11 +53,6 @@
                     newname: e.target.value.trim(),
                     folder_id: e.target.dataset.id
                 }
-            })
-            .then(() => {
-                const target = $(e.target)
-                target.css({"display":"none"})
-                target.siblings('.folder-file-name').css({"display":"block"}).text(target.val())
             })
         }
     })  

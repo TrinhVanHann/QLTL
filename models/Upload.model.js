@@ -40,6 +40,7 @@ var that = module.exports = {
     },
     uploadFile: async (file, parentId) => {
         try {
+            file.originalname =  Buffer.from(file.originalname, 'latin1').toString('utf-8')
             const createFile = await drive.files.create({
                 resource: {
                     name: file.originalname,

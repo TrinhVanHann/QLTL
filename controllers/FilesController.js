@@ -1,6 +1,6 @@
 const path = require('path')
 const fs = require('fs')
-const { uploadFile, showFile } = require('../models/Upload.model')
+const { uploadFile, showFile, renameDocument } = require('../models/Upload.model')
 const File = require('../models/Files')
 const Folder = require('../models/Folders')
 const { tracebackFolder } = require('../middlewares/OperateFolder')
@@ -66,6 +66,18 @@ class FilesController{
         res.render('home', {tracebackList, showList, preview, iframeSrc})
       })
       .catch(next)
+    }
+
+    rename(req, res, next) {
+        console.log('Doi ten khong thanh cong')
+        const newname = req.body.newname
+        File.updateOne({ _id: req.body.file_id },
+                        { name: newname })
+        .then(() => {
+            return renameDocument(req.body.file_id, newname)
+        })
+        .then(() => res.redirect('back'))
+        .catch(next)
     }
 }
  

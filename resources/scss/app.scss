@@ -143,6 +143,7 @@ html {
     height: 60px;
     display: flex;
     align-items: center;
+    margin-bottom: 16px;
 }
 .user-avatar{
     margin-right: 10px;
@@ -321,11 +322,17 @@ overflow: hidden;
     display: block;
     margin-left: 20px;
     margin-right: auto;
+    max-width: 400px;
 }
 .folder-file-name{
     font-size: 1.6rem;
     color: blue;
     line-height: 24px;
+    max-height: 48px;
+    overflow: hidden;
+    // display: -webkit-box;
+    // -webkit-box-orient: vertical;
+    // -webkit-line-clamp: 2;
 }
 .folder-file-description{ 
     font-size: 1.4rem;
@@ -380,18 +387,25 @@ overflow: hidden;
     display: none;
 }
 
-.custom-file-upload {
+.custom-action-label {
     margin: 4px;
     padding: 0px 8px;
     font-size: 1.4rem;
+    font-family: Arial;
     line-height: 30px;
-    background-color: rgb(22, 109, 231);
-    border: 1px solid black;
+    height: 30px;
+    background-color: #efefef;
+    border: 1px solid rgb(32, 32, 32);
     border-radius: 2px;
-    color: white
+    color: black;
 }
  
-.custom-file-upload:hover {
-    background-color:rgb(17, 85, 180);
+.custom-action-label:hover {
+    background-color:#e4e2e2;
     cursor: pointer;
+}
+
+.preview-iframe {
+    width: 100%;
+    height: 100vh
 }

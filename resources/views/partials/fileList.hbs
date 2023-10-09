@@ -9,6 +9,7 @@
         </div>
         <div class="folder-file-information">
             <p class="folder-file-name">{{this.name}}</p>
+            <input type="text" class="rename-file-input" style="display: none" data-id="{{this._id}}">
             <p class="folder-file-description">Kích cỡ: {{this.size}}</p> 
         </div>
         <div class="folder-file-operation">
@@ -21,3 +22,37 @@
     </li>
     {{/each}}
 </ul>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function(){
+        let fileNames = $('.folder-file-name')
+        let fileNameInput = $('.rename-file-input')
+        fileNames.dblclick(function(e){
+            const target = $(e.target)
+            target.css({"display":"none"})
+            target.siblings('.rename-file-input').css({"display":"block"}).val(target.text())
+        })
+        fileNameInput.blur(function(e){
+            handleRenamePost(e)
+        })
+        fileNameInput.keyup(function(e){
+            if(e.keyCode === 13){
+                handleRenamePost(e)
+            }
+        })
+
+        function handleRenamePost(e){
+            const target = $(e.target)
+            target.css({"display":"none"})
+            target.siblings('.folder-file-name').css({"display":"block"}).text(target.val())
+            $.ajax({
+                url: '/files/action/rename',
+                method: 'POST',
+                data: {
+                    newname: e.target.value.trim(),
+                    file_id: e.target.dataset.id
+                }
+            })
+        }
+    })  
+</script>

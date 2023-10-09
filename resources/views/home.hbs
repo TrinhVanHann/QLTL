@@ -3,7 +3,7 @@
         <div class="col l-2 m-2 c-0">
             {{> sidebar rootFolderSlug=rootFolderSlug}}
         </div> 
-        <div class="col l-6 m-10 c-12">
+        <div class="col l-7 m-10 c-12">
             {{#if showList}}
                 <div class="action-bar">
                     <div class="checkbox-group">
@@ -42,7 +42,7 @@
                 {{> fileList fileList=fileList}}
             {{else}}
             {{#if preview}} 
-                <iframe src="{{iframeSrc}}" width="800" height="600" frameborder="0"></iframe>
+                <iframe class="preview-iframe" src="{{iframeSrc}}" width="800" height="600" frameborder="0"></iframe>
             {{else}}
                 <img src="/imgs/txt.png" alt="">
             {{/if}}
@@ -74,7 +74,7 @@
             </table>
             <input type="text" style="display: none" name="parentId" value="{{currentFolderId}}">
             <div class="form-btn-group">
-                <label for="upload-file-input" class="custom-file-upload">Tải thêm</label>
+                <label for="upload-file-input" class="custom-action-label">Tải thêm</label>
                 <button class="action-btn submit-upload-btn">Lưu lại</button>
                 <button class="action-btn" id="cancel-btn">Hủy</button>
             </div>
