@@ -1,0 +1,33 @@
+<div class="shared-objects">
+    <div class="shared-objects-title">Chọn lựa đối tượng chia sẻ</div>
+    <label for="shared-department-checkbox" class="shared-objects-type">
+        Phòng ban
+    </label>
+    <input type="checkbox" id="shared-department-checkbox" style="display: none" class="shared-objects-checkbox">
+    <ul class="shared-objects-list">
+            <li class="shared-objects-item">
+                <div class="shared-objects-item-info">
+                    <h2>Phòng tài chính kế toán</h2>
+                </div>
+                <i class="fa-solid fa-square-plus"></i>
+            </li>
+    </ul>
+
+    <label for="shared-user-checkbox" class="shared-objects-type">
+        Người dùng
+    </label>
+    <input type="checkbox" id="shared-user-checkbox" style="display: none" class="shared-objects-checkbox">
+    <ul class="shared-objects-list ready-users">
+        {{#each notSharedUsers}}
+            <li class="shared-objects-item">
+                <input type="text" class="ready-user-id" style="display: none" 
+                       data-id="{{this._id}}" data-role="{{this.role}}">
+                <div class="shared-objects-item-info">
+                    <h2>{{this.username}}</h2>
+                    <p>Phòng ban: {{this.department}}</p>
+                </div>
+                <i class="fa-solid fa-square-plus shared-add"></i>
+            </li>
+        {{/each}}
+    </ul>
+</div>

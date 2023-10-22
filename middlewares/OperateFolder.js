@@ -30,8 +30,8 @@ module.exports = {
     },
     tracebackFolder: async function (folder) {
         let ifolder = folder
-        let pathList = [{name: ifolder.name, slug: ifolder.slug}];
-        try { 
+        let pathList = [{name: ifolder.name, slug: ifolder.slug, type: ifolder.type }];
+        try {
             while (ifolder.parent_id !== 'none') {
                 ifolder = await Folder.findOne({ _id: ifolder.parent_id });
                 if (!ifolder) {

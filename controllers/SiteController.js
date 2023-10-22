@@ -6,14 +6,13 @@ class SiteController{
     //GET /
     index(req, res, next){
         const rootId = req.data.root_id
-        const showList = false
-        const preview = false
+        const renderValue = 'none'
         Folder.findOne({ _id: rootId })
         .then(rootFolder => {
             rootFolder = rootFolder.toObject()
             const rootFolderSlug = rootFolder.slug
    
-            res.render('home',{ rootFolderSlug, showList, preview })
+            res.render('home',{ rootFolderSlug, renderValue })
         })
         .catch(next)
     }

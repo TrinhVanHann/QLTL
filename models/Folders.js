@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const MongooseDelete = require('mongoose-delete');
 const slug = require('mongoose-slug-generator');
 const Schema = mongoose.Schema
 
@@ -11,11 +12,14 @@ const folderSchema = new Schema({
     folder_childs: [String],
     file_childs: [String],
     slug: { type: String, slug: "name", unique: true },
-    updatedAt: [Date],
-    createdAt: [Date],
+    owner: {type: String},
+    updatedAt: {type:Date, default: Date.now},
+    createdAt: {type:Date, default: Date.now},
+    deleteAt: {type:Date, default: null},
 },{
     _id: false,
     timestamps: true
 });
 
+folderSchema.plugin(MongooseDelete, { overrideMethods: 'all', deletedAt: true })
 module.exports = mongoose.model("Folder", folderSchema);

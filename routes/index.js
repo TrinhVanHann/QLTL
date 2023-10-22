@@ -3,11 +3,12 @@ const loginRouter = require('./login')
 const filesRouter = require('./files')
 const foldersRouter = require('./folders')
 const usersRouter = require('./users')
-
+const trashRouter = require('./trash')
 const registerRouter = require('./register')
  
 function route(app){
-    app.use('./users',usersRouter)
+    app.use('/users',usersRouter)
+    app.use('/trash', trashRouter)
     app.use('/files', filesRouter)
     app.use('/folders', foldersRouter)
     app.use('/login', loginRouter)

@@ -1,4 +1,5 @@
 function Validator(option){
+    var option = option
     function getParent(element, selector) {
         while(element.parentElement){
             if(element.parentElement.matches(selector)){
@@ -34,52 +35,9 @@ function Validator(option){
         return !errorMessage;
     }
     var formElement = document.querySelector(option.form);
+    
     if(formElement) {
-        //Xử lý submit: validate toàn bộ khi có submit, neu k có lỗi thì in ra giá trị input
-        formElement.onsubmit = function(e) {
-            e.preventDefault();
-            var isValidAll = true;
-            option.rules.forEach(function(rule) {
-                var inputElement = formElement.querySelector(rule.selector);
-                var isValid = validate(inputElement,rule);
-                if(!isValid) isValidAll = false;
-            })
-            if(isValidAll) {
-                if(typeof option.onSubmit === 'function') {
-                    var formInputs = Array.from(formElement.querySelectorAll('[name]'))
-                    var formValues = formInputs.reduce( function(value, input){
-                        switch(input.type) {
-                            case 'radio':
-                                if(input.matches(':checked')) {
-                                    value[input.name] = input.value;
-                                }
-                                break;
-                            case 'checkbox':
-                                if(input.matches(':checked')) {
-                                    if(Array.isArray(value[input.name])) {
-                                        value[input.name].push(input.value);
-                                    }
-                                    else { 
-                                        value[input.name] = [input.value];
-                                    }
-                                }
-                                break;
-                            case 'file':
-                                value[input.name] = input.files
-                                break;
-                            default:
-                                value[input.name] = input.value;
-                        }
-                        return value;
-                    }, {})
-                    option.onSubmit(formValues);
-                } else {
-                    formElement.submit();
-                }
-            }
-        }
         option.rules.forEach(function(rule) {
-            //Nhóm các rule theo selector
             if(!Array.isArray(selectorRules[rule.selector])) {
                 selectorRules[rule.selector] = [rule.test];
             } else {
@@ -135,5 +93,17 @@ Validator.isConfirmed = function(selector,confirmValue) {
             return value === confirmValue() ? undefined : 'Giá trị nhập vào không chính xác'
         }
     }
+}
+Validator.validateOnSubmit = function(){
+    if(this.formElement) {
+        var isValidAll = true;
+        option.rules.forEach(function(rule) {
+            var inputElement = formElement.querySelector(rule.selector);
+            var isValid = this.validate(inputElement,rule);
+            if(!isValid) isValidAll = false;
+        })
+        return isValidAll
+    }
+    else return false
 }
 

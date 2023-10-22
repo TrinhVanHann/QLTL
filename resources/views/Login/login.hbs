@@ -86,20 +86,21 @@
         }
 
         $('.form-btn').click(function(){
-           $.ajax({
-                url: '/login/auth', 
-                method: 'POST', 
-                data: {
-                    username: $('#inputUsername').val(),
-                    password: $('#inputPassword').val()
-                }
-                
-            })
-            .then(data => {
-                setCookie('token',data.token, 1)
-            })
-            .catch(err => console.error(err))
-
+            if(true){
+                $.ajax({
+                    url: '/login/auth', 
+                    method: 'POST', 
+                    data: {
+                        username: $('#inputUsername').val(),
+                        password: $('#inputPassword').val()
+                    }
+                    
+                })
+                .then(data => {
+                    setCookie('token',data.token, 1)
+                })
+                .catch(err => console.error(err))
+            }
         })
         // --------
 

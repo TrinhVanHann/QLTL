@@ -1,4 +1,4 @@
-const { createFolder, renameDocument } = require('../models/Upload.model')
+const { createFolder, renameDocument, downloadFolder } = require('../models/Upload.model')
 const { checkNameFolder, tracebackFolder } = require('../middlewares/OperateFolder')
 const Folder = require('../models/Folders')
 const User = require('../models/Users')
@@ -12,7 +12,7 @@ class FoldersController{
         const userId = req.data.user_id
         const rootId = req.data.root_id
         let slug = req.params.slug
-        const showList = true
+        const renderValue = 'showList'
 
         Promise.all([Folder.findOne({ slug: slug}), 
                      User.findOne({ _id: userId })])
@@ -33,7 +33,7 @@ class FoldersController{
 
             res.render('home',{ folderList, fileList, 
                                 username, currentFolderId, 
-                                rootFolderSlug, showList,
+                                rootFolderSlug, renderValue,
                                 tracebackList })
         })
         .catch(next)
@@ -44,6 +44,7 @@ class FoldersController{
 
         const parentId = req.body.curFolderId
         let folderName
+        const folderOwner = req.data.user_id
         checkNameFolder(parentId, 'New Folder')
         .then(count => {
             if (count === 0) folderName = 'New Folder'
@@ -52,10 +53,12 @@ class FoldersController{
             return createFolder(folderName, parentId)
         })
         .then((folderId) => {
+
             const newFolder = new Folder({
                 _id: folderId,
                 name: folderName,
                 parent_id: parentId,
+                owner: folderOwner
             })
             return newFolder
         })
@@ -80,6 +83,21 @@ class FoldersController{
         })
         .then(() => res.redirect('back'))
         .catch(next)
+    }
+
+    //GET /folders/action/download/:slug
+    download(req, res, next) {
+        Folder.findOne({ slug: req.params.slug })
+        .then(folder => downloadFolder(folder._id,`C:\\Users\\Administrator\\Downloads\\`))
+        .then(() => res.redirect('back'))
+        .catch(next)
+    }
+
+    //GET /folders/action/delete/:slug
+    delete(req, res, next) {
+        Folder.delete({ slug: req.params.slug})
+            .then(() => res.redirect('back'))
+            .catch(next)
     }
 }
 

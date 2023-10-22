@@ -5,7 +5,8 @@ const userSchema = new mongoose.Schema({
   password: { type: String },
   token: { type: String },
   folder_id: {type: String },
-  role: {type: String}
+  role: {type: String},
+  department: {type: String}
 });
 
 module.exports = mongoose.model("user", userSchema);

@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken')
 
 module.exports = function authenticateToken(req, res, next) {
   const token = req.cookies.token;
+  console.log(token)
   if (!token) return res.redirect('/login')
 
   jwt.verify(token, process.env.SECRET_KEY, (err, decoded) => {

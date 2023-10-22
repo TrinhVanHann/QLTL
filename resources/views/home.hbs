@@ -3,50 +3,66 @@
         <div class="col l-2 m-2 c-0">
             {{> sidebar rootFolderSlug=rootFolderSlug}}
         </div> 
-        <div class="col l-7 m-10 c-12">
-            {{#if showList}}
-                <div class="action-bar">
-                    <div class="checkbox-group">
-                        <input type="checkbox" id="choose-all">
-                        <label for="choose-all">Chọn</label>
+        <div class="col l-7 m-7 c-8">
+            {{#switch renderValue}}
+                {{#case 'showList'}}
+                    <div class="action-bar">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="choose-all">
+                            <label for="choose-all">Chọn</label>
+                        </div>
+                        <button class="action-btn" id="upload-folder-btn">
+                            Tải lên thư mục
+                        </button>
+                        <button class="action-btn" id="upload-btn">
+                            Tải lên
+                        </button>
+                        <button class="action-btn">
+                            Xóa
+                        </button>
+                        <button class="action-btn">
+                            Di chuyển
+                        </button>
+                        <button class="action-btn" id="create-folder-btn">
+                            Tạo thư mục
+                        </button>
                     </div>
-                    <button class="action-btn" id="upload-folder-btn">
-                        Tải lên thư mục
-                    </button>
-                    <button class="action-btn" id="upload-btn">
-                        Tải lên
-                    </button>
-                    <button class="action-btn">
-                        Xóa
-                    </button>
-                    <button class="action-btn">
-                        Di chuyển
-                    </button>
-                    <button class="action-btn" id="create-folder-btn">
-                        Tạo thư mục
-                    </button>
-                </div>
-                <div class="filter-bar">
-                    <select name="document-type" class="filter-select">
-                        <option value="" selected>--Loại tài liệu--</option>
-                    </select>
-                    <select name="sort" id="" class="filter-select">
-                        <option value="sort-date" selected>Sắp xếp theo ngày</option>
-                    </select>
-                    <input type="text" class="find-input" placeholder="Từ ngày">
-                    <input type="text" class="find-input" placeholder="Đến ngày">
-                    <input type="text" class="find-input" placeholder="Tìm theo tên, mô tả">
-                    <button class="action-btn">Tìm</button>
-                </div>
-                {{> folderList folderList=folderList}}
-                {{> fileList fileList=fileList}}
-            {{else}}
-            {{#if preview}} 
-                <iframe class="preview-iframe" src="{{iframeSrc}}" width="800" height="600" frameborder="0"></iframe>
-            {{else}}
-                <img src="/imgs/txt.png" alt="">
-            {{/if}}
-            {{/if}}
+                    <div class="filter-bar">
+                        <select name="document-type" class="filter-select">
+                            <option value="" selected>--Loại tài liệu--</option>
+                        </select>
+                        <select name="sort" id="" class="filter-select">
+                            <option value="sort-date" selected>Sắp xếp theo ngày</option>
+                        </select>
+                        <input type="text" class="find-input" placeholder="Từ ngày">
+                        <input type="text" class="find-input" placeholder="Đến ngày">
+                        <input type="text" class="find-input" placeholder="Tìm theo tên, mô tả">
+                        <button class="action-btn">Tìm</button>
+                    </div>
+                    {{> folderList folderList=folderList}}
+                    {{> fileList fileList=fileList}}
+                {{/case}}
+
+                {{#case 'preview'}} 
+                    <iframe class="preview-iframe" src="{{iframeSrc}}" width="800" height="600" frameborder="0"></iframe>
+                {{/case}}
+
+                {{#case 'share'}}
+                    {{> share file=file sharedUsers=sharedUsers}}
+                {{/case}}
+                
+                {{#case 'none'}} 
+                    <img src="/imgs/txt.png" alt="">
+                {{/case}}
+
+            {{/switch}}
+        </div>
+        <div class="col l-3 m-3 c-4">
+            {{#switch renderValue}}
+                {{#case 'share'}}
+                    {{> sharedObject notSharedUsers=notSharedUsers}}
+                {{/case}}
+            {{/switch}}
         </div>
     </div>
 </div>
@@ -190,7 +206,76 @@
         function deleteCookie(cookieName) {
             document.cookie = cookieName + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
         }
+        ////////////////// Share /////////////////////
 
+        let sharePage = $('.share-page')
+        let readyUserList = $('ul.shared-objects-list.ready-users')
 
+        sharePage.on('click', '.shared-remove', function(e){
+            const sharedUser = e.target.closest('.shared-user')
+            const user = $(`
+                <li class="shared-objects-item ready-user">
+                    <input type="text" class="ready-user-id" style="display: none" 
+                       data-id="${sharedUser.querySelector('input.shared-user-id').value}" 
+                       data-role="${sharedUser.querySelectorAll('p.shared-user-information')[1].innerText.slice(10)}">
+                    <div class="shared-objects-item-info">
+                        <h2>${sharedUser.querySelector('p.shared-user-name').innerText}</h2>
+                        <p>${sharedUser.querySelectorAll('p.shared-user-information')[0].innerText}</p>
+                    </div>
+                    <i class="fa-solid fa-square-plus shared-add"></i>
+                </li>
+            `)
+            readyUserList.append(user)
+            sharedUser.remove()
+        })
+
+        readyUserList.on('click', '.shared-add', function(e){
+            const readyUser = e.target.closest('.shared-objects-item')
+            const user = $(`
+                <div class="shared-user">
+                    <input class="shared-user-id" type="text" style="display: none" 
+                            value="${readyUser.querySelector('input').getAttribute('data-id')}">
+                    <div class="shared-user-info">
+                        <p class="shared-user-name">
+                            ${readyUser.querySelector('h2').innerText}
+                        </p>
+                        <p class="shared-user-information">
+                            ${readyUser.querySelector('p').innerText}
+                        </p>
+                        <p class="shared-user-information">
+                            Chức vụ: ${readyUser.querySelector('input').getAttribute('data-role')}
+                        </p>
+                    </div>
+                    <div class="share-permission">
+                        <p class="share-permission-heading">Chia sẻ</p>
+                        <ul class="share-permission-list">
+                            <li class="share-permission-item">
+                                <input type="checkbox" class="user-permission-checkbox" value="preview">
+                                <label for="preview-checkbox">Xem</label>
+                            </li>
+                            <li class="share-permission-item">
+                                <input type="checkbox" class="user-permission-checkbox" value="update">
+                                <label for="update-checkbox">Sửa</label>
+                            </li>
+                            <li class="share-permission-item">
+                                <input type="checkbox" class="user-permission-checkbox" value="delete">
+                                <label for="delete-checkbox">Xóa</label>
+                            </li>
+                            <li class="share-permission-item">
+                                <input type="checkbox" class="user-permission-checkbox" value="download">
+                                <label for="download-checkbox">Tải về</label>
+                            </li>
+                            <li class="share-permission-item">
+                                <input type="checkbox" id="all-checkbox">
+                                <label for="all-checkbox">Tất cả</label>
+                            </li>
+                        </ul>
+                    </div>
+                    <i class="fa-solid fa-circle-minus shared-remove"></i>
+                </div>
+            `)
+            sharePage.append(user)
+            readyUser.remove()
+        })
     })
 </script>

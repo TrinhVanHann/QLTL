@@ -13,10 +13,10 @@ class RegisterController{
 
     //POST /register
     async auth(req, res, next){
-        const { username, password, role } = req.body;
+        const { username, password, department, role } = req.body;
         const secretKey = process.env.SECRET_KEY
 
-        const user = await User.findOne({ username: username, role: role });
+        const user = await User.findOne({ username: username });
         if(!user){
             let rootId;
             createFolder(username)
@@ -24,6 +24,7 @@ class RegisterController{
                     const newFolder = new Folder({
                         _id: folderId,
                         name: username,
+                        owner: username
                     })
                     return newFolder
                 })
@@ -32,6 +33,8 @@ class RegisterController{
                     const newUser = new User({
                         username: username,
                         password: password,
+                        department: department,
+                        role: role,
                         folder_id: newFolder._id
                     })
                     

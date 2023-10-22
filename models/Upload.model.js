@@ -124,5 +124,31 @@ var that = module.exports = {
         catch (err){
             console.error(err)
         }
+    },
+    downloadFile: async function(fileId, destPath) {
+        const dest = fs.createWriteStream(destPath);
+
+        drive.files.get(
+        { fileId, alt: 'media' },
+        { responseType: 'stream' },
+        (err, res) => {
+            if (err) {
+                console.error(err);
+                return;
+            }
+
+            res.data
+            .on('end', () => {
+                console.log('File downloaded');
+            })
+            .on('error', (err) => {
+                console.error('Error downloading file', err);
+            })
+            .pipe(dest);
+        }
+        );
+    },
+    downloadFolder: async function (folderId, destPath) {
+        //nothing
     }
 }

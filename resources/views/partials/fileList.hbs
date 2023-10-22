@@ -12,13 +12,27 @@
             <input type="text" class="rename-file-input" style="display: none" data-id="{{this._id}}">
             <p class="folder-file-description">Kích cỡ: {{this.size}}</p> 
         </div>
-        <div class="folder-file-operation">
-            <a href="">Tải về</a>
-            <a href="/files/{{this.slug}}">Xem</a>
-            <a href="">Sửa</a>
-            <a href="">Xóa</a>
-            <a href="">Thao tác khác</a>
-        </div>
+        {{#if this.deletedAt}}
+            <div class="folder-file-operation">
+                <a href="/files/{{this.slug}}">Xem</a>
+                <a href="/files/action/restore/{{this.slug}}">Khôi phục</a>
+                <a href="/files/action/trueDelete/{{this.slug}}">Xóa vĩnh viễn</a>
+            </div>     
+        {{else}}
+            <div class="folder-file-operation">
+                <a href="/files/action/download/{{this.slug}}">Tải về</a>
+                <a href="/files/{{this.slug}}">Xem</a>
+                <a href="">Sửa</a>
+                <a href="/files/action/delete/{{this.slug}}">Xóa</a>
+                <div class="more-action">
+                    <a>Thao tác khác</a>
+                    <ul class="more-action-list">
+                        <li class="more-action-item"><a href="/files/action/share/{{this.slug}}">Chia sẻ</a></li>
+                        <li class="more-action-item"><a href="">Di chuyển</a></li>
+                    </ul>
+                </div> 
+            </div>  
+        {{/if}}
     </li>
     {{/each}}
 </ul>
