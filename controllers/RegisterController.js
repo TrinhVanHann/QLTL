@@ -18,46 +18,42 @@ class RegisterController{
 
         const user = await User.findOne({ username: username });
         if(!user){
-            let rootId;
-            createFolder(username)
-                .then((folderId) => {
-                    const newFolder = new Folder({
-                        _id: folderId,
-                        name: username,
-                        owner: username
-                    })
-                    return newFolder
+            try {
+                const folderId = await createFolder(username)
+
+                const newFolder = new Folder({
+                    _id: folderId,
+                    name: username,
+                    owner: username,
                 })
-                .then((newFolder) => {
-                    newFolder.save()
-                    const newUser = new User({
-                        username: username,
-                        password: password,
-                        department: department,
-                        role: role,
-                        folder_id: newFolder._id
-                    })
-                    
-                    return newUser
+                await newFolder.save()
+
+                const newUser = new User({
+                    username: username,
+                    password: password,
+                    department: department,
+                    role: role,
+                    folder_id: newFolder._id
                 })
-                .then((newUser) => {
-                    newUser.save()
-                    const token = jwt.sign(
-                        { 
-                            user_id: newUser._id,
-                            root_id: newUser.folder_id
-                        },
-                        secretKey,
-                        { expiresIn: "24h" }
-                    )
-                    
-                    return res.json({
-                        token: token
-                    })
+                await newUser.save()
+
+                const token = await jwt.sign(
+                    { 
+                        user_id: newUser._id,
+                        username: newUser.username,
+                        root_id: newUser.folder_id
+                    },
+                    secretKey,
+                    { expiresIn: "24h" }
+                )
+                
+                return res.json({
+                    token: token
                 })
-                .catch((err) => {
-                    console.error(err)
-                })  
+            }
+            catch(err) {
+                console.error(err)
+            }
         }else {
             res.status(401).json({ message: 'Tài khoản đã tồn tại' });
         }

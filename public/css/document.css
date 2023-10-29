@@ -42,7 +42,8 @@
 .folder-file-operation a {
   display: block;
   font-size: 1.4rem;
-  margin: auto 4px; }
+  margin: auto 4px;
+  color: black; }
 
 .more-action {
   position: relative;

@@ -48,7 +48,9 @@ Handlebars.registerHelper('default', function(value, options) {
 });
 module.exports = {
     renderIcon: (type) => {
+        console.log([type])
         const mimeTypeToIcon = {
+            'application/vnd.google-apps.folder': 'folder.png',
             'application/pdf': 'PDF.png',
             'application/msword': 'DOC.png',
             'application/vnd.openxmlformats-officedocument.wordprocessingml.document': 'DOC.png',
@@ -64,4 +66,28 @@ module.exports = {
 
         return '/imgs/' + url
     },   
+    renderSize: (size) => {
+        if(size < 1024) return `${size}B`
+        else if(size < 1024*1024) return `${Math.round(size/1024,2)}KB`
+        else return `${Math.round(size/(1024*1024),2)}MB`
+    },
+    renderPermissions: function(id, permissions, type){
+
+        const result = permissions.reduce((accum, permission) => {
+            if(permission === 'preview') {
+                const href = Handlebars.escapeExpression(`/share/${type}s/${id}`)
+                return accum + `<a href="${href}">Xem</a>`
+            }
+            else if(permission === 'delete') {
+                const href = Handlebars.escapeExpression(`/share/${type}s/action/delete/${id}`)
+                return accum + `<a href="${href}">Xóa</a>`
+            }
+            else if(permission === 'download') {
+                const href = Handlebars.escapeExpression(`/share/${type}s/action/download/${id}`)
+                return accum + `<a href="${href}">Tải về</a>`
+            }
+            else return accum
+        }, '')
+        return new Handlebars.SafeString(result)
+    }
 }

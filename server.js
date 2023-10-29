@@ -4,7 +4,6 @@ const morgan = require('morgan')
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser')
 const { engine } = require('express-handlebars')
-const session = require('express-session')
 const app = express()
 const route = require('./routes/index')
 require("./config/db").connect();
@@ -22,7 +21,7 @@ app.use(express.json())
 
 app.engine('hbs', engine({
   extname: '.hbs',
-  helpers: require('./helpers/renderIcon')
+  helpers: require('./helpers/helpers')
 }));
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname,'resources/views'));

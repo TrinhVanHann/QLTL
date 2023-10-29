@@ -1,9 +1,9 @@
 <ul class="folder-list">
     {{#each folderList}}
-    <li class="folder" data-slug="{{this.slug}}">
+    <li class="folder" data-id="{{this._id}}">
         <div class="checkbox-folder-file">
-            <input type="checkbox" id="choose-folder-file[]">
-            <label for="choose-folder-file[]">
+            <input type="checkbox" name="folderIds[]" value="{{this._id}}">
+            <label>
                 <img src="/imgs/folder.png" alt="">
             </label>
         </div>
@@ -12,13 +12,20 @@
             <input type="text" class="rename-folder-input" style="display: none" data-id="{{this._id}}">
             <p class="folder-file-description">Hiện có: {{this.folder_childs.length}} thư mục, {{this.file_childs.length}} tệp</p>
         </div>
+        {{#if this.deleted}}
         <div class="folder-file-operation">
-            <a href="/folders/action/download/{{this.slug}}">Tải về</a>
-            <a href="">Xem</a>
-            <a href="">Sửa</a>
-            <a href="">Xóa</a>
-            <a href="">Thao tác khác</a>
+            {{!-- <a href="/folders/action/download/{{this._id}}">Tải về</a> --}}
+            <a href="/trash/restore/{{this._id}}">Khôi phục</a>
+            <a href="/trash/trueDelete/{{this._id}}">Xóa vĩnh viễn</a>
+            
         </div>
+        {{else}}
+        <div class="folder-file-operation">
+            {{!-- <a href="/folders/action/download/{{this._id}}">Tải về</a> --}}
+            <a href="/folders/action/delete/{{this._id}}">Xóa</a>
+            <a href="/folders/action/share/{{this._id}}">Chia sẻ</a>
+        </div>
+        {{/if}}
     </li>
     {{/each}}
 </ul>

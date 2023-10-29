@@ -55,17 +55,27 @@
   font-size: 1.4rem;
   color: green; }
 
-.shared-user {
+.shared-user, .shared-department {
   display: flex;
   justify-content: space-between;
-  background-color: #f2e3e3;
+  background-image: linear-gradient(0, #c7b1c3, #f8e4f3);
   align-items: center; }
 
-.shared-user-info {
+.shared-department {
+  background-image: linear-gradient(0, #a5c5be, #c2eeef); }
+
+.shared-article {
+  font-weight: 500;
+  font-size: 2rem;
+  line-height: 40px;
+  padding-left: 20px;
+  background-image: linear-gradient(0, #b8d1e9, #cce8ec); }
+
+.shared-user-info, .shared-department-info {
   margin: 10px;
   margin-right: auto; }
 
-.shared-user-name {
+.shared-user-name, .shared-department-name {
   font-size: 1.6rem;
   color: blue;
   line-height: 24px;
@@ -76,12 +86,17 @@
   font-size: 1.4rem;
   line-height: 20px; }
 
-.shared-remove {
+.shared-user-remove, .shared-department-remove {
   font-size: 2rem;
   margin: 0 18px;
   color: #cd0808; }
 
-.shared-remove:hover {
+.shared--user-remove:hover {
+  font-size: 2rem;
+  margin: 0 18px;
+  color: #a50e0e; }
+
+.shared-department-remove:hover {
   font-size: 2rem;
   margin: 0 18px;
   color: #a50e0e; }
@@ -129,7 +144,6 @@
 
 .shared-objects-item-info h2 {
   color: #155fd6;
-  height: 22px;
   font-size: 1.6rem;
   line-height: 20px;
   text-decoration: none;
@@ -154,3 +168,30 @@
 
 .shared-objects-item i:hover {
   color: #3b9545; }
+
+.search-user {
+  position: relative;
+  height: 30px;
+  margin: 8px 0px; }
+
+.search-user-input {
+  background-color: white;
+  display: block;
+  height: 30px;
+  border-radius: 15px;
+  padding-left: 8px;
+  overflow: hidden;
+  height: 30px;
+  width: 90%;
+  margin: auto; }
+
+.search-user i {
+  position: absolute;
+  font-size: 1.6rem;
+  height: 30px;
+  width: 30px;
+  top: 0;
+  right: 14px;
+  display: block;
+  text-align: center;
+  line-height: 30px; }

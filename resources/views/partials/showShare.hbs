@@ -1,0 +1,57 @@
+<div class="filter-bar">
+    <select name="document-type" class="filter-select">
+        <option value="" selected>--Loại tài liệu--</option>
+    </select>
+    <select name="sort" id="" class="filter-select">
+        <option value="sort-date" selected>Sắp xếp theo ngày</option>
+    </select>
+    <input type="text" class="find-input" placeholder="Từ ngày">
+    <input type="text" class="find-input" placeholder="Đến ngày">
+    <input type="text" class="find-input" placeholder="Tìm theo tên, mô tả">
+    <button class="action-btn">Tìm</button>
+</div>
+<ul class="folder-list">
+    {{#each shareFolders}}
+    <li class="folder" data-id="{{this._id}}">
+        <div class="checkbox-folder-file">
+            <input type="checkbox" id="choose-folder-file">
+            <label for="choose-folder-file">
+                <img src={{renderIcon this.type}} alt="">
+            </label>
+        </div>
+        <div class="folder-file-information">
+            <p class="folder-file-name">{{this.name}}</p>
+            <input type="text" class="rename-file-input" style="display: none" data-id="{{this._id}}">
+            <p class="folder-file-description">Kích cỡ: {{this.size}}</p> 
+            <p class="folder-file-description">Sở hữu: {{this.owner}}</p>
+        </div>
+        <div class="folder-file-operation">
+            {{renderPermissions this._id this.shares.permissions 'folder'}}
+        </div>  
+    </li>
+    {{/each}}
+</ul>
+<ul class="file-list">
+    {{#each shareFiles}}
+    <li class="file" data-id="{{this._id}}">
+        <div class="checkbox-folder-file">
+            <input type="checkbox" id="choose-folder-file">
+            <label for="choose-folder-file">
+                <img src={{renderIcon this.type}} alt="">
+            </label>
+        </div>
+        <div class="folder-file-information">
+            <p class="folder-file-name">{{this.name}}</p>
+            <input type="text" class="rename-file-input" style="display: none" data-id="{{this._id}}">
+            <p class="folder-file-description">Kích cỡ: {{this.size}}</p> 
+            <p class="folder-file-description">Sở hữu: {{this.owner}}</p>
+        </div>
+        <div class="folder-file-operation">
+            {{renderPermissions this._id this.shares.permissions 'file'}}
+        </div>  
+    </li>
+    {{/each}}
+</ul>
+
+<script>
+</script>

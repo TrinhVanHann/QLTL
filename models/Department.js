@@ -4,10 +4,10 @@ const Schema = mongoose.Schema
 
 mongoose.plugin(slug)
 
-const folderSchema = new Schema({
+const departmentSchema = new Schema({
     name: {type: String, unique: true},
-    mgr_id: {type: String},
-    employee_count: {type: Number},
+    mgr_id: {type: String, default: null},
+    employee_count: {type: Number, default: 0},
 });
 
 module.exports = mongoose.model("Department", departmentSchema);

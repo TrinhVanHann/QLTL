@@ -13,16 +13,17 @@ class LoginController{
 
     // POST /login/auth
     async auth(req, res, next){
-        const { username, password } = req.body;
+        const { username, password, role } = req.body;
         const secretKey = process.env.SECRET_KEY
 
         const user = await User.findOne({ username });
-        if (user && password === user.password) {
+        if (user && password === user.password && role === user.role) {
             Folder.findOne({ _id: user.folder_id })
             .then((folder) => {
                 const token = jwt.sign( 
                     {
                         user_id: user._id,
+                        username: user.username,
                         root_id: folder._id
                     },
                     secretKey,
@@ -34,7 +35,7 @@ class LoginController{
             })
         }
         else {
-            res.status(401).json({ message: 'Đăng nhập không thành công' });
+            res.status(401).send({ message: 'Đăng nhập không thành công' });
         }
     }
 

@@ -4,13 +4,13 @@
             <img src="/imgs/avatar-user.png" class="user-avatar" alt="..">
             <div class="user-text">
                 <div class="user-name">
-                    {{username}}
+                    {{user.username}}
                 </div>
                 <div class="user-postion">
-                    Nhân viên
+                    {{iser.role}}
                 </div>
                 <div class="user-department">
-                    IT
+                    {{user.department}}
                 </div>
             </div>
         </div>
@@ -43,14 +43,20 @@
     </div>
     <div class="category">
         <div class="category-article">
-            <label for="checkbox-2" class="category-article-title">
+            <label for="category-checkbox" class="category-article-title">
                 <i class="fa-solid fa-caret-right"></i>
                 Quản lý tài liệu
             </label>
-            <input type="checkbox" id="checkbox-2" class="checkbox">
+            <input type="checkbox" id="category-checkbox" class="checkbox">
             <div class="category-article-list">
-                    <a href="/folders/{{rootFolderSlug}}" class="category-article-item">Tài liệu của tôi</a>
-                    <a href="" class="category-article-item">Chia sẻ</a>
+                    <a href="/folders/{{rootId}}" class="category-article-item">Tài liệu của tôi</a>
+                    <label for="checkbox" class="category-article-item category-share">Chia sẻ</label>
+                    <input type="checkbox" id="checkbox" class="checkbox">
+                    <div class="category-share-list">
+                        <a href="/share/general">Chia sẻ chung</a>
+                        <a href="/share/user">Từ người dùng</a>
+                        <a href="/share/department">Từ phòng ban</a>
+                    </div>
                     <a href="/trash" class="category-article-item">Thùng rác</a>
             </div>
         </div>

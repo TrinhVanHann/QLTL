@@ -1,7 +1,7 @@
 <div class="grid">
     <div class="row no-gutters">
         <div class="col l-2 m-2 c-0">
-            {{> sidebar rootFolderSlug=rootFolderSlug}}
+            {{> sidebar rootId=rootId user=user}}
         </div> 
         <div class="col l-7 m-7 c-8">
             {{#switch renderValue}}
@@ -11,21 +11,16 @@
                             <input type="checkbox" id="choose-all">
                             <label for="choose-all">Chọn</label>
                         </div>
-                        <button class="action-btn" id="upload-folder-btn">
-                            Tải lên thư mục
-                        </button>
                         <button class="action-btn" id="upload-btn">
                             Tải lên
-                        </button>
-                        <button class="action-btn">
-                            Xóa
-                        </button>
-                        <button class="action-btn">
-                            Di chuyển
                         </button>
                         <button class="action-btn" id="create-folder-btn">
                             Tạo thư mục
                         </button>
+                        <button class="action-btn multi-btn" id="delete-btn" disabled>
+                            Xóa
+                        </button>
+                        
                     </div>
                     <div class="filter-bar">
                         <select name="document-type" class="filter-select">
@@ -39,8 +34,10 @@
                         <input type="text" class="find-input" placeholder="Tìm theo tên, mô tả">
                         <button class="action-btn">Tìm</button>
                     </div>
-                    {{> folderList folderList=folderList}}
-                    {{> fileList fileList=fileList}}
+                    <form class="action-form" method="POST">
+                        {{> folderList folderList=folderList}}
+                        {{> fileList fileList=fileList}}
+                    </form>
                 {{/case}}
 
                 {{#case 'preview'}} 
@@ -48,7 +45,15 @@
                 {{/case}}
 
                 {{#case 'share'}}
-                    {{> share file=file sharedUsers=sharedUsers}}
+                    {{> share document=document sharedUsers=sharedUsers}}
+                {{/case}}
+
+                {{#case 'showShare'}} 
+                    {{> showShare shareFiles=shareFiles shareFolders=shareFolders}}
+                {{/case}}
+
+                {{#case 'trash'}}
+
                 {{/case}}
                 
                 {{#case 'none'}} 
@@ -60,7 +65,7 @@
         <div class="col l-3 m-3 c-4">
             {{#switch renderValue}}
                 {{#case 'share'}}
-                    {{> sharedObject notSharedUsers=notSharedUsers}}
+                    {{> sharedObject notSharedUsers=notSharedUsers notSharedDepartments=notSharedDepartments}}
                 {{/case}}
             {{/switch}}
         </div>
@@ -76,14 +81,14 @@
                 Kéo file vào đây
             </div>
             <input type="file" name="file" id="upload-file-input" multiple>
+            <input type="file" style="display: none" class="cache" multiple>
             <table class="table upload-file-table hidden">
                 <tr>
                     <th>Tên tài liệu</th>
                     <th>Loại tài liệu</th>
                     <th>Kích thước</th>
                     <th>
-                        <input type="checkbox" id="deleteAll">
-                        <label for="deleteAll">Xóa</label>
+                        <label>Xóa</label>
                     </th>
                 </tr>
 
@@ -98,6 +103,7 @@
     </div>
 </div>
 
+             
 
 
 
@@ -118,10 +124,12 @@
         let postForm = $('.post-form')
         let curFolderIdInput = $('input[name="curFolderId"]')
         let folderList = $('.folder-list')
-        
+        let fileList = $('.file-list')
         let createFolderBtn = $('#create-folder-btn')
         let logoutBtn = $('.logout-btn')
-
+        let deleteBtn = $('.action-btn#delete-btn')
+        let actionForm = document.querySelector('form.action-form')
+        let filesCache = document.querySelector('input.cache').files
         //----------------Handle event----------------
 
         //------ Handle upload file button and upload file form ---------
@@ -164,11 +172,13 @@
             }
         }
 
+
         // --------- Handle logout
         logoutBtn.click(function(e){
             logout()
             alert('Bạn đã đăng xuất thành công')
         })
+        
         //------- Handle upload folder button and upload folder form --------
         createFolderBtn.click(function(e){
             postForm.attr('action','/folders/action/create')
@@ -179,18 +189,44 @@
         folderList.dblclick(function(e){
             if(!e.target.closest('.action-btn')  && !e.target.closest('.folder-file-name')){
                 const folderItem = e.target.closest('.folder')
-                window.location.href = '/folders/' + folderItem.dataset.slug
+                window.location.href = '/folders/' + folderItem.dataset.id
+            }
+        }) 
+        fileList.dblclick(function(e){
+            if(!e.target.closest('.action-btn')  && !e.target.closest('.folder-file-name')){
+                const fileItem = e.target.closest('.file')
+                window.location.href = '/files/' + fileItem.dataset.id
             }
         }) 
 
+        function concatFileLists(fileList1, fileList2) {
+            const filesArray1 = Array.from(fileList1);
+            const filesArray2 = Array.from(fileList2);
+
+            const combinedFilesArray = filesArray1.concat(filesArray2);
+
+            const combinedFileList = new DataTransfer();
+            combinedFilesArray.forEach(file => {
+                combinedFileList.items.add(file);
+            })
+
+            return combinedFileList.files;
+        }
 
         function renderUploadTable(fileInput){
            for( var i = 0; i < fileInput.files.length; i++) {
                 const newRow = $(`<tr>`)
                 newRow.append(`<td>${fileInput.files[i].name}</td>`)
-                newRow.append(`<td>${fileInput.files[i].type}</td>`)
+                newRow.append(`<td>
+                    <select name="document-type" class="form-select">
+                        <option value="Hành chính" selected>Hành chính</option>
+                        <option value="Báo cáo">Báo cáo</option>
+                        <option value="Hợp đồng">Hợp đồng</option>
+                        <option value="Dự án">Dự án</option>
+                    </select>      
+                </td>`)
                 newRow.append(`<td>${Math.round(fileInput.files[i].size/1024)}KB</td>`)
-                newRow.append(`<td><input type="checkbox" name="uploadfileIds[]"></td>`)
+                newRow.append(`<td><i class="fa-solid fa-circle-xmark" color="red"></i></td>`)
                 uploadFileTable.append(newRow)
            }
         }
@@ -206,12 +242,58 @@
         function deleteCookie(cookieName) {
             document.cookie = cookieName + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
         }
-        ////////////////// Share /////////////////////
+        
+        
+        // ---------------Handle Action bar -------------------------
+        let chooseAllCheckbox = $('#choose-all')
+        let chooseFolderCheckboxes = $('input[name="folderIds[]"]')
+        let chooseFileCheckboxes = $('input[name="fileIds[]"]')
 
-        let sharePage = $('.share-page')
+        chooseAllCheckbox.change(function(e){
+            const isCheckedAll = $(this).prop('checked')
+            chooseFileCheckboxes.prop('checked', isCheckedAll)
+            chooseFolderCheckboxes.prop('checked', isCheckedAll)
+            renderCheckMultiBtn()
+        })
+        chooseFileCheckboxes.change(function(e){
+            const isFileCheckedAll = chooseFileCheckboxes.length === $('input[name="fileIds[]"]:checked').length
+            const isFolderCheckedAll = chooseFolderCheckboxes.length === $('input[name="folderIds[]"]:checked').length
+            chooseAllCheckbox.prop('checked', isFileCheckedAll && isFolderCheckedAll)
+            renderCheckMultiBtn()
+        })
+        chooseFolderCheckboxes.change(function(e){
+            const isFileCheckedAll = chooseFileCheckboxes.length === $('input[name="fileIds[]"]:checked').length
+            const isFolderCheckedAll = chooseFolderCheckboxes.length === $('input[name="folderIds[]"]:checked').length
+            chooseAllCheckbox.prop('checked', isFileCheckedAll && isFolderCheckedAll)
+            renderCheckMultiBtn()
+        })
+        
+        function renderCheckMultiBtn (){
+            let checkedCount = $('input[name="fileIds[]"]:checked').length + $('input[name="folderIds[]"]:checked').length
+
+            if(checkedCount > 0){  
+                deleteBtn.prop('disabled', false) 
+            } else {
+                deleteBtn.prop('disabled', true)
+            }
+        }
+        
+        deleteBtn.click(function(e){
+            actionForm.action = '/action/delete'
+            actionForm.submit()
+        })
+
+        
+        
+        
+        //-----------------Handle Share function ----------------------
+
+        let shareUserList = $('.shared-user-list')
+        let shareDepartmentList = $('.shared-department-list')
         let readyUserList = $('ul.shared-objects-list.ready-users')
+        let readyDepartmentList = $('ul.shared-objects-list.ready-departments')
 
-        sharePage.on('click', '.shared-remove', function(e){
+        shareUserList.on('click', '.shared-user-remove', function(e){
             const sharedUser = e.target.closest('.shared-user')
             const user = $(`
                 <li class="shared-objects-item ready-user">
@@ -222,14 +304,28 @@
                         <h2>${sharedUser.querySelector('p.shared-user-name').innerText}</h2>
                         <p>${sharedUser.querySelectorAll('p.shared-user-information')[0].innerText}</p>
                     </div>
-                    <i class="fa-solid fa-square-plus shared-add"></i>
+                    <i class="fa-solid fa-square-plus shared-user-add"></i>
                 </li>
             `)
             readyUserList.append(user)
             sharedUser.remove()
         })
 
-        readyUserList.on('click', '.shared-add', function(e){
+        shareDepartmentList.on('click', '.shared-department-remove', function(e){
+            const sharedDepartment = e.target.closest('.shared-department')
+            const department = $(`
+                <li class="shared-objects-item ready-departments">
+                    <div class="shared-objects-item-info">
+                        <h2>${sharedDepartment.querySelector('p.shared-department-name').innerText.toLowerCase()}</h2>
+                    </div>
+                    <i class="fa-solid fa-square-plus shared-department-add"></i>
+                </li>
+            `)
+            readyDepartmentList.append(department)
+            sharedDepartment.remove()
+        })
+
+        readyUserList.on('click', '.shared-user-add', function(e){
             const readyUser = e.target.closest('.shared-objects-item')
             const user = $(`
                 <div class="shared-user">
@@ -254,10 +350,6 @@
                                 <label for="preview-checkbox">Xem</label>
                             </li>
                             <li class="share-permission-item">
-                                <input type="checkbox" class="user-permission-checkbox" value="update">
-                                <label for="update-checkbox">Sửa</label>
-                            </li>
-                            <li class="share-permission-item">
                                 <input type="checkbox" class="user-permission-checkbox" value="delete">
                                 <label for="delete-checkbox">Xóa</label>
                             </li>
@@ -266,16 +358,54 @@
                                 <label for="download-checkbox">Tải về</label>
                             </li>
                             <li class="share-permission-item">
-                                <input type="checkbox" id="all-checkbox">
-                                <label for="all-checkbox">Tất cả</label>
+                                <input type="checkbox" class="user-all-checkbox">
+                                <label>Tất cả</label>
                             </li>
                         </ul>
                     </div>
-                    <i class="fa-solid fa-circle-minus shared-remove"></i>
+                    <i class="fa-solid fa-circle-minus shared-user-remove"></i>
                 </div>
             `)
-            sharePage.append(user)
+            shareUserList.append(user)
             readyUser.remove()
         })
+
+        readyDepartmentList.on('click', '.shared-department-add', function(e){
+            const readyDepartment = e.target.closest('.shared-objects-item')
+            const department = $(`
+                <div class="shared-department">
+                    <div class="shared-department-info">
+                        <p class="shared-department-name">
+                            ${readyDepartment.querySelector('h2').innerText.toUpperCase()}
+                        </p>
+                    </div>
+                    <div class="share-permission">
+                        <p class="share-permission-heading">Chia sẻ</p>
+                        <ul class="share-permission-list">
+                            <li class="share-permission-item">
+                                <input type="checkbox" class="department-permission-checkbox" value="preview">
+                                <label for="preview-checkbox">Xem</label>
+                            </li>
+                            <li class="share-permission-item">
+                                <input type="checkbox" class="department-permission-checkbox" value="delete">
+                                <label for="delete-checkbox">Xóa</label>
+                            </li>
+                            <li class="share-permission-item">
+                                <input type="checkbox" class="department-permission-checkbox" value="download">
+                                <label for="download-checkbox">Tải về</label>
+                            </li>
+                            <li class="share-permission-item">
+                                <input type="checkbox" class="department-all-checkbox">
+                                <label>Tất cả</label>
+                            </li>
+                        </ul>
+                    </div>
+                    <i class="fa-solid fa-circle-minus shared-department-remove"></i>
+                </div>
+            `)
+            shareDepartmentList.append(department)
+            readyDepartment.remove()
+        })
+
     })
 </script>

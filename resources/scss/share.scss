@@ -9,7 +9,7 @@
     justify-content: space-between;
     background-color: #e8e8e8;
     align-items: center;
-}
+} 
 .share-box img {
     width: 50px;
     margin: 0px 12px;
@@ -56,17 +56,27 @@
     color: green;
 }
 
-.shared-user {
+.shared-user,.shared-department {
     display: flex;
     justify-content: space-between;
-    background-color: #f2e3e3;
+    background-image: linear-gradient(0, rgb(199, 177, 195),rgb(248, 228, 243));
     align-items: center;
 }
-.shared-user-info {
+.shared-department {
+    background-image: linear-gradient(0, rgb(165, 197, 190),rgb(194, 238, 239));
+}
+.shared-article {
+    font-weight: 500;
+    font-size: 2rem;
+    line-height: 40px;
+    padding-left: 20px;
+    background-image: linear-gradient(0, rgb(184, 209, 233),rgb(204, 232, 236)) ;
+}
+.shared-user-info,.shared-department-info {
     margin: 10px;
     margin-right: auto;
 }
-.shared-user-name {
+.shared-user-name,.shared-department-name {
     font-size: 1.6rem;
     color: blue; 
     line-height: 24px;
@@ -77,13 +87,18 @@
     font-size: 1.4rem;
     line-height: 20px;
 }
-.shared-remove {
+.shared-user-remove,.shared-department-remove {
     font-size: 2rem;
     margin: 0 18px;
     color: rgb(205, 8, 8)
 }
-.shared-remove:hover{
-    font-size: 2rem;
+.shared--user-remove:hover {
+    font-size: 2rem; 
+    margin: 0 18px;
+    color: rgb(165, 14, 14)
+}
+.shared-department-remove:hover {
+    font-size: 2rem; 
     margin: 0 18px;
     color: rgb(165, 14, 14)
 }
@@ -131,7 +146,6 @@
 }
 .shared-objects-item-info h2{
     color: rgb(21, 95, 214);
-    height: 22px;
     font-size: 1.6rem;
     line-height: 20px;
     text-decoration: none;
@@ -156,4 +170,31 @@
 }
 .shared-objects-item i:hover{
     color: rgb(59, 149, 69);
+}
+.search-user {
+    position: relative;
+    height: 30px;
+    margin: 8px 0px;
+}
+.search-user-input {
+    background-color: white;
+    display: block;
+    height: 30px;
+    border-radius: 15px;
+    padding-left: 8px;
+    overflow: hidden;
+    height: 30px;
+    width: 90%;
+    margin: auto;
+}
+.search-user i {
+    position: absolute;
+    font-size: 1.6rem;
+    height: 30px;
+    width: 30px;
+    top: 0;
+    right: 14px;
+    display: block;
+    text-align: center;
+    line-height: 30px;
 }

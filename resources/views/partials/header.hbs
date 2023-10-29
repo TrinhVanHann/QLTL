@@ -7,11 +7,11 @@
         {{#each tracebackList}} 
             <li class="nav-item">
                 {{#if this.type}}
-                    <a href="/files/{{this.slug}}" class="nav-item-link">
+                    <a href="/files/{{this._id}}" class="nav-item-link">
                         {{this.name}}
                     </a>
                 {{else}}
-                    <a href="/folders/{{this.slug}}" class="nav-item-link">
+                    <a href="/folders/{{this._id}}" class="nav-item-link">
                         {{this.name}}
                         <i class="fa-solid fa-caret-right"></i>
                     </a>

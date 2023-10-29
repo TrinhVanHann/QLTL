@@ -48,16 +48,17 @@
     display: block;
     font-size: 1.4rem;
     margin: auto 4px;
+    color: black;
 }
 .more-action {
     position: relative;
-    display: flex;
+    display: flex; 
     align-items: center;
 }
 .more-action:hover .more-action-list {
     display: block;
 } 
-.more-action-list {
+.more-action-list { 
     position: absolute;
     border-radius: 2px;
     top: 20%;

@@ -3,7 +3,7 @@ const File = require('../models/Files')
 
 module.exports = {
     checkNameFolder: function(folderId, name){
-        return Folder.find({ parent_id: folderId})
+        return Folder.findWithDeleted({ parent_id: folderId})
             .then((folders) => {
                 const folderNames = folders.map( folder => folder.name)
                 if (folderNames.includes(name)) {
@@ -16,7 +16,7 @@ module.exports = {
             .catch(err => console.error(err))
     },
     checkNameFile: function(fileId, name){
-        File.findAll({ parent_id: fileId})
+        File.findWithDeleted({ parent_id: fileId})
             .then((files) => {
                 const fileNames = files.map( file => file.name)
                 return [fileNames, files]
@@ -30,7 +30,7 @@ module.exports = {
     },
     tracebackFolder: async function (folder) {
         let ifolder = folder
-        let pathList = [{name: ifolder.name, slug: ifolder.slug, type: ifolder.type }];
+        let pathList = [{name: ifolder.name, _id: ifolder._id, type: ifolder.type }];
         try {
             while (ifolder.parent_id !== 'none') {
                 ifolder = await Folder.findOne({ _id: ifolder.parent_id });
@@ -39,7 +39,7 @@ module.exports = {
                     console.error('Parent folder not found');
                     return pathList; // Trả về mảng hiện tại
                 }
-                pathList.unshift({name: ifolder.name, slug: ifolder.slug});
+                pathList.unshift({name: ifolder.name, _id: ifolder._id});
             }
       
             return pathList;

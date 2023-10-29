@@ -3,37 +3,38 @@ const { checkNameFolder, tracebackFolder } = require('../middlewares/OperateFold
 const Folder = require('../models/Folders')
 const User = require('../models/Users')
 const File = require('../models/Files')
+const Share = require('../models/Share')
+const Department = require('../models/Department')
 
 class FoldersController{
-    //GET /folders/:slug
+    //GET /folders/:id   ####### HAS SIDEBAR
     index(req, res, next){
-        let username
+        let user
         let currentFolderId
         const userId = req.data.user_id
         const rootId = req.data.root_id
-        let slug = req.params.slug
+        let id = req.params.id
         const renderValue = 'showList'
 
-        Promise.all([Folder.findOne({ slug: slug}), 
+        Promise.all([Folder.findOne({ _id: id}), 
                      User.findOne({ _id: userId })])
         .then(([curFolder,User]) => {
-            username = User.username
+            user = User
             currentFolderId = curFolder._id
             return Promise.all([ tracebackFolder(curFolder),
                                  Folder.find({ parent_id: currentFolderId }),
-                                 File.find({ parent_id: currentFolderId }),
-                                 Folder.findOne({ _id: rootId }) ])
+                                 File.find({ parent_id: currentFolderId })
+                               ])
         })
-        .then(([tracebackList, folderList, fileList, rootFolder]) => {
+        .then(([tracebackList, folderList, fileList]) => {
 
             folderList = folderList.map(folder => folder.toObject())
             fileList = fileList.map(file => file.toObject())
-            rootFolder = rootFolder.toObject()
-            const rootFolderSlug = rootFolder.slug
+            user = user.toObject()
 
             res.render('home',{ folderList, fileList, 
-                                username, currentFolderId, 
-                                rootFolderSlug, renderValue,
+                                user, currentFolderId, 
+                                rootId, renderValue,
                                 tracebackList })
         })
         .catch(next)
@@ -42,9 +43,13 @@ class FoldersController{
     //POST /folders/action/create
     async create(req, res, next){
 
+
+        console.log([req.body])
         const parentId = req.body.curFolderId
         let folderName
-        const folderOwner = req.data.user_id
+        const folderOwner = req.data.username
+        const folderOwnerId = req.data.user_id
+
         checkNameFolder(parentId, 'New Folder')
         .then(count => {
             if (count === 0) folderName = 'New Folder'
@@ -58,6 +63,7 @@ class FoldersController{
                 _id: folderId,
                 name: folderName,
                 parent_id: parentId,
+                owner_id: folderOwnerId,
                 owner: folderOwner
             })
             return newFolder
@@ -85,19 +91,85 @@ class FoldersController{
         .catch(next)
     }
 
-    //GET /folders/action/download/:slug
-    download(req, res, next) {
-        Folder.findOne({ slug: req.params.slug })
-        .then(folder => downloadFolder(folder._id,`C:\\Users\\Administrator\\Downloads\\`))
-        .then(() => res.redirect('back'))
-        .catch(next)
-    }
+    //GET /folders/action/download/:id
+    // async download(req, res, next) {
+    //     // const recDownload = function(){
 
-    //GET /folders/action/delete/:slug
+    //     // }
+    //     // const folder = await Folder.findOne({ id: req.params.id })
+    //     // const fileList = await File.find({ parent_id: folder._id})
+    //     // const folderList = await Folder.find({parent_id: folder._id})
+    //     // .then(folder => downloadFolder(folder._id,`C:\\Users\\Administrator\\Downloads\\`))
+    //     // .then(() => res.redirect('back'))
+    //     // .catch(next)
+    // }
+
+    
+    //GET /folders/action/delete/:id
     delete(req, res, next) {
-        Folder.delete({ slug: req.params.slug})
+        Folder.delete({ _id: req.params.id})
             .then(() => res.redirect('back'))
             .catch(next)
+    }
+
+    //GET folders/action/share/:id   ####### HAS SIDEBAR
+    async share(req, res, next){
+        const renderValue = 'share'
+        const isFile = false
+        const rootId = req.data.root_id
+        let document = await Folder.findOne({ _id: req.params.id})
+        let Shared = await Share.find({document_id: document._id})
+        let [notSharedUsers, notSharedDepartments] = await Promise.all([ 
+            User.find({ username: {$nin: [Shared.shared_object, document.owner]}}),
+            Department.find({name: {$nin: Shared.shared_object}}),
+        ])
+
+        document = document.toObject()
+        notSharedUsers = notSharedUsers.map(user => user.toObject())
+        notSharedDepartments = notSharedDepartments.map(department => department.toObject())
+
+        res.render('home', {document, isFile,
+                            Shared, notSharedUsers, 
+                            notSharedDepartments,
+                            rootId, renderValue})
+        }
+  
+  
+      //POST folders/action/completeShare
+      async completeShare(req, res, next){
+        const data = req.body
+        Share.deleteMany({document_id: data.documentId})
+        .then(async function(){
+        if(data.general.permissions !== 'none'){
+            const newGeneralShare = await new Share({
+                document_id: data.documentId,
+                shared_object: 'general',
+                permissions: data.general.permissions
+            })
+            newGeneralShare.save()
+        }
+        if(data.users !== 'none'){
+            const newUserShares = await data.users.filter(user => user.permissions !== 'none').map(user => {
+                return {
+                    document_id: data.documentId,
+                    shared_object: user.userId,
+                    permissions: user.permissions
+                }
+            })
+            Share.insertMany(newUserShares)
+        }
+        if(data.departments !== 'none'){
+            const newDeparmentShares = await data.departments.map(department => {
+            return {
+                document_id: data.documentId,
+                shared_object: department.departmentName,
+                permissions: department.permissions
+            }
+            })
+            Share.insertMany(newDeparmentShares)
+        }
+        })
+        res.redirect('back')
     }
 }
 

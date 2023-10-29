@@ -1,0 +1,15 @@
+const express = require('express')
+const router = express.Router()
+const shareController = require('../controllers/ShareController')
+const authenticateToken = require('../middlewares/AuthenticateToken')
+const checkRBAC = require('../middlewares/checkRBAC')
+
+router.get('/files/:id', authenticateToken, checkRBAC, shareController.fileShow)
+router.get('/files/action/download/:id',authenticateToken, checkRBAC, shareController.fileDownload)
+router.get('/files/action/delete/:id', authenticateToken, checkRBAC, shareController.fileDelete)
+// router.get('/folders/action/download/:id', authenticateToken, checkRBAC, shareController.folderDownload)
+router.use('/folders/:id', authenticateToken, checkRBAC, shareController.folderShow)
+router.get('/user',authenticateToken, shareController.indexUser)
+router.get('/general',authenticateToken, shareController.indexGeneral)
+router.get('/department',authenticateToken, shareController.indexDepartment)
+module.exports = router 

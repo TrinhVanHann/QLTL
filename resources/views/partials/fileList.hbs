@@ -2,7 +2,7 @@
     {{#each fileList}}
     <li class="file" data-id="{{this._id}}">
         <div class="checkbox-folder-file">
-            <input type="checkbox" id="choose-folder-file">
+            <input type="checkbox" name="fileIds[]" value="{{this._id}}">
             <label for="choose-folder-file">
                 <img src={{renderIcon this.type}} alt="">
             </label>
@@ -10,26 +10,25 @@
         <div class="folder-file-information">
             <p class="folder-file-name">{{this.name}}</p>
             <input type="text" class="rename-file-input" style="display: none" data-id="{{this._id}}">
-            <p class="folder-file-description">Kích cỡ: {{this.size}}</p> 
+            <p class="folder-file-description">Kích cỡ: {{renderSize this.size}}</p> 
+            <p class="folder-file-description">Sở hữu: {{this.owner}}</p>
         </div>
-        {{#if this.deletedAt}}
+        {{#if this.deleted}}
             <div class="folder-file-operation">
-                <a href="/files/{{this.slug}}">Xem</a>
-                <a href="/files/action/restore/{{this.slug}}">Khôi phục</a>
-                <a href="/files/action/trueDelete/{{this.slug}}">Xóa vĩnh viễn</a>
+                <a href="/trash/restore/{{this._id}}">Khôi phục</a>
+                <a href="/trash/trueDelete/{{this._id}}">Xóa vĩnh viễn</a>
             </div>     
         {{else}}
             <div class="folder-file-operation">
-                <a href="/files/action/download/{{this.slug}}">Tải về</a>
-                <a href="/files/{{this.slug}}">Xem</a>
-                <a href="">Sửa</a>
-                <a href="/files/action/delete/{{this.slug}}">Xóa</a>
+                <a href="/files/action/download/{{this._id}}">Tải về</a>
+                <a href="/files/{{this._id}}">Xem</a>
+                <a href="/files/action/delete/{{this._id}}">Xóa</a>
                 <div class="more-action">
-                    <a>Thao tác khác</a>
-                    <ul class="more-action-list">
-                        <li class="more-action-item"><a href="/files/action/share/{{this.slug}}">Chia sẻ</a></li>
-                        <li class="more-action-item"><a href="">Di chuyển</a></li>
-                    </ul>
+                    <a href="/files/action/share/{{this._id}}">Chia sẻ</a>
+                    {{!-- <ul class="more-action-list">
+                        <li class="more-action-item"><a href="/files/action/share/{{this._id}}">Chia sẻ</a></li>
+                        <li class="more-action-item move-action"><a href="">Di chuyển</a></li>
+                    </ul> --}}
                 </div> 
             </div>  
         {{/if}}
@@ -41,6 +40,7 @@
     document.addEventListener('DOMContentLoaded', function(){
         let fileNames = $('.folder-file-name')
         let fileNameInput = $('.rename-file-input')
+        let moveBtn = $('.more-action-item.move-action')
         fileNames.dblclick(function(e){
             const target = $(e.target)
             target.css({"display":"none"})
@@ -68,5 +68,12 @@
                 }
             })
         }
+
+        moveBtn.click(function(e){
+            const moveFile = e.target.closest('.file')
+            const moveFileId = moveFile.datasets.id
+            monveFile.remove()
+        })
+
     })  
 </script>
