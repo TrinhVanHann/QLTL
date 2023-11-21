@@ -6,6 +6,7 @@ const { response } = require('express')
 class SiteController{
     //GET /
     index(req, res, next){
+        console.log('HEEEEEEEEEEEE')
         const rootId = req.data.root_id
         const userId = req.data.user_id
         const renderValue = 'none'
@@ -16,7 +17,7 @@ class SiteController{
         .then(([rootFolder, user]) => {
             rootFolder = rootFolder.toObject()
             user = user.toObject()
-   
+            console.log([user])
             res.render('home',{ rootId, user, renderValue })
         })
         .catch(next)

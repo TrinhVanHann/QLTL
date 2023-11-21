@@ -125,14 +125,18 @@ class FoldersController{
         ])
 
         document = document.toObject()
+        Shared = Shared.map(shared => shared.toObject())
         notSharedUsers = notSharedUsers.map(user => user.toObject())
         notSharedDepartments = notSharedDepartments.map(department => department.toObject())
+        userShared = Shared.filter(shared => shared.type_object === 'user')
+        departmentShared = Shared.filter(shared => shared.type_object === 'department')
+        generalShared = Shared.filter(shared => shared.type_object === 'general')
 
         res.render('home', {document, isFile,
-                            Shared, notSharedUsers, 
+                            generalShared, userShared, departmentShared, notSharedUsers, 
                             notSharedDepartments,
                             rootId, renderValue})
-        }
+    }
   
   
       //POST folders/action/completeShare
@@ -144,7 +148,8 @@ class FoldersController{
             const newGeneralShare = await new Share({
                 document_id: data.documentId,
                 shared_object: 'general',
-                permissions: data.general.permissions
+                permissions: data.general.permissions,
+                type_object: 'general'
             })
             newGeneralShare.save()
         }
@@ -153,7 +158,8 @@ class FoldersController{
                 return {
                     document_id: data.documentId,
                     shared_object: user.userId,
-                    permissions: user.permissions
+                    permissions: user.permissions,
+                    type_object: 'user'
                 }
             })
             Share.insertMany(newUserShares)
@@ -163,7 +169,8 @@ class FoldersController{
             return {
                 document_id: data.documentId,
                 shared_object: department.departmentName,
-                permissions: department.permissions
+                permissions: department.permissions,
+                type_object: 'department'
             }
             })
             Share.insertMany(newDeparmentShares)

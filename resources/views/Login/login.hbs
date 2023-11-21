@@ -50,7 +50,7 @@
         let passwordSee = $('.password-see')
         let passwordUnsee = $('.password-unsee')
         let passwordInput = $('#inputPassword')
-        console.log(passwordInput)
+
         passwordSee.click(function(e){
             passwordSee.removeClass('active')
             passwordUnsee.addClass('active')
@@ -85,24 +85,23 @@
             return "";
         }
 
-        $('.form-btn').click(function(){
-            if(true){
-                $.ajax({
-                    url: '/login/auth', 
-                    method: 'POST', 
-                    data: {
-                        username: $('#inputUsername').val(),
-                        password: $('#inputPassword').val(),
-                        role: $('select[name="account-type"]').val()
-                    }
-                    
-                })
-                .then(data => {
-                    setCookie('token',data.token, 1)
-                })
-                .catch(err => console.error(err))
-            }
+        $('.form-btn').click(function(e){
+            $.ajax({
+                url: '/login/auth', 
+                method: 'POST', 
+                data: {
+                    username: $('#inputUsername').val(),
+                    password: $('#inputPassword').val(),
+                    role: $('select[name="account-type"]').val()
+                }     
+            })
+            .then(reply => {
+                setCookie('token',reply.token, 1)
+                window.location.href = '/'
+            })
+            .catch(err => console.error(err))
         })
+
         // --------
 
     })

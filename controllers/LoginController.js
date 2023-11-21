@@ -46,14 +46,15 @@ class LoginController{
 
     //POST /login/change
     updateChange(req, res, next){
-        User.findOne({username: req.body.username})
+        const { username, oldPassword, newPassword } = req.body;
+        User.findOne({username: username})
             .then((user) => {
-                if(user.password === req.body.oldPassword){
-                    user.password = req.body.newPassword
+                if(user && user.password === oldPassword){
+                    user.password = newPassword
                     user.save()
                 }
                 else {
-                    res.status(401).json({ message: 'Tên đăng nhập hoặc mật khẩu của bạn không đúng' });
+                    res.status(401).send({ message: 'Tên đăng nhập hoặc mật khẩu của bạn không đúng' });
                 }
             })
             .then(() => {

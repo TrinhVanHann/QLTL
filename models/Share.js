@@ -9,7 +9,8 @@ const shareSchema = new Schema({
     document_id: {type: String},
     shared_object: {type: String},
     permissions: [String],
-    shareAt: {type: Date}
+    shareAt: {type: Date},
+    type_object: {type: String}
 },{
     timestamps: true
 });
