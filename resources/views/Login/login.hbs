@@ -1,5 +1,6 @@
 <div class="modal active">
-    <div class="modal-overlay">
+    <div class="modal-overlay modal-login">
+        <img src="/imgs/template3.png" alt=".." class="login-img">
         <div class="form-login standard-form">
             <h1 class="form-title">ĐĂNG NHẬP</h1>
             <div class="form-group">
@@ -24,7 +25,7 @@
                 <span class="form-message"></span>
             </div>
             <p class="form-text">
-                Bạn có muốn đổi mật khẩu? 
+                Bạn có muốn đổi mật khẩu?
                 <a href="/login/change">Đổi tại đây</a>
             </p>
             <div class="form-btn-group">
@@ -46,18 +47,18 @@
         ]
     })
 
-    document.addEventListener('DOMContentLoaded', function(e){
+    document.addEventListener('DOMContentLoaded', function (e) {
         let passwordSee = $('.password-see')
         let passwordUnsee = $('.password-unsee')
         let passwordInput = $('#inputPassword')
 
-        passwordSee.click(function(e){
+        passwordSee.click(function (e) {
             passwordSee.removeClass('active')
             passwordUnsee.addClass('active')
             passwordInput.attr("type", "password")
-            
+
         })
-        passwordUnsee.click(function(e){
+        passwordUnsee.click(function (e) {
             passwordSee.addClass('active')
             passwordUnsee.removeClass('active')
             passwordInput.attr("type", "text")
@@ -65,41 +66,41 @@
 
         function setCookie(cname, cvalue, exdays) {
             const d = new Date();
-            d.setTime(d.getTime() + (exdays*24*60*60*1000));
-            let expires = "expires="+ d.toUTCString();
+            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+            let expires = "expires=" + d.toUTCString();
             document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
         }
         function getCookie(cname) {
             let name = cname + "=";
             let decodedCookie = decodeURIComponent(document.cookie);
             let ca = decodedCookie.split(';');
-            for(let i = 0; i < ca.length; i++) {
+            for (let i = 0; i < ca.length; i++) {
                 let c = ca[i];
                 while (c.charAt(0) == ' ') {
-                c = c.substring(1);
+                    c = c.substring(1);
                 }
                 if (c.indexOf(name) == 0) {
-                return c.substring(name.length, c.length);
+                    return c.substring(name.length, c.length);
                 }
             }
             return "";
         }
 
-        $('.form-btn').click(function(e){
+        $('.form-btn').click(function (e) {
             $.ajax({
-                url: '/login/auth', 
-                method: 'POST', 
+                url: '/login/auth',
+                method: 'POST',
                 data: {
                     username: $('#inputUsername').val(),
                     password: $('#inputPassword').val(),
                     role: $('select[name="account-type"]').val()
-                }     
+                }
             })
-            .then(reply => {
-                setCookie('token',reply.token, 1)
-                window.location.href = '/'
-            })
-            .catch(err => console.error(err))
+                .then(reply => {
+                    setCookie('token', reply.token, 1)
+                    window.location.href = '/'
+                })
+                .catch(() => console.log("Đăng nhập thất bại"))
         })
 
         // --------

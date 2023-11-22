@@ -1,7 +1,7 @@
 const User = require('../models/Users')
 
-class UsersController{
-    index(req, res, next){
+class UsersController {
+    index(req, res, next) {
         res.render('user')
     }
 }

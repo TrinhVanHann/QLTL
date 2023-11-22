@@ -5,19 +5,19 @@ const Folder = require('../models/Folders')
 const { createFolder } = require('../models/Upload.model')
 const bcrypt = require('bcrypt')
 
-class RegisterController{
+class RegisterController {
     //GET /register
     index(req, res, next) {
         res.render('Login/register')
     }
 
     //POST /register
-    async auth(req, res, next){
+    async auth(req, res, next) {
         const { username, password, department, role } = req.body;
         const secretKey = process.env.SECRET_KEY
 
         const user = await User.findOne({ username: username });
-        if(!user){
+        if (!user) {
             try {
                 const folderId = await createFolder(username)
 
@@ -38,7 +38,7 @@ class RegisterController{
                 await newUser.save()
 
                 const token = await jwt.sign(
-                    { 
+                    {
                         user_id: newUser._id,
                         username: newUser.username,
                         root_id: newUser.folder_id
@@ -46,15 +46,15 @@ class RegisterController{
                     secretKey,
                     { expiresIn: "24h" }
                 )
-                
+
                 return res.json({
                     token: token
                 })
             }
-            catch(err) {
+            catch (err) {
                 console.error(err)
             }
-        }else {
+        } else {
             res.status(401).json({ message: 'Tài khoản đã tồn tại' });
         }
     }

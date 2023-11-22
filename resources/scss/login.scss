@@ -2,20 +2,23 @@
     from {
         transform: scale(var(--growth-from));
     }
+
     to {
         transform: scale(var(--growth-to));
     }
 }
+
 .modal {
     position: fixed;
     top: 0;
     left: 0;
-    right:0;
+    right: 0;
     bottom: 0;
     z-index: 0;
     display: none;
 }
-.modal.active{
+
+.modal.active {
     display: block;
 }
 
@@ -23,15 +26,27 @@
     position: absolute;
     width: 100%;
     height: 100%;
-    background-color: rgba(0,0,0,0.4);
+    background-color: rgba(0, 0, 0, 0.4);
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
 }
 
-.standard-form{
+.modal-overlay.modal-login {
+    background-color: white;
+}
+
+.login-img {
+    height: 300px;
+    width: 300px;
+    margin: 50px;
+}
+
+.standard-form {
+    margin: 0;
     width: 300px;
     position: relative;
-    margin: auto;
     --growth-from: 0.7;
     --growth-to: 1;
     animation: growth linear 0.1s;
@@ -39,18 +54,25 @@
     border: 1px solid black;
     padding: 20px;
 }
-.form-title{
+
+.standard-form.form-login {
+    animation: none;
+    border: none;
+}
+
+.form-title {
     font-size: 1.8rem;
     text-decoration: bold;
     text-align: center;
 }
+
 .form-group {
     margin-bottom: 10px;
     position: relative;
 }
 
 .form-group i {
-    display: none; 
+    display: none;
     position: absolute;
     top: 60%;
     right: 4px;
@@ -60,6 +82,7 @@
     font-size: 1.3rem;
     color: rgb(107, 107, 107)
 }
+
 .form-group i.active {
     display: block;
 }
@@ -69,18 +92,20 @@
     cursor: pointer;
 }
 
-.form-label{
+.form-label {
     font-size: 1.6rem;
-    line-height: 24px; 
+    line-height: 24px;
     display: block;
     text-decoration: bold;
-} 
-.form-control{
+}
+
+.form-control {
     height: 20px;
     height: 24px;
     font-size: 1.6rem;
     width: 100%
 }
+
 .form-select {
     height: 24px;
     font-size: 1.6rem;
@@ -93,10 +118,11 @@
     text-align: center;
     font-size: 1.4rem;
 }
+
 .form-btn-group {
     display: flex;
     justify-content: end;
-    margin-top: 20px; 
+    margin-top: 20px;
 }
 
 .form-btn {
@@ -109,16 +135,19 @@
     display: block;
     border: none;
     padding: 4px 10px;
-} 
+}
+
 .form-btn:hover {
     cursor: pointer;
     background-color: rgb(2, 76, 186);
 }
+
 .form-btn-cancel {
     background-color: rgb(205, 204, 204);
     color: black;
     margin-left: 4px;
 }
+
 .form-btn-cancel:hover {
     background-color: rgb(156, 154, 154);
 }

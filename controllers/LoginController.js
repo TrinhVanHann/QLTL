@@ -5,34 +5,34 @@ const Folder = require('../models/Folders')
 const { createFolder } = require('../models/Upload.model')
 const bcrypt = require('bcrypt')
 
-class LoginController{
+class LoginController {
     // GET /login
-    index(req, res, next){
+    index(req, res, next) {
         res.render('Login/login')
     }
 
     // POST /login/auth
-    async auth(req, res, next){
+    async auth(req, res, next) {
         const { username, password, role } = req.body;
         const secretKey = process.env.SECRET_KEY
 
         const user = await User.findOne({ username });
         if (user && password === user.password && role === user.role) {
             Folder.findOne({ _id: user.folder_id })
-            .then((folder) => {
-                const token = jwt.sign( 
-                    {
-                        user_id: user._id,
-                        username: user.username,
-                        root_id: folder._id
-                    },
-                    secretKey,
-                    { expiresIn: "2h" }
-                )
-                return res.json({
-                    token: token
+                .then((folder) => {
+                    const token = jwt.sign(
+                        {
+                            user_id: user._id,
+                            username: user.username,
+                            root_id: folder._id
+                        },
+                        secretKey,
+                        { expiresIn: "2h" }
+                    )
+                    return res.json({
+                        token: token
+                    })
                 })
-            })
         }
         else {
             res.status(401).send({ message: 'Đăng nhập không thành công' });
@@ -40,16 +40,16 @@ class LoginController{
     }
 
     //GET /login/change
-    change(req,res,next){
+    change(req, res, next) {
         res.render('Login/changePassword')
     }
 
     //POST /login/change
-    updateChange(req, res, next){
+    updateChange(req, res, next) {
         const { username, oldPassword, newPassword } = req.body;
-        User.findOne({username: username})
+        User.findOne({ username: username })
             .then((user) => {
-                if(user && user.password === oldPassword){
+                if (user && user.password === oldPassword) {
                     user.password = newPassword
                     user.save()
                 }
@@ -59,7 +59,7 @@ class LoginController{
             })
             .then(() => {
                 res.redirect('/')
-            }) 
+            })
             .catch(next)
     }
 }
