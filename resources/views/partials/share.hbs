@@ -7,7 +7,7 @@
     </div>
     <div class="share-box">
         <input type="text" class="share-document-id" style="display: none" value="{{document._id}}">
-        {{#if isFile}} 
+        {{#if isFile}}
         <img src="{{renderIcon document.type}}" alt="..">
         {{else}}
         <img src="/imgs/folder.png" alt="..">
@@ -28,20 +28,24 @@
                 Vào lúc: {{document.createAt}}
             </p>
         </div>
-        <div class="share-permission" data-permissions="{{generalShared.permissions}}">
+        <div class="share-permission">
             <p class="share-permission-heading">Chia sẻ chung</p>
             <ul class="share-permission-list">
+
                 <li class="share-permission-item">
-                    <input type="checkbox" class="general-permission-checkbox" id="preview-checkbox" value="preview">
+                    <input type="checkbox" class="general-permission-checkbox" id="preview-checkbox" value="preview"
+                        {{#if (contains generalShared.permissions 'preview' ) }} checked {{/if}}>
                     <label for="preview-checkbox">Xem</label>
                 </li>
                 <li class="share-permission-item">
-                    <input type="checkbox" class="general-permission-checkbox" id="delete-checkbox" value="delete">
+                    <input type="checkbox" class="general-permission-checkbox" id="delete-checkbox" value="delete" {{#if
+                        (contains generalShared.permissions 'delete' ) }} checked {{/if}}>
                     <label for="delete-checkbox">Xóa</label>
                 </li>
                 {{#if isFile}}
                 <li class="share-permission-item">
-                    <input type="checkbox" class="general-permission-checkbox" id="download-checkbox" value="download">
+                    <input type="checkbox" class="general-permission-checkbox" id="download-checkbox" value="download"
+                        {{#if (contains generalShared.permissions 'download' ) }} checked {{/if}}>
                     <label for="download-checkbox">Tải về</label>
                 </li>
                 {{/if}}
@@ -57,75 +61,77 @@
     </div>
     <div class="shared-user-list">
         <h2 class="shared-article">Chia sẻ tới người dùng</h2>
-        {{#each sharedUsers}}
-            <div class="shared-user">
-                <input class="shared-user-id" type="text" style="display: none" value="{{this.username}}">
-                <div class="shared-user-info">
-                    <p class="shared-user-name">
-                        {{this.username}}
-                    </p>
-                    <p class="shared-user-information">
-                        Phòng ban: {{this.department}}
-                    </p>
-                    <p class="shared-user-information">
-                        Chức vụ: {{this.role}}
-                    </p>
-                </div>
-                <div class="share-permission">
-                    <p class="share-permission-heading">Chia sẻ</p>
-                    <ul class="share-permission-list">
-                        <li class="share-permission-item">
-                            <input type="checkbox" class="user-permission-checkbox" value="preview">
-                            <label>Xem</label>
-                        </li>
-                        <li class="share-permission-item">
-                            <input type="checkbox" class="user-permission-checkbox" value="delete">
-                            <label>Xóa</label>
-                        </li>
-                        <li class="share-permission-item">
-                            <input type="checkbox" class="user-permission-checkbox" value="download">
-                            <label>Tải về</label>
-                        </li>
-                        <li class="share-permission-item">
-                            <input type="checkbox" id="all-checkbox">
-                            <label>Tất cả</label>
-                        </li>
-                    </ul>
-                </div>
-                <i class="fa-solid fa-circle-minus shared-user-remove"></i>
+        {{#each userShared}}
+        <div class="shared-user">
+            <input class="shared-user-id" type="text" style="display: none" value="{{this.username}}">
+            <div class="shared-user-info">
+                <p class="shared-user-name">
+                    {{this.username}}
+                </p>
+                <p class="shared-user-information">
+                    Phòng ban: {{this.department}}
+                </p>
+                <p class="shared-user-information">
+                    Chức vụ: {{this.role}}
+                </p>
             </div>
+            <div class="share-permission">
+                <p class="share-permission-heading">Chia sẻ</p>
+                <ul class="share-permission-list">
+                    <li class="share-permission-item">
+                        <input type="checkbox" class="user-permission-checkbox" value="preview" {{#if (contains
+                            this.shares.permissions 'preview' ) }} checked {{/if}}>
+                        <label>Xem</label>
+                    </li>
+                    <li class="share-permission-item">
+                        <input type="checkbox" class="user-permission-checkbox" value="delete" {{#if (contains
+                            this.shares.permissions 'delete' ) }} checked {{/if}}>
+                        <label>Xóa</label>
+                    </li>
+                    <li class="share-permission-item">
+                        <input type="checkbox" class="user-permission-checkbox" value="download" {{#if (contains
+                            this.shares.permissions 'download' ) }} checked {{/if}}>
+                        <label>Tải về</label>
+                    </li>
+                    <li class="share-permission-item">
+                        <input type="checkbox" id="all-checkbox">
+                        <label>Tất cả</label>
+                    </li>
+                </ul>
+            </div>
+            <i class="fa-solid fa-circle-minus shared-user-remove"></i>
+        </div>
         {{/each}}
     </div>
 </div>
 <script>
-    document.addEventListener('DOMContentLoaded', function(){
+    document.addEventListener('DOMContentLoaded', function () {
         const shareBtn = $('.share-btn')
         const documentId = $('.share-box').find('input.share-document-id').val()
 
-        shareBtn.click(function(e){
+        shareBtn.click(function (e) {
             let generalcheckedCheckboxes = $('.general-permission-checkbox:checked')
             let generalSharePermissions = generalcheckedCheckboxes.map((idx, ele) => {
                 return ele.value
-            }).get() 
-            if(generalSharePermissions.length === 0) generalSharePermissions = 'none'
+            }).get()
+            if (generalSharePermissions.length === 0) generalSharePermissions = 'none'
 
 
             let sharedDepartments = $('.shared-department')
             let sharedDepartmentsData = sharedDepartments.map((idx, department) => {
                 const departmentName = department.querySelector('p.shared-department-name').innerText.toLowerCase()
-                console.log(departmentName)
                 let departmentPermissionCheckboxs = Array.from(department.querySelectorAll('.department-permission-checkbox:checked'))
                 let departmentSharePermissions = departmentPermissionCheckboxs.map(ele => {
                     return ele.value
                 })
-                if(departmentSharePermissions.length === 0) departmentSharePermissions = 'none'
+                if (departmentSharePermissions.length === 0) departmentSharePermissions = 'none'
                 return {
                     departmentName: departmentName,
                     permissions: departmentSharePermissions
                 }
             }).get()
-            if(sharedDepartmentsData.length === 0) sharedDepartmentsData = 'none'
-            
+            if (sharedDepartmentsData.length === 0) sharedDepartmentsData = 'none'
+
             let sharedUsers = $('.shared-user')
             let sharedUsersData = sharedUsers.map((idx, user) => {
                 const userId = user.querySelector('input.shared-user-id').value
@@ -134,14 +140,14 @@
                     return ele.value
                 })
                 console.log(userSharePermissions)
-                if(userSharePermissions.length === 0) userSharePermissions = 'none'
+                if (userSharePermissions.length === 0) userSharePermissions = 'none'
                 return {
                     userId: userId,
                     permissions: userSharePermissions
                 }
             }).get()
-            if(sharedUsersData.length === 0) sharedUsersData = 'none'
-            
+            if (sharedUsersData.length === 0) sharedUsersData = 'none'
+
             $.ajax({
                 url: '/files/action/completeShare',
                 method: 'POST',
