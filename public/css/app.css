@@ -63,13 +63,15 @@ html {
 
 .header-title {
   color: #710c0c;
-  font-size: 2rem;
-  line-height: 40px; }
+  font-size: 1.6rem;
+  line-height: 30px; }
 
 .nav-list {
   list-style: none;
   display: flex;
-  justify-content: space-between; }
+  justify-content: space-between; 
+  align-items: center;
+}
 
 .nav-item:last-child {
   margin-left: auto; }
