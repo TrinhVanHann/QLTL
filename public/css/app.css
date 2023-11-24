@@ -54,8 +54,10 @@ html {
     transform: scaleY(100%); } }
 
 .header {
-  background-color: #8dcbe5;
-  padding: 0px 50px 10px; }
+  background-color: #85b249c2;
+  padding: 10px 40px 10px;
+  
+}
 
 .container {
   width: 100%;
@@ -111,7 +113,7 @@ html {
   right: 8px; }
 
 .sidebar {
-  background-color: #a9bfc4;
+  background-color: #a7af62b3;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -157,7 +159,7 @@ html {
 
 .user-page i {
   font-size: 1.4rem;
-  color: white; }
+  color: black; }
 
 .user-logout {
   margin: 4px;
@@ -166,7 +168,7 @@ html {
 
 .user-logout i {
   font-size: 1.4rem;
-  color: white; }
+  color: black; }
 
 #logout-checkbox:checked ~ .modal {
   display: block; }
@@ -178,7 +180,7 @@ html {
 
 .user-message i {
   font-size: 1.4rem;
-  color: white; }
+  color: black; }
 
 .user-notification {
   font-size: 1.6rem;
@@ -187,7 +189,7 @@ html {
 
 .user-notification i {
   font-size: 1.6rem;
-  color: white; }
+  color: black; }
 
 .category {
   overflow: hidden; }
@@ -196,18 +198,20 @@ html {
   line-height: 40px;
   font-size: 1.6rem;
   display: block;
-  background-color: #0954e0;
-  color: white;
-  padding-left: 20px; }
+  background-color: #af8d62;
+  color: black;
+  padding-left: 20px; 
+  border: 1px solid rgb(0, 0, 0);
+}
 
 .category-article-list {
   display: none; }
 
 .category-article-item {
-  background-color: #6482e6;
+  background-color: #af8d62;
   height: 40px;
-  border-bottom: 2px solid #297bbe;
-  color: white;
+  border-bottom: 2px solid rgb(0, 0, 0);
+  color: black;
   font-size: 1.8rem;
   line-height: 40px;
   padding-left: 40px;
@@ -226,7 +230,7 @@ html {
 .category-share-list a {
   text-decoration: none;
   font-size: 1.4rem;
-  color: white;
+  color: black;
   line-height: 30px;
   padding-left: 60px;
   display: block;
