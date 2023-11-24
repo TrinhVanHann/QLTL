@@ -9,16 +9,16 @@
                     <div class="action-bar">
                         <div class="checkbox-group">
                             <input type="checkbox" id="choose-all">
-                            <label for="choose-all">Chọn</label>
+                            <label for="choose-all">Chọn tất cả </label>
                         </div>
                         <button class="action-btn" id="upload-btn">
-                            Tải lên
+                            <i class="fa-solid fa-upload"></i>
                         </button>
                         <button class="action-btn" id="create-folder-btn">
-                            Tạo thư mục
+                            <i class="fa-solid fa-folder-plus"></i>
                         </button>
                         <button class="action-btn multi-btn" id="delete-btn" disabled>
-                            Xóa
+                            <i class="fa-solid fa-trash-can"></i>
                         </button>
                         
                     </div>
@@ -32,7 +32,7 @@
                         <input type="text" class="find-input" placeholder="Từ ngày">
                         <input type="text" class="find-input" placeholder="Đến ngày">
                         <input type="text" class="find-input" placeholder="Tìm theo tên, mô tả">
-                        <button class="action-btn">Tìm</button>
+                        <button class="action-btn"> <i class="fa-solid fa-magnifying-glass"></i></i></button>
                     </div>
                     <form class="action-form" method="POST">
                         {{> folderList folderList=folderList}}
