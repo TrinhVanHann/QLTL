@@ -1,8 +1,10 @@
-<h1 class="header-title">HỆ THỐNG QUẢN LÝ TÀI LIỆU</h1>
+<h1 class="header-title">
+   <i class="fa-solid fa-database"></i>
+   HỆ THỐNG QUẢN LÝ TÀI LIỆU</h1>
 <div class="nav">
     <ul class="nav-list">
         <li class="nav-item">
-            <a href="/" class="nav-item-link">Trang chủ</a>
+            <a href="/" class="nav-item-link"><i class="fa-solid fa-house"></i>  Trang chủ</a>
         </li>
         {{#each tracebackList}} 
             <li class="nav-item">
@@ -11,18 +13,20 @@
                         {{this.name}}
                     </a>
                 {{else}}
+                   
                     <a href="/folders/{{this._id}}" class="nav-item-link">
+                         <i class="fa-solid fa-user-tie"></i>  
                         {{this.name}}
                         <i class="fa-solid fa-caret-right"></i>
                     </a>
                 {{/if}}
             </li>
         {{/each}}
-        <li class="nav-item">
+        {{!-- <li class="nav-item">
             <div class="nav-item-search">
                 <input type="text" class="nav-item-search-input" placeholder="Từ khóa tìm kiếm ...">
                 <i class="fa-solid fa-magnifying-glass"></i>
             </div>
-        </li>
+        </li> --}}
     </ul>
 </div>
