@@ -39,56 +39,38 @@
                 {{> fileList fileList=fileList}}
             </form>
             {{/case}}
+
+            {{#case 'preview'}}
+            <iframe class="preview-iframe" src="{{iframeSrc}}" width="800" height="600" frameborder="0"></iframe>
+            {{/case}}
+
+            {{#case 'share'}}
+            {{> share document=document generalShared=generalShared userShared=userShared
+            departmentShared=departmentShared}}
+            {{/case}}
+
+            {{#case 'showShare'}}
+            {{> showShare shareFiles=shareFiles shareFolders=shareFolders}}
+            {{/case}}
+
+            {{#case 'trash'}}
+
+            {{/case}}
+
+            {{#case 'none'}}
+            <img src="/imgs/txt.png" alt="">
+            {{/case}}
+
+            {{/switch}}
         </div>
-        <div class="filter-bar">
-            <select name="document-type" class="filter-select">
-                <option value="" selected>--Loại tài liệu--</option>
-            </select>
-            <select name="sort" id="" class="filter-select">
-                <option value="sort-date" selected>Sắp xếp theo ngày</option>
-            </select>
-            <input type="text" class="find-input" placeholder="Từ ngày">
-            <input type="text" class="find-input" placeholder="Đến ngày">
-            <input type="text" class="find-input" placeholder="Tìm theo tên, mô tả">
-            <button class="action-btn">Tìm</button>
+        <div class="col l-3 m-3 c-4">
+            {{#switch renderValue}}
+            {{#case 'share'}}
+            {{> sharedObject notSharedUsers=notSharedUsers notSharedDepartments=notSharedDepartments}}
+            {{/case}}
+            {{/switch}}
         </div>
-        <form class="action-form" method="POST">
-            {{> folderList folderList=folderList}}
-            {{> fileList fileList=fileList}}
-        </form>
-        {{/case}}
-
-        {{#case 'preview'}}
-        <iframe class="preview-iframe" src="{{iframeSrc}}" width="800" height="600" frameborder="0"></iframe>
-        {{/case}}
-
-        {{#case 'share'}}
-        {{> share document=document generalShared=generalShared userShared=userShared
-        departmentShared=departmentShared}}
-        {{/case}}
-
-        {{#case 'showShare'}}
-        {{> showShare shareFiles=shareFiles shareFolders=shareFolders}}
-        {{/case}}
-
-        {{#case 'trash'}}
-
-        {{/case}}
-
-        {{#case 'none'}}
-        <img src="/imgs/txt.png" alt="">
-        {{/case}}
-
-        {{/switch}}
     </div>
-    <div class="col l-3 m-3 c-4">
-        {{#switch renderValue}}
-        {{#case 'share'}}
-        {{> sharedObject notSharedUsers=notSharedUsers notSharedDepartments=notSharedDepartments}}
-        {{/case}}
-        {{/switch}}
-    </div>
-</div>
 </div>
 
 <div class="modal">
