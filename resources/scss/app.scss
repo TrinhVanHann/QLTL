@@ -158,6 +158,14 @@ html {
     display: flex;
     flex-direction: column;
 }
+.change-avatar {
+    cursor: pointer;
+}
+
+.change-avatar i {
+    font-size: 1.4rem;
+    color: black;
+}
 .user-name{
     font-size: 1.6rem;
     line-height: 20px;

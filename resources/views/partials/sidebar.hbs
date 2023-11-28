@@ -12,11 +12,17 @@
                 <div class="user-department">
                     {{user.department}}
                 </div>
+                 <div class="change-avatar" onclick="openFileExplorer(event)">
+                <i class="fa-solid fa-pen-to-square"></i>
             </div>
+            <input type="file" id="avatar-input" style="display: none" accept="image/*" onchange="updateAvatarPreview(event)">
+            </div>
+            
         </div>
-        <a class="user-page" href="/user">
+        
+        {{!-- <a class="user-page" href="/user">
             <i class="fa-solid fa-user"></i> Trang cá nhân
-        </a>
+        </a> --}}
         <label class="user-logout" for="logout-checkbox">
             <i class="fa-solid fa-right-from-bracket"></i> Đăng xuất
         </label>
@@ -62,3 +68,21 @@
         </div>
     </div>
 </div>
+<script>
+    function openFileExplorer(event) {
+         event.preventDefault();
+        document.getElementById('avatar-input').click();
+    }
+</script>
+<script>
+    function updateAvatarPreview(event) {
+        const input = event.target;
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                document.querySelector('.user-avatar').src = e.target.result;
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
