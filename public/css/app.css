@@ -30,7 +30,8 @@ html {
   border-bottom: 1px solid #717070;
   display: flex; }
 
-.table tr th, td {
+.table tr th,
+td {
   width: 120px;
   margin: 0px 4px;
   line-height: 30px;
@@ -41,7 +42,8 @@ html {
   overflow: hidden;
   text-overflow: ellipsis; }
 
-.table tr th:first-child, td:first-child {
+.table tr th:first-child,
+td:first-child {
   width: 200px; }
 
 .table.hidden {
@@ -56,8 +58,7 @@ html {
 .header {
   background-color: #85b249c2;
   padding: 10px 40px 10px;
-  border-bottom:1px solid rgb(0, 0, 0);
-}
+  border: black; }
 
 .container {
   width: 100%;
@@ -65,18 +66,14 @@ html {
 
 .header-title {
   color: #710c0c;
-  font-size: 1.6rem;
+  font-size: 2rem;
   line-height: 30px; }
 
 .nav-list {
   list-style: none;
   display: flex;
-  justify-content: space-between; 
-  align-items: center;
-}
-
-.nav-item:last-child {
-  margin-left: auto; }
+  justify-content: start;
+  align-items: center; }
 
 .nav-item-link {
   font-size: 1.8rem;
@@ -117,9 +114,7 @@ html {
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 100vh;
-  border-right:1px solid rgb(0, 0, 0); 
-}
+  height: 100vh; }
 
 .user {
   margin: 20px;
@@ -141,15 +136,13 @@ html {
 .user-text {
   display: flex;
   flex-direction: column; }
-  
+
 .change-avatar {
-    cursor: pointer;
-}
+  cursor: pointer; }
 
 .change-avatar i {
-    font-size: 1.4rem;
-    color: black;
-}
+  font-size: 1.4rem;
+  color: black; }
 
 .user-name {
   font-size: 1.6rem;
@@ -209,11 +202,9 @@ html {
   line-height: 40px;
   font-size: 1.6rem;
   display: block;
-  background-color: #af8d62;
+  background-color: #a1a7ce;
   color: black;
-  padding-left: 20px; 
-  border: 1px solid rgb(0, 0, 0);
-}
+  padding-left: 20px; }
 
 .category-article-list {
   display: none; }
@@ -221,9 +212,9 @@ html {
 .category-article-item {
   background-color: #af8d62;
   height: 40px;
-  border-bottom: 2px solid rgb(0, 0, 0);
+  border-bottom: 2px solid black;
   color: black;
-  font-size: 1.6rem;
+  font-size: 1.8rem;
   line-height: 40px;
   padding-left: 40px;
   text-decoration: none;
@@ -241,7 +232,7 @@ html {
 .category-share-list a {
   text-decoration: none;
   font-size: 1.4rem;
-  color: black;
+  color: white;
   line-height: 30px;
   padding-left: 60px;
   display: block;

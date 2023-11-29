@@ -117,31 +117,77 @@ class FoldersController {
     //GET folders/action/share/:id   ####### HAS SIDEBAR
     async share(req, res, next) {
         const renderValue = 'share'
-        const isFile = false
+        const isFile = true
         const rootId = req.data.root_id
+        let user = await User.findOne({ _id: req.data.user_id })
         let document = await Folder.findOne({ _id: req.params.id })
-        let Shared = await Share.find({ document_id: document._id })
+        let [userShared, departmentShared, generalShared, shared] = await Promise.all([
+            User.aggregate([
+                {
+                    $addFields: { 'userId': { '$toString': '$_id' } }
+                },
+                {
+                    $lookup: {
+                        from: 'shares',
+                        localField: 'userId',
+                        foreignField: 'shared_object',
+                        as: 'shares'
+                    }
+                },
+                {
+                    $unwind: '$shares',
+                },
+                {
+                    $match: {
+                        'shares.document_id': document._id
+                    }
+                }
+            ]),
+            Department.aggregate([
+                {
+                    $lookup: {
+                        from: 'shares',
+                        localField: 'name',
+                        foreignField: 'shared_object',
+                        as: 'shares'
+                    }
+                },
+                {
+                    $unwind: '$shares'
+                },
+                {
+                    $match: {
+                        'shares.document_id': document._id
+                    }
+                }
+            ]),
+            Share.findOne({ document_id: document._id, type_object: 'general' }),
+        ])
+        const sharedUserId = userShared.map(user => user.userId)
+        const sharedDeparmentName = departmentShared.map(department => department.name)
         let [notSharedUsers, notSharedDepartments] = await Promise.all([
-            User.find({ username: { $nin: [Shared.shared_object, document.owner] } }),
-            Department.find({ name: { $nin: Shared.shared_object } }),
+            User.find({
+                $and: [
+                    { _id: { $nin: sharedUserId } },
+                    { _id: { $nin: document.owner_id } },
+                ]
+            }),
+            Department.find({ name: { $nin: sharedDeparmentName } }),
         ])
 
         document = document.toObject()
-        Shared = Shared.map(shared => shared.toObject())
         notSharedUsers = notSharedUsers.map(user => user.toObject())
         notSharedDepartments = notSharedDepartments.map(department => department.toObject())
-        userShared = Shared.filter(shared => shared.type_object === 'user')
-        departmentShared = Shared.filter(shared => shared.type_object === 'department')
-        generalShared = Shared.filter(shared => shared.type_object === 'general')
+        if (generalShared) generalShared = generalShared.toObject()
+        user = user.toObject()
 
         res.render('home', {
-            document, isFile,
+            document, isFile, user,
             generalShared, userShared, departmentShared, notSharedUsers,
             notSharedDepartments,
             rootId, renderValue
         })
     }
-
 
     //POST folders/action/completeShare
     async completeShare(req, res, next) {

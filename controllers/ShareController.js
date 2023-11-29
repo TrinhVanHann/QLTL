@@ -62,6 +62,7 @@ class ShareController {
     const userId = req.data.user_id
     const rootId = req.data.root_id
     Promise.all([
+      User.findOne({ _id: userId }),
       File.aggregate([
         {
           $lookup: {
@@ -99,9 +100,10 @@ class ShareController {
         }
       ])
     ])
-      .then(([shareFiles, shareFolders]) => {
+      .then(([user, shareFiles, shareFolders]) => {
         const renderValue = 'showShare'
-        res.render('home', { rootId, shareFiles, shareFolders, renderValue })
+        user = user.toObject()
+        res.render('home', { rootId, user, shareFiles, shareFolders, renderValue })
       })
   }
 
@@ -110,6 +112,7 @@ class ShareController {
     const userId = req.data.user_id
     const rootId = req.data.root_id
     Promise.all([
+      User.findOne({ _id: userId }),
       File.aggregate([
         {
           $lookup: {
@@ -147,9 +150,10 @@ class ShareController {
         }
       ])
     ])
-      .then(([shareFiles, shareFolders]) => {
+      .then(([user, shareFiles, shareFolders]) => {
         const renderValue = 'showShare'
-        res.render('home', { rootId, shareFiles, shareFolders, renderValue })
+        user = user.toObject()
+        res.render('home', { rootId, user, shareFiles, shareFolders, renderValue })
       })
   }
 
@@ -157,11 +161,14 @@ class ShareController {
   fileShow(req, res, next) {
     const renderValue = 'preview'
     const rootId = req.data.root_id
-
-    File.findOneWithDeleted({ _id: req.params.id })
-      .then(file => {
+    Promise.all([
+      User.findOne({ _id: req.data.user_id }),
+      File.findOneWithDeleted({ _id: req.params.id })
+    ])
+      .then(([user, file]) => {
         const iframeSrc = `https://drive.google.com/file/d/${file._id}/preview`
-        res.render('home', { rootId, renderValue, iframeSrc })
+        user = user.toObject()
+        res.render('home', { rootId, user, renderValue, iframeSrc })
       })
       .catch(next)
   }

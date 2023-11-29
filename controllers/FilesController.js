@@ -67,9 +67,11 @@ class FilesController {
     const userId = req.data.user_id
     const rootId = req.data.root_id
     let curFile
-
-    File.findOneWithDeleted({ _id: req.params.id })
-      .then(file => {
+    Promise.all([
+      User.findOne({ _id: userId }),
+      File.findOneWithDeleted({ _id: req.params.id })
+    ])
+      .then(([user, file]) => {
         curFile = file
         return tracebackFolder(file)
       })
@@ -113,6 +115,7 @@ class FilesController {
     const renderValue = 'share'
     const isFile = true
     const rootId = req.data.root_id
+    let user = await User.findOne({ _id: req.data.user_id })
     let document = await File.findOne({ _id: req.params.id })
     let [userShared, departmentShared, generalShared, shared] = await Promise.all([
       User.aggregate([
@@ -173,11 +176,10 @@ class FilesController {
     notSharedUsers = notSharedUsers.map(user => user.toObject())
     notSharedDepartments = notSharedDepartments.map(department => department.toObject())
     generalShared = generalShared.toObject()
-    // userShared = userShared.map(user => user.toObject())
-    // departmentShared = departmentShared.map(department => department.toObject())
+    user = user.toObject()
 
     res.render('home', {
-      document, isFile,
+      document, isFile, user,
       generalShared, userShared, departmentShared, notSharedUsers,
       notSharedDepartments,
       rootId, renderValue

@@ -54,7 +54,10 @@
             {{/case}}
 
             {{#case 'trash'}}
-
+            <form class="action-form" method="POST">
+                {{> folderList folderList=folderList}}
+                {{> fileList fileList=fileList}}
+            </form>
             {{/case}}
 
             {{#case 'none'}}

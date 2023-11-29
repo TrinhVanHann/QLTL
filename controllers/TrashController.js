@@ -4,20 +4,23 @@ const File = require('../models/Files')
 class TrashController {
     //GET /trash   ####### HAS SIDEBAR
     index(req, res, next) {
-        const renderValue = 'showList'
+        const renderValue = 'trash'
         const userId = req.data.user_id
         const rootId = req.data.root_id
 
-        Promise.all([File.findDeleted({ owner_id: userId }),
-        Folder.findDeleted({ owner_id: userId })])
-            .then(([fileList, folderList]) => {
-
+        Promise.all([
+            User.findOne({ _id: userId }),
+            File.findDeleted({ owner_id: userId }),
+            Folder.findDeleted({ owner_id: userId })
+        ])
+            .then(([user, fileList, folderList]) => {
+                user = user.toObject()
                 folderList = folderList.map(folder => folder.toObject())
                 fileList = fileList.map(file => file.toObject())
                 fileList = fileList.filter(file => file.deleted)
                 folderList = folderList.filter(folder => folder.deleted)
 
-                res.render('home', { folderList, fileList, rootId, renderValue })
+                res.render('home', { user, folderList, fileList, rootId, renderValue })
             })
     }
 

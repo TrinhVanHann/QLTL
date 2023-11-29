@@ -26,14 +26,18 @@ html {
     border-collapse: collapse;
     width: 100%;
 }
+
 .table tr:first-child {
     border-bottom: 2px solid #4e4c4c;
 }
+
 .table tr {
     border-bottom: 1px solid #717070;
     display: flex;
 }
-.table tr th,td {
+
+.table tr th,
+td {
     width: 120px;
     margin: 0px 4px;
     line-height: 30px;
@@ -44,7 +48,9 @@ html {
     overflow: hidden;
     text-overflow: ellipsis;
 }
-.table tr th:first-child,td:first-child {
+
+.table tr th:first-child,
+td:first-child {
     width: 200px;
 }
 
@@ -57,6 +63,7 @@ html {
     from {
         transform: scaleY(0);
     }
+
     to {
         transform: scaleY(100%);
     }
@@ -66,7 +73,7 @@ html {
 .header {
     background-color: #85b249c2;
     padding: 10px 40px 10px;
-    border:rgb(0, 0, 0);
+    border: rgb(0, 0, 0);
 }
 
 
@@ -85,23 +92,22 @@ html {
 .nav-list {
     list-style: none;
     display: flex;
-    justify-content: space-between;
+    justify-content: start;
     align-items: center;
 }
-.nav-item:last-child {
-    margin-left: auto;
-} 
 
 .nav-item-link {
     font-size: 1.8rem;
     text-decoration: none;
     margin: auto 4px;
 }
-.nav-item:first-child .nav-item-link{
+
+.nav-item:first-child .nav-item-link {
     font-size: 1.8rem;
     margin-right: 16px;
-    color: black 
+    color: black
 }
+
 .nav-item-link i {
     font-size: 1.4rem;
 }
@@ -122,6 +128,7 @@ html {
     outline: none;
     font-size: 1.6rem;
 }
+
 .nav-item-search i {
     position: absolute;
     font-size: 1.6rem;
@@ -137,27 +144,32 @@ html {
     width: 100%;
     height: 100vh;
 }
-.user{
+
+.user {
     margin: 20px;
     display: flex;
     flex-direction: column;
 }
-.user-information{
+
+.user-information {
     height: 60px;
     display: flex;
     align-items: center;
     margin-bottom: 16px;
 }
-.user-avatar{
+
+.user-avatar {
     margin-right: 10px;
     width: 50px;
     border-top-left-radius: 10px;
     border-bottom-right-radius: 10px;
 }
-.user-text{
+
+.user-text {
     display: flex;
     flex-direction: column;
 }
+
 .change-avatar {
     cursor: pointer;
 }
@@ -166,15 +178,18 @@ html {
     font-size: 1.4rem;
     color: black;
 }
-.user-name{
+
+.user-name {
     font-size: 1.6rem;
     line-height: 20px;
 }
-.user-postion{
+
+.user-postion {
     font-size: 1.6rem;
     line-height: 20px;
 }
-.user-department{
+
+.user-department {
     font-size: 1.6rem;
     line-height: 20px;
 }
@@ -183,81 +198,92 @@ html {
     font-size: 1.6rem;
     line-height: 20px;
     margin: 4px;
-} 
+}
+
 .user-page i {
     font-size: 1.4rem;
     color: black;
 }
+
 .user-logout {
     margin: 4px;
     font-size: 1.6rem;
     line-height: 20px;
 }
+
 .user-logout i {
     font-size: 1.4rem;
     color: black;
 }
 
-#logout-checkbox:checked ~ .modal {
+#logout-checkbox:checked~.modal {
     display: block;
 }
 
-.user-message{
+.user-message {
     font-size: 1.6rem;
     line-height: 20px;
     margin: 4px;
 }
+
 .user-message i {
     font-size: 1.4rem;
     color: black;
 }
-.user-notification{
+
+.user-notification {
     font-size: 1.6rem;
     line-height: 20px;
     margin: 4px
 }
+
 .user-notification i {
     font-size: 1.6rem;
     color: black;
 }
 
-.category{
-overflow: hidden;
+.category {
+    overflow: hidden;
 }
 
-.category-article-title{
+.category-article-title {
     line-height: 40px;
     font-size: 1.6rem;
     display: block;
-    background-color: rgb(9, 84, 224);
+    background-color: #a1a7ce;
     color: black;
     padding-left: 20px;
 }
-.category-article-list{
+
+.category-article-list {
     display: none;
 }
+
 .category-article-item {
-background-color: #af8d62;
-  height: 40px;
-  border-bottom: 2px solid rgb(0, 0, 0);
-  color: black;
-  font-size: 1.8rem;
-  line-height: 40px;
-  padding-left: 40px;
-  text-decoration: none;
-  display: block;
+    background-color: #af8d62;
+    height: 40px;
+    border-bottom: 2px solid rgb(0, 0, 0);
+    color: black;
+    font-size: 1.8rem;
+    line-height: 40px;
+    padding-left: 40px;
+    text-decoration: none;
+    display: block;
 }
+
 .category-share-list {
     background-color: rgb(34, 168, 198);
     display: flex;
     flex-direction: column;
     display: none;
 }
-#checkbox:checked ~ .category-share-list {
-    display:block;
+
+#checkbox:checked~.category-share-list {
+    display: block;
 }
+
 .category-share-list a {
-    text-decoration: none; 
+    text-decoration: none;
     font-size: 1.4rem;
     color: white;
     line-height: 30px;
@@ -266,14 +292,17 @@ background-color: #af8d62;
     width: 100%;
     height: 100%
 }
+
 .category-share-list a:hover {
     background-color: rgb(23, 136, 159);
     cursor: pointer;
 }
+
 .category-article-item:hover {
     background-color: #5f72b7;
     cursor: pointer;
 }
+
 .category-article-item:last-child {
     border: none;
 }
@@ -282,38 +311,43 @@ background-color: #af8d62;
     display: none;
 }
 
-.category-article .checkbox:checked ~ .category-article-list {
+.category-article .checkbox:checked~.category-article-list {
     display: block;
 }
 
 // --------- Content -----------
 
 // --- Action bar
-.action-bar{
+.action-bar {
     display: flex;
     height: 40px;
     align-items: center;
     background-color: #ccc;
 }
+
 .checkbox-group {
     display: block;
     margin-right: auto;
     margin-left: 10px;
 }
+
 .checkbox-group label {
     font-size: 1.6rem;
 }
+
 .action-btn {
     height: 30px;
     margin: 4px;
     padding: 0px 8px;
 }
+
 // --- Filter bar 
-.filter-bar{
+.filter-bar {
     display: flex;
     align-items: center;
     background-color: #eee;
 }
+
 .filter-select {
     height: 30px;
     font-size: 1.4rem;
@@ -339,6 +373,7 @@ background-color: #af8d62;
     padding: 0;
     position: relative;
 }
+
 .form-quit {
     position: absolute;
     font-size: 1.8rem;
@@ -349,9 +384,11 @@ background-color: #af8d62;
     top: 0px;
     right: 0px;
 }
+
 .form-quit:hover {
     background-color: #c6c5c5;
 }
+
 .form-header {
     text-align: center;
     line-height: 30px;
@@ -385,9 +422,9 @@ background-color: #af8d62;
     border-radius: 2px;
     color: black;
 }
- 
+
 .custom-action-label:hover {
-    background-color:#e4e2e2;
+    background-color: #e4e2e2;
     cursor: pointer;
 }
 
