@@ -83,7 +83,36 @@
                 document.querySelector('.avatar').src = e.target.result;
             };
             reader.readAsDataURL(input.files[0]);
+            const formData = new FormData();
+            formData.append('avatar', input.files[0]);
+            fetch('/upload-avatar', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                })
+                .catch(error => {
+                    console.error(error);
+                })
         }
     }
 </script>
+{{!-- <script>
+    window.onload = function(){
+        fetch('/get-user-data')
+            .then(response => response.json())
+            .then(data => {
+                const avatarImg = document.querySelector('.avatar');
+                if(data.avatar){
+                    const avatarUrl = 'data:image/png;base64,' + btoa(String.fromCharCode.apply(null, data.avatar.data));
+                    avatarImg.src = avatarUrl;
+                }
+            })
+            .catch(error => {
+                console.error(error);
+            })
+    };
+</script> --}}
 
