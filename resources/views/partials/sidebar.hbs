@@ -71,7 +71,7 @@
 <script>
     function openFileExplorer(event) {
          event.preventDefault();
-        document.getElementById('avatar-input').click();
+         document.getElementById('avatar-input').click();
     }
 </script>
 <script>
@@ -80,9 +80,10 @@
         if (input.files && input.files[0]) {
             const reader = new FileReader();
             reader.onload = function (e) {
-                document.querySelector('.user-avatar').src = e.target.result;
+                document.querySelector('.avatar').src = e.target.result;
             };
             reader.readAsDataURL(input.files[0]);
         }
     }
 </script>
+

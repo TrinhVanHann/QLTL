@@ -13,7 +13,7 @@ class RegisterController {
 
     //POST /register
     async auth(req, res, next) {
-        const { username, password, department, role } = req.body;
+        const { username, password, department, role, avatar } = req.body;
         const secretKey = process.env.SECRET_KEY
 
         const user = await User.findOne({ username: username });
@@ -33,7 +33,9 @@ class RegisterController {
                     password: password,
                     department: department,
                     role: role,
-                    folder_id: newFolder._id
+                    folder_id: newFolder._id,
+                    //path to the avatar
+                    avatar: null
                 })
                 await newUser.save()
 
