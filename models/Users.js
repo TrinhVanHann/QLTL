@@ -7,7 +7,7 @@ const userSchema = new mongoose.Schema({
   folder_id: { type: String },
   role: { type: String },
   department: { type: String },
-  avatar: { type: Buffer }
+  avatar: { type: String }
 });
 
 module.exports = mongoose.model("user", userSchema);

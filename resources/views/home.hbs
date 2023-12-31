@@ -135,6 +135,7 @@
         let deleteBtn = $('.action-btn#delete-btn')
         let actionForm = document.querySelector('form.action-form')
         let filesCache = document.querySelector('input.cache').files
+        
         //----------------Handle event----------------
 
         //------ Handle upload file button and upload file form ---------
@@ -231,9 +232,13 @@
                     </select>      
                 </td>`)
                 newRow.append(`<td>${Math.round(fileInput.files[i].size / 1024)}KB</td>`)
-                newRow.append(`<td><i class="fa-solid fa-circle-xmark" color="red"></i></td>`)
+                newRow.append(`<td><button class="delete_row" onclick="deleteRow(this)"><i class="fa-solid fa-circle-xmark" color="red"></i></button></td>`)
                 uploadFileTable.append(newRow)
             }
+        }
+        function deleteRow(row) {
+            const i = row.parentNode.parentNode.rowIndex;
+            document.getElementById('uploadFileTable').deleteRow(i);
         }
 
         function deleteAllRow(selector) {

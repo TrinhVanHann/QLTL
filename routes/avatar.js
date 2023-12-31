@@ -3,7 +3,6 @@ const router = express.Router();
 const multer = require('multer');
 const AvatarController = require('../controllers/AvatarController');
 const uploadAvatar = multer({
-
     limits: { fileSize: 1024 * 1024 * 100 },
     fileFilter: (req, file, cb) => {
         if(!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
@@ -11,7 +10,8 @@ const uploadAvatar = multer({
         }
         cb(null, true);
     }
+});
 
-}); //limit file size to 100MB
 router.post('/avatar', uploadAvatar.single('avatar'), AvatarController.saveAvatar);
+
 module.exports = router;
