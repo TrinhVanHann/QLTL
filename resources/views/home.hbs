@@ -66,6 +66,7 @@
 
             {{#case 'affStaff'}}
             {{> staffFolderList folderList=staffFolder}}
+            {{> staffFileList fileList=staffFile}}
             {{/case}}
 
             {{#case 'none'}}
@@ -216,13 +217,13 @@
 
         staffFolderList.dblclick(function (e) {
             const folderItem = e.target.closest('.folder')
-            window.location.href = '/folders/' + folderItem.dataset.id
+            window.location.href = '/folders/staff/' + folderItem.dataset.id
         })
 
         staffFileList.dblclick(function (e) {
             if (!e.target.closest('.action-btn') && !e.target.closest('.folder-file-name')) {
                 const fileItem = e.target.closest('.file')
-                window.location.href = '/files/' + fileItem.dataset.id
+                window.location.href = '/files/staff/' + fileItem.dataset.id
             }
         })
 

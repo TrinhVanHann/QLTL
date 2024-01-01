@@ -233,20 +233,24 @@ class FilesController {
 
   staffShow(req, res, next) {
     const renderValue = 'preview'
+    const staffFlag = true
     const userId = req.data.user_id
     const rootId = req.data.root_id
     let curFile
+    let user
     Promise.all([
       User.findOne({ _id: userId }),
       File.findOneWithDeleted({ _id: req.params.id })
     ])
-      .then(([user, file]) => {
-        curFile = file
-        return tracebackFolder(file)
+      .then(([User, File]) => {
+        user = User
+        curFile = File
+        return tracebackFolder(File)
       })
       .then(tracebackList => {
         const iframeSrc = `https://drive.google.com/file/d/${curFile._id}/preview`
-        res.render('home', { rootId, tracebackList, renderValue, iframeSrc })
+        user = user.toObject()
+        res.render('home', { user, rootId, tracebackList, staffFlag, renderValue, iframeSrc })
       })
       .catch(next)
   }
