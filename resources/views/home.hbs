@@ -88,7 +88,7 @@
 <div class="modal">
     <div class="modal-overlay">
         <form method="POST" action="/files/action/upload" enctype="multipart/form-data"
-            class="upload-file-form standard-form">
+            class="upload-file-form ">
             <h2 class="form-header">Upload tài liệu</h2>
             <div class="form-quit"><i class="fa-solid fa-xmark"></i></div>
             <div class="drop-container" id="drop-container">
@@ -146,6 +146,7 @@
         let deleteBtn = $('.action-btn#delete-btn')
         let actionForm = document.querySelector('form.action-form')
         let filesCache = document.querySelector('input.cache').files
+        
         //----------------Handle event----------------
 
         //------ Handle upload file button and upload file form ---------
@@ -254,9 +255,13 @@
                     </select>      
                 </td>`)
                 newRow.append(`<td>${Math.round(fileInput.files[i].size / 1024)}KB</td>`)
-                newRow.append(`<td><i class="fa-solid fa-circle-xmark" color="red"></i></td>`)
+                newRow.append(`<td><button class="delete_row" onclick="deleteRow(this)"><i class="fa-solid fa-circle-xmark" color="red"></i></button></td>`)
                 uploadFileTable.append(newRow)
             }
+        }
+        function deleteRow(row) {
+            const i = row.parentNode.parentNode.rowIndex;
+            document.getElementById('uploadFileTable').deleteRow(i);
         }
 
         function deleteAllRow(selector) {
