@@ -1,4 +1,4 @@
-<ul class="file-list">
+<ul class="file-list own">
     {{#each fileList}}
     <li class="file" data-id="{{this._id}}">
         <div class="checkbox-folder-file">
@@ -10,55 +10,55 @@
         <div class="folder-file-information">
             <p class="folder-file-name">{{this.name}}</p>
             <input type="text" class="rename-file-input" style="display: none" data-id="{{this._id}}">
-            <p class="folder-file-description">Kích cỡ: {{renderSize this.size}}</p> 
+            <p class="folder-file-description">Kích cỡ: {{renderSize this.size}}</p>
             <p class="folder-file-description">Sở hữu: {{this.owner}}</p>
         </div>
         {{#if this.deleted}}
-            <div class="folder-file-operation">
-                <a href="/trash/restore/{{this._id}}">Khôi phục</a>
-                <a href="/trash/trueDelete/{{this._id}}">Xóa vĩnh viễn</a>
-            </div>     
+        <div class="folder-file-operation">
+            <a href="/trash/restore/{{this._id}}">Khôi phục</a>
+            <a href="/trash/trueDelete/{{this._id}}">Xóa vĩnh viễn</a>
+        </div>
         {{else}}
-            <div class="folder-file-operation">
-                <a href="/files/action/download/{{this._id}}">Tải về</a>
-                <a href="/files/{{this._id}}">Xem</a>
-                <a href="/files/action/delete/{{this._id}}">Xóa</a>
-                <div class="more-action">
-                    <a href="/files/action/share/{{this._id}}">Chia sẻ</a>
-                    {{!-- <ul class="more-action-list">
-                        <li class="more-action-item"><a href="/files/action/share/{{this._id}}">Chia sẻ</a></li>
-                        <li class="more-action-item move-action"><a href="">Di chuyển</a></li>
-                    </ul> --}}
-                </div> 
-            </div>  
+        <div class="folder-file-operation">
+            <a href="/files/action/download/{{this._id}}">Tải về</a>
+            <a href="/files/{{this._id}}">Xem</a>
+            <a href="/files/action/delete/{{this._id}}">Xóa</a>
+            <div class="more-action">
+                <a href="/files/action/share/{{this._id}}">Chia sẻ</a>
+                {{!-- <ul class="more-action-list">
+                    <li class="more-action-item"><a href="/files/action/share/{{this._id}}">Chia sẻ</a></li>
+                    <li class="more-action-item move-action"><a href="">Di chuyển</a></li>
+                </ul> --}}
+            </div>
+        </div>
         {{/if}}
     </li>
     {{/each}}
 </ul>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function(){
+    document.addEventListener('DOMContentLoaded', function () {
         let fileNames = $('.folder-file-name')
         let fileNameInput = $('.rename-file-input')
         let moveBtn = $('.more-action-item.move-action')
-        fileNames.dblclick(function(e){
+        fileNames.dblclick(function (e) {
             const target = $(e.target)
-            target.css({"display":"none"})
-            target.siblings('.rename-file-input').css({"display":"block"}).val(target.text())
+            target.css({ "display": "none" })
+            target.siblings('.rename-file-input').css({ "display": "block" }).val(target.text())
         })
-        fileNameInput.blur(function(e){
+        fileNameInput.blur(function (e) {
             handleRenamePost(e)
         })
-        fileNameInput.keyup(function(e){
-            if(e.keyCode === 13){
+        fileNameInput.keyup(function (e) {
+            if (e.keyCode === 13) {
                 handleRenamePost(e)
             }
         })
 
-        function handleRenamePost(e){
+        function handleRenamePost(e) {
             const target = $(e.target)
-            target.css({"display":"none"})
-            target.siblings('.folder-file-name').css({"display":"block"}).text(target.val())
+            target.css({ "display": "none" })
+            target.siblings('.folder-file-name').css({ "display": "block" }).text(target.val())
             $.ajax({
                 url: '/files/action/rename',
                 method: 'POST',
@@ -69,7 +69,7 @@
             })
         }
 
-        moveBtn.click(function(e){
+        moveBtn.click(function (e) {
             const moveFile = e.target.closest('.file')
             const moveFileId = moveFile.datasets.id
             monveFile.remove()

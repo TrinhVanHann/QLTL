@@ -10,6 +10,8 @@ router.post('/action/rename', authenticateToken, foldersController.rename)
 router.get('/action/delete/:id', authenticateToken, checkRBAC, foldersController.delete)
 router.get('/action/share/:id', authenticateToken, checkRBAC, foldersController.share)
 router.post('/action/completeShare', authenticateToken, foldersController.completeShare)
+router.get('/affiliated', authenticateToken, foldersController.affiliated)
 router.use('/:id', authenticateToken, checkRBAC, foldersController.index)
- 
+
+
 module.exports = router 

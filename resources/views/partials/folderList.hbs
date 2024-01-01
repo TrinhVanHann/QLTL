@@ -1,4 +1,4 @@
-<ul class="folder-list">
+<ul class="folder-list own">
     {{#each folderList}}
     <li class="folder" data-id="{{this._id}}">
         <div class="checkbox-folder-file">
@@ -10,18 +10,16 @@
         <div class="folder-file-information">
             <p class="folder-file-name">{{this.name}}</p>
             <input type="text" class="rename-folder-input" style="display: none" data-id="{{this._id}}">
-            <p class="folder-file-description">Hiện có: {{this.folder_childs.length}} thư mục, {{this.file_childs.length}} tệp</p>
+            <p class="folder-file-description">Hiện có: {{this.folder_childs.length}} thư mục,
+                {{this.file_childs.length}} tệp</p>
         </div>
         {{#if this.deleted}}
         <div class="folder-file-operation">
-            {{!-- <a href="/folders/action/download/{{this._id}}">Tải về</a> --}}
             <a href="/trash/restore/{{this._id}}">Khôi phục</a>
             <a href="/trash/trueDelete/{{this._id}}">Xóa vĩnh viễn</a>
-            
         </div>
         {{else}}
         <div class="folder-file-operation">
-            {{!-- <a href="/folders/action/download/{{this._id}}">Tải về</a> --}}
             <a href="/folders/action/delete/{{this._id}}">Xóa</a>
             <a href="/folders/action/share/{{this._id}}">Chia sẻ</a>
         </div>
@@ -31,28 +29,28 @@
 </ul>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function(){
+    document.addEventListener('DOMContentLoaded', function () {
         let folderNames = $('.folder-file-name')
         let folderNameInput = $('.rename-folder-input')
-        folderNames.dblclick(function(e){
+        folderNames.dblclick(function (e) {
             const target = $(e.target)
-            target.css({"display":"none"})
-            target.siblings('.rename-folder-input').css({"display":"block"}).val(target.text())
+            target.css({ "display": "none" })
+            target.siblings('.rename-folder-input').css({ "display": "block" }).val(target.text())
         })
-        folderNameInput.blur(function(e){
+        folderNameInput.blur(function (e) {
             handleRenamePost(e)
         })
-        folderNameInput.keyup(function(e){
-            if(e.keyCode === 13){
+        folderNameInput.keyup(function (e) {
+            if (e.keyCode === 13) {
                 handleRenamePost(e)
             }
         })
 
-        function handleRenamePost(e){
+        function handleRenamePost(e) {
             const target = $(e.target)
-            target.css({"display":"none"})
-            target.siblings('.folder-file-name').css({"display":"block"}).text(target.val())
-            
+            target.css({ "display": "none" })
+            target.siblings('.folder-file-name').css({ "display": "block" }).text(target.val())
+
             $.ajax({
                 url: '/folders/action/rename',
                 method: 'POST',

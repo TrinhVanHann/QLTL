@@ -9,6 +9,7 @@ module.exports = function checkRBAC(req, res, next) {
     User.findOne({ username: req.data.username })
         .then(user => {
             curUser = user
+            if (req.params.id == null) next()
             if (url.includes('files')) return File.findOne({ _id: req.params.id })
             else return Folder.findOne({ _id: req.params.id })
         })
@@ -44,9 +45,9 @@ module.exports = function checkRBAC(req, res, next) {
                         license = false
                         break
                     case 'manager':
-                        User.find({ department: curUser.department, role: 'employee' })
+                        await User.find({ department: curUser.department, role: 'employee' })
                             .then(employees => {
-                                license = employees.every(employee => employee.username !== document.owner) && url[1] !== 'action'
+                                license = employees.some(employee => employee.username === document.owner) && url[1] !== 'action'
                             })
                         req.data.flag = 'manager-employee'
                         break
@@ -58,7 +59,7 @@ module.exports = function checkRBAC(req, res, next) {
                         break
                 }
             }
-            if (license === true) {
+            if (license == true) {
                 next()
             }
             else res.json({ message: 'Bạn không có quyền truy cập vào trang này' })

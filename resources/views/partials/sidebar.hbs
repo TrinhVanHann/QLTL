@@ -7,19 +7,20 @@
                     {{user.username}}
                 </div>
                 <div class="user-postion">
-                    {{iser.role}}
+                    {{user.role}}
                 </div>
                 <div class="user-department">
                     {{user.department}}
                 </div>
-                 <div class="change-avatar" onclick="openFileExplorer(event)">
-                <i class="fa-solid fa-pen-to-square"></i>
+                <div class="change-avatar" onclick="openFileExplorer(event)">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                </div>
+                <input type="file" id="avatar-input" style="display: none" accept="image/*"
+                    onchange="updateAvatarPreview(event)">
             </div>
-            <input type="file" id="avatar-input" style="display: none" accept="image/*" onchange="updateAvatarPreview(event)">
-            </div>
-            
+
         </div>
-        
+
         {{!-- <a class="user-page" href="/user">
             <i class="fa-solid fa-user"></i> Trang cá nhân
         </a> --}}
@@ -27,15 +28,16 @@
             <i class="fa-solid fa-right-from-bracket"></i> Đăng xuất
         </label>
         <input type="checkbox" id="logout-checkbox" style="display: none">
-        <div class="modal " tabindex="-1"> 
+        <div class="modal " tabindex="-1">
             <div class="modal-overlay">
                 <div class="standard-form">
-                <h1 style="font-size: 2rem; margin-bottom: 12px">Đăng xuất</h1>
-                <p style="font-size: 1.6rem">Bạn có chắc chắn muốn đăng xuất?</p>
-                <div class="form-btn-group">
-                    <button class="action-btn logout-btn">Đăng xuất</button>
-                    <label type="button" class="custom-action-label" for="logout-checkbox" style="line-height: 30px; font-size: 1.4rem">Hủy</label>
-                </div>
+                    <h1 style="font-size: 2rem; margin-bottom: 12px">Đăng xuất</h1>
+                    <p style="font-size: 1.6rem">Bạn có chắc chắn muốn đăng xuất?</p>
+                    <div class="form-btn-group">
+                        <button class="action-btn logout-btn">Đăng xuất</button>
+                        <label type="button" class="custom-action-label" for="logout-checkbox"
+                            style="line-height: 30px; font-size: 1.4rem">Hủy</label>
+                    </div>
                 </div>
             </div>
         </div>
@@ -55,22 +57,30 @@
             </label>
             <input type="checkbox" id="category-checkbox" class="checkbox">
             <div class="category-article-list">
-                    <a href="/folders/{{rootId}}" class="category-article-item"><i class="fa-solid fa-folder"> </i> Tài liệu của tôi </a>
-                    <label for="checkbox" class="category-article-item category-share"> <i class="fa-solid fa-share-from-square"> </i> Chia sẻ </i></label>
-                    <input type="checkbox" id="checkbox" class="checkbox">
-                    <div class="category-share-list">
-                        <a href="/share/general"><i class="fa-solid fa-users"></i> Chia sẻ chung  </a>
-                        <a href="/share/user"> <i class="fa-solid fa-user"></i> Từ người dùng </a>
-                        <a href="/share/department"><i class="fa-solid fa-building"></i> Từ phòng ban  </a>
-                    </div>
-                    <a href="/trash" class="category-article-item"> <i class="fa-solid fa-trash-can"></i> Thùng rác </a>
+                <a href="/folders/{{rootId}}" class="category-article-item"><i class="fa-solid fa-folder"> </i> Tài liệu
+                    của tôi </a>
+                <label for="checkbox" class="category-article-item category-share"> <i
+                        class="fa-solid fa-share-from-square"> </i> Chia sẻ </i></label>
+                <input type="checkbox" id="checkbox" class="checkbox">
+                <div class="category-share-list">
+                    <a href="/share/general"><i class="fa-solid fa-users"></i> Chia sẻ chung </a>
+                    <a href="/share/user"> <i class="fa-solid fa-user"></i> Từ người dùng </a>
+                    <a href="/share/department"><i class="fa-solid fa-building"></i> Từ phòng ban </a>
+                </div>
+                {{#switch user.role}}
+                {{#case 'manager'}}
+                <a href="/folders/affiliated" class="category-article-item"><i class="fa-solid fa-folder"> </i>
+                    Tài liệu nhân viên</a>
+                {{/case}}
+                {{/switch}}
+                <a href="/trash" class="category-article-item"> <i class="fa-solid fa-trash-can"></i> Thùng rác </a>
             </div>
         </div>
     </div>
 </div>
 <script>
     function openFileExplorer(event) {
-         event.preventDefault();
+        event.preventDefault();
         document.getElementById('avatar-input').click();
     }
 </script>

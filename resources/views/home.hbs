@@ -24,7 +24,11 @@
             </div>
             <div class="filter-bar">
                 <select name="document-type" class="filter-select">
-                    <option value="" selected>--Loại tài liệu--</option>
+                    <option disabled>--Loại tài liệu--</option>
+                    <option value="administrative">Hành chính</option>
+                    <opion value="report">Báo cáo</opion>
+                    <option value="contract">Hợp đồng</option>
+                    <option value="project">Dự án</option>
                 </select>
                 <select name="sort" id="" class="filter-select">
                     <option value="sort-date" selected>Sắp xếp theo ngày</option>
@@ -58,6 +62,10 @@
                 {{> folderList folderList=folderList}}
                 {{> fileList fileList=fileList}}
             </form>
+            {{/case}}
+
+            {{#case 'affStaff'}}
+            {{> staffFolderList folderList=staffFolder}}
             {{/case}}
 
             {{#case 'none'}}
@@ -128,8 +136,10 @@
         let submitUploadBtn = $('submit-upload-btn')
         let postForm = $('.post-form')
         let curFolderIdInput = $('input[name="curFolderId"]')
-        let folderList = $('.folder-list')
-        let fileList = $('.file-list')
+        let folderList = $('.folder-list.own')
+        let fileList = $('.file-list.own')
+        let staffFolderList = $('.folder-list.staff')
+        let staffFileList = $('.file-list.staff')
         let createFolderBtn = $('#create-folder-btn')
         let logoutBtn = $('.logout-btn')
         let deleteBtn = $('.action-btn#delete-btn')
@@ -204,6 +214,18 @@
             }
         })
 
+        staffFolderList.dblclick(function (e) {
+            const folderItem = e.target.closest('.folder')
+            window.location.href = '/folders/' + folderItem.dataset.id
+        })
+
+        staffFileList.dblclick(function (e) {
+            if (!e.target.closest('.action-btn') && !e.target.closest('.folder-file-name')) {
+                const fileItem = e.target.closest('.file')
+                window.location.href = '/files/' + fileItem.dataset.id
+            }
+        })
+
         function concatFileLists(fileList1, fileList2) {
             const filesArray1 = Array.from(fileList1);
             const filesArray2 = Array.from(fileList2);
@@ -223,7 +245,7 @@
                 const newRow = $(`<tr>`)
                 newRow.append(`<td>${fileInput.files[i].name}</td>`)
                 newRow.append(`<td>
-                    <select name="document-type" class="form-select">
+                    <select name="documentType[]" class="form-select">
                         <option value="Hành chính" selected>Hành chính</option>
                         <option value="Báo cáo">Báo cáo</option>
                         <option value="Hợp đồng">Hợp đồng</option>

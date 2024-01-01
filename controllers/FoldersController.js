@@ -228,6 +228,59 @@ class FoldersController {
             })
         res.redirect('back')
     }
+
+
+    //GET folders/affiliated-staff
+    async affiliated(req, res, next) {
+        const renderValue = 'affStaff'
+        const rootId = req.data.root_id
+        let user = await User.findOne({ _id: req.data.user_id })
+        const staff = await User.find({ department: user.department, role: 'employee' })
+        const staffId = staff.map(staff => staff.folder_id.toString())
+        let staffFolder = await Folder.find({
+            _id: { $in: staffId }
+        })
+        console.log(staffFolder)
+        if (staffFolder) staffFolder = staffFolder.map(folder => folder.toObject())
+        user = user.toObject()
+        res.render('home', { rootId, user, staffFolder, renderValue })
+
+    }
+
+    //GET folders/staff/:id
+    staffIndex(req, res, next) {
+        let user
+        let currentFolderId
+        const userId = req.data.user_id
+        const rootId = req.data.root_id
+        let id = req.params.id
+        const renderValue = 'affStaff'
+
+        Promise.all([Folder.findOne({ _id: id }),
+        User.findOne({ _id: userId })])
+            .then(([curFolder, User]) => {
+                user = User
+                currentFolderId = curFolder._id
+                return Promise.all([tracebackFolder(curFolder),
+                Folder.find({ parent_id: currentFolderId }),
+                File.find({ parent_id: currentFolderId })
+                ])
+            })
+            .then(([tracebackList, folderList, fileList]) => {
+
+                folderList = folderList.map(folder => folder.toObject())
+                fileList = fileList.map(file => file.toObject())
+                user = user.toObject()
+
+                res.render('home', {
+                    folderList, fileList,
+                    user, currentFolderId,
+                    rootId, renderValue,
+                    tracebackList
+                })
+            })
+            .catch(next)
+    }
 }
 
 module.exports = new FoldersController

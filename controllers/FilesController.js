@@ -12,6 +12,8 @@ class FilesController {
   //POST /files/action/upload
   async upload(req, res, next) {
     const files = req.files
+    const fileType = req.body.documentType
+    console.log(fileType)
     const parentId = req.body.parentId
 
     const fileOwner = req.data.username
@@ -39,7 +41,8 @@ class FilesController {
               parent_id: req.body.parentId,
               size: file.size,
               owner_id: fileOwnerId,
-              owner: fileOwner
+              owner: fileOwner,
+              documentType: fileType[index]
             })
 
             return newFile
@@ -225,6 +228,27 @@ class FilesController {
         }
       })
     res.redirect('back')
+  }
+
+
+  staffShow(req, res, next) {
+    const renderValue = 'preview'
+    const userId = req.data.user_id
+    const rootId = req.data.root_id
+    let curFile
+    Promise.all([
+      User.findOne({ _id: userId }),
+      File.findOneWithDeleted({ _id: req.params.id })
+    ])
+      .then(([user, file]) => {
+        curFile = file
+        return tracebackFolder(file)
+      })
+      .then(tracebackList => {
+        const iframeSrc = `https://drive.google.com/file/d/${curFile._id}/preview`
+        res.render('home', { rootId, tracebackList, renderValue, iframeSrc })
+      })
+      .catch(next)
   }
 }
 
