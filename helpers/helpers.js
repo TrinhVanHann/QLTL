@@ -93,5 +93,9 @@ module.exports = {
     contains: (list, item) => {
         if (list) return list.includes(item)
         else return false
+    },
+    filter: (list, category) => {
+        list.filter(ele => ele.documentType === category)
+        return list
     }
 }

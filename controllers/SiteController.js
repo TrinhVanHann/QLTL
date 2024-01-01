@@ -6,7 +6,6 @@ const { response } = require('express')
 class SiteController {
     //GET /
     index(req, res, next) {
-        console.log('HEEEEEEEEEEEE')
         const rootId = req.data.root_id
         const userId = req.data.user_id
         const renderValue = 'none'

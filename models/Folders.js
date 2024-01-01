@@ -6,17 +6,15 @@ const Schema = mongoose.Schema
 mongoose.plugin(slug)
 
 const folderSchema = new Schema({
-    _id: {type: String},
-    name: {type: String },
-    parent_id: {type: String, default: 'none'},
+    _id: { type: String },
+    name: { type: String },
+    parent_id: { type: String, default: 'none' },
     folder_childs: [String],
     file_childs: [String],
-    owner: {type: String},
-    owner_id: {type: String},
-    updatedAt: {type:Date, default: Date.now},
-    createdAt: {type:Date, default: Date.now},
-    deleteAt: {type:Date, default: null},
-},{
+    owner: { type: String },
+    owner_id: { type: String },
+    deleteAt: { type: Date, default: null }
+}, {
     _id: false,
     timestamps: true
 });

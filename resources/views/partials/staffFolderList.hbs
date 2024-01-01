@@ -1,0 +1,18 @@
+<ul class="folder-list staff">
+    {{#each folderList}}
+    <li class="folder staff" data-id="{{this._id}}">
+        <div class="checkbox-folder-file">
+            <input type="checkbox" name="folderIds[]" value="{{this._id}}">
+            <label>
+                <img src="/imgs/folder.png" alt="">
+            </label>
+        </div>
+        <div class="folder-file-information">
+            <p class="folder-file-name">{{this.name}}</p>
+            <input type="text" class="rename-folder-input" style="display: none" data-id="{{this._id}}">
+            <p class="folder-file-description">Hiện có: {{this.folder_childs.length}} thư mục,
+                {{this.file_childs.length}} tệp</p>
+        </div>
+    </li>
+    {{/each}}
+</ul>
