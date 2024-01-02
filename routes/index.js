@@ -6,6 +6,7 @@ const shareRouter = require('./share')
 const usersRouter = require('./users')
 const trashRouter = require('./trash')
 const registerRouter = require('./register')
+const avatarRouter = require('./avatar')
 
 function route(app) {
     app.use('/users', usersRouter)
@@ -16,6 +17,7 @@ function route(app) {
     app.use('/login', loginRouter)
     app.use('/register', registerRouter)
     app.use('/', siteRouter)
+    app.use('/avatar', avatarRouter)
 }
 
 module.exports = route
