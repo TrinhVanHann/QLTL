@@ -1,7 +1,7 @@
 <div class="sidebar">
     <div class="user">
         <div class="user-information">
-            <img src="{imgs/avatar-user.png}" class="user-avatar" alt="..">
+            <img src="/imgs/avatar-user.png" class="user-avatar" alt="..">
             <div class="change-avatar" onclick="openFileExplorer(event)">
                     <i class="fa-solid fa-pen-to-square"></i>
                 </div>
@@ -10,14 +10,17 @@
         </div>
         <div class="user-text">
                 <div class="user-name">
-                    Tên người dùng: {{user.username}}
+                    <label class="user-name-label">User Name</label>: {{user.username}}
                 </div>
                 <div class="user-postion">
-                    Vai trò: {{user.role}}
+
+                    <label class="user-postion-label">Role</label>: {{user.role}}
                 </div>
                 <div class="user-department">
-                    Phòng ban: {{user.department}}
+
+                    <label class="user-department-label">Department</label>: {{user.department}}
                 </div>
+                
                 
         </div>
         {{!-- <a class="user-page" href="/user">
@@ -105,8 +108,8 @@
             processData: false,  // add this line
             contentType: false   // and this line
         })
-        .then(response => response.json())
-        .then(data => console.log(data));
+        
+
     }
     
 </script>

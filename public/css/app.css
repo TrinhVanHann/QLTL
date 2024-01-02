@@ -131,7 +131,8 @@ td:first-child {
   margin-bottom: 16px; }
 
 .user-avatar {
-  margin-right: 10px;
+ 
+  margin-right: 20px;
   width: 50px;
   border-top-left-radius: 10px;
   border-bottom-right-radius: 10px; }
@@ -150,15 +151,27 @@ td:first-child {
 .user-name {
   font-size: 1.6rem;
   line-height: 20px; }
-
+.user-name-label{
+  font-weight: bold;
+  font-size: 1.6rem;
+  line-height: 20px;
+}
 .user-postion {
   font-size: 1.6rem;
   line-height: 20px; }
-
+.user-postion-label{
+    font-weight: bold;
+    font-size: 1.6rem;
+    line-height: 20px;
+}
 .user-department {
   font-size: 1.6rem;
   line-height: 20px; }
-
+.user-department-label{
+    font-weight: bold;
+    font-size: 1.6rem;
+    line-height: 20px;
+}
 .user-page {
   font-size: 1.6rem;
   line-height: 20px;

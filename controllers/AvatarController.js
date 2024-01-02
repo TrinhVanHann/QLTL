@@ -19,14 +19,27 @@ class AvatarController {
         const username = req.data.username;
         //const ext = path.extname(req.file.originalname);
         const avatarPath = `/public/imgs/avatar/${username}`;
-        await User.findOneAndUpdate({ _id: username }, { avatar: avatarPath });
-        res.json({ message: 'Upload success' });
-        res.redirect('back');
+        User.findOne({ username: username })
+        .then((user) => {
+            if (user) {
+                user.avatar = avatarPath;
+                user.save()
+                    .then(() => {
+                        res.json({ message: 'Upload success' });
+                        res.redirect('back');
+                    })
+                    .catch(next);
+            } else {
+                res.status(404).send({ message: 'User not found' });
+            }
+        })
+        .catch(next);
     }
     uploadAvatar(req, res, next) {
         upload.single('avatar')(req, res, err => {
             if (err) {
                 // handle error
+                next(err);
             } else {
                 this.saveAvatar(req, res, next);
             }
