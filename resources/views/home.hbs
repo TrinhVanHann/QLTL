@@ -11,13 +11,13 @@
                     <input type="checkbox" id="choose-all">
                     <label for="choose-all">Chọn tất cả </label>
                 </div>
-                <button class="action-btn" id="upload-btn">
+                <button class="action-btn" id="upload-btn" title="Tải lên tài liệu">
                     <i class="fa-solid fa-upload"></i>
                 </button>
-                <button class="action-btn" id="create-folder-btn">
+                <button class="action-btn" id="create-folder-btn" title="Tạo một thư mục">
                     <i class="fa-solid fa-folder-plus"></i>
                 </button>
-                <button class="action-btn multi-btn" id="delete-btn" disabled>
+                <button class="action-btn multi-btn" id="delete-btn" title="Xóa" disabled>
                     <i class="fa-solid fa-trash-can"></i>
                 </button>
 
@@ -78,8 +78,10 @@
         <div class="col l-3 m-3 c-4">
             {{#switch renderValue}}
             {{#case 'share'}}
-            {{> sharedObject notSharedUsers=notSharedUsers notSharedDepartments=notSharedDepartments}}
+                {{> sharedObject notSharedUsers=notSharedUsers notSharedDepartments=notSharedDepartments}}
             {{/case}}
+            {{#default}}
+                {{> calendar}}
             {{/switch}}
         </div>
     </div>

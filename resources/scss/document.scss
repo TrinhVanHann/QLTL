@@ -49,6 +49,12 @@
     font-size: 1.4rem;
     margin: auto 4px;
     color: black;
+    transition: background-color 0.3s, color 0.3s, transform 0.3s;
+}
+.folder-file-operation a:hover {
+    color: rgb(200, 90, 90);
+    transform: scale(1.1);
+    cursor: pointer;
 }
 .more-action {
     position: relative;
