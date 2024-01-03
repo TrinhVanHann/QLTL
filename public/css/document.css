@@ -1,11 +1,14 @@
 .folder, .file {
   border-bottom: 2px solid #eee;
   display: flex;
-  padding: 10px 10px; }
+  padding: 10px 10px; 
+  background-image: linear-gradient(120deg, #fdfbfb 0%, #c4eca6 100%);
+}
 
 .folder:hover, .file:hover {
   background-color: #ccc;
-  cursor: pointer; }
+  cursor: pointer; 
+}
 
 .checkbox-folder-file {
   display: flex;

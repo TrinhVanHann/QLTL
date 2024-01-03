@@ -53,16 +53,16 @@
 
 .share-permission-item label {
   font-size: 1.4rem;
-  color: green; }
+  color: rgb(14, 13, 14); }
 
 .shared-user, .shared-department {
   display: flex;
   justify-content: space-between;
-  background-image: linear-gradient(0, #c7b1c3, #f8e4f3);
+  background-image: linear-gradient(0, #a5c5be, #d2efc2);
   align-items: center; }
 
 .shared-department {
-  background-image: linear-gradient(0, #a5c5be, #c2eeef); }
+  background-image: linear-gradient(0, #a5c5be, #d2efc2); }
 
 .shared-article {
   font-weight: 500;

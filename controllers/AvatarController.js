@@ -1,6 +1,6 @@
 const multer = require('multer');
 const path = require('path');
-
+const User = require('../models/Users'); // Dòng mới thêm vào
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, 'public/imgs/avatar');
@@ -18,11 +18,11 @@ class AvatarController {
     async saveAvatar(req, res, next) {
         const username = req.data.username;
         const ext = path.extname(req.file.originalname);
-        const avatarPath = `/public/imgs/avatar/${username}+${ext}`;
+        const avatarPath = `/public/imgs/avatar/${username}${ext}`; // Sửa lại đường dẫn
         User.findOne({ username: username })
         .then((user) => {
             if (user) {
-                user.avatar = avatarPath;
+                user.avatar = avatarPath; // Lưu đường dẫn vào trường avatar của user
                 user.save()
                     .then(() => {
                         res.json({ message: 'Upload success' });
@@ -45,8 +45,6 @@ class AvatarController {
             }
         });
     }
-    
 }
 
 module.exports = new AvatarController;
-
