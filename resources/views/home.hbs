@@ -78,10 +78,8 @@
         <div class="col l-3 m-3 c-4">
             {{#switch renderValue}}
             {{#case 'share'}}
-                {{> sharedObject notSharedUsers=notSharedUsers notSharedDepartments=notSharedDepartments}}
-            {{/case}}
-            {{#default}}
-                {{> calendar}}
+            {{> sharedObject notSharedUsers=notSharedUsers notSharedDepartments=notSharedDepartments}}
+                {{/case}}
             {{/switch}}
         </div>
     </div>

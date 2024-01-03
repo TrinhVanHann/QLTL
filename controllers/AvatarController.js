@@ -7,8 +7,8 @@ const storage = multer.diskStorage({
     },
     filename: function (req, file, cb) {
         const username = req.data.username;
-        //const ext = path.extname(file.originalname);
-        cb(null, username);
+        const ext = path.extname(file.originalname);
+        cb(null, username+ext);
     }
 });
 
@@ -17,8 +17,8 @@ const upload = multer({ storage: storage });
 class AvatarController {
     async saveAvatar(req, res, next) {
         const username = req.data.username;
-        //const ext = path.extname(req.file.originalname);
-        const avatarPath = `/public/imgs/avatar/${username}`;
+        const ext = path.extname(req.file.originalname);
+        const avatarPath = `/public/imgs/avatar/${username}+${ext}`;
         User.findOne({ username: username })
         .then((user) => {
             if (user) {
