@@ -1,14 +1,14 @@
 const multer = require('multer');
 const path = require('path');
-
+const User = require('../models/Users'); // Dòng mới thêm vào
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, 'public/imgs/avatar');
     },
     filename: function (req, file, cb) {
-        const userId = req.data.user_id;
+        const username = req.data.username;
         const ext = path.extname(file.originalname);
-        cb(null, userId + ext);
+        cb(null, username+ext);
     }
 });
 
@@ -16,10 +16,34 @@ const upload = multer({ storage: storage });
 
 class AvatarController {
     async saveAvatar(req, res, next) {
-        const user = await User.findOne({ _id: req.data.user_id });
-        const avatarPath = `/public/imgs/avatar/${req.data.user_id}`;
-        await User.findOneAndUpdate({ _id: req.data.user_id }, { avatar: avatarPath });
-        res.json({ message: 'Upload success' });
+        const username = req.data.username;
+        const ext = path.extname(req.file.originalname);
+        const avatarPath = `/public/imgs/avatar/${username}${ext}`; // Sửa lại đường dẫn
+        User.findOne({ username: username })
+        .then((user) => {
+            if (user) {
+                user.avatar = avatarPath; // Lưu đường dẫn vào trường avatar của user
+                user.save()
+                    .then(() => {
+                        res.json({ message: 'Upload success' });
+                        res.redirect('back');
+                    })
+                    .catch(next);
+            } else {
+                res.status(404).send({ message: 'User not found' });
+            }
+        })
+        .catch(next);
+    }
+    uploadAvatar(req, res, next) {
+        upload.single('avatar')(req, res, err => {
+            if (err) {
+                // handle error
+                next(err);
+            } else {
+                this.saveAvatar(req, res, next);
+            }
+        });
     }
 }
 

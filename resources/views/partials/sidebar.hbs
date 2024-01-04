@@ -2,25 +2,27 @@
     <div class="user">
         <div class="user-information">
             <img src="/imgs/avatar-user.png" class="user-avatar" alt="..">
-            <div class="user-text">
-                <div class="user-name">
-                    {{user.username}}
-                </div>
-                <div class="user-postion">
-                    {{user.role}}
-                </div>
-                <div class="user-department">
-                    {{user.department}}
-                </div>
-                <div class="change-avatar" onclick="openFileExplorer(event)">
+            <div class="change-avatar" onclick="openFileExplorer(event)">
                     <i class="fa-solid fa-pen-to-square"></i>
                 </div>
                 <input type="file" id="avatar-input" style="display: none" accept="image/*"
-                    onchange="updateAvatarPreview(event)">
-            </div>
-
+                    onchange="handleAvatarChange(event)">
         </div>
+        <div class="user-text">
+                <div class="user-name">
+                    <label class="user-name-label">User Name</label>: {{user.username}}
+                </div>
+                <div class="user-postion">
 
+                    <label class="user-postion-label">Role</label>: {{user.role}}
+                </div>
+                <div class="user-department">
+
+                    <label class="user-department-label">Department</label>: {{user.department}}
+                </div>
+                
+                
+        </div>
         {{!-- <a class="user-page" href="/user">
             <i class="fa-solid fa-user"></i> Trang cá nhân
         </a> --}}
@@ -83,17 +85,30 @@
         event.preventDefault();
         document.getElementById('avatar-input').click();
     }
-</script>
-<script>
-    function updateAvatarPreview(event) {
-        const input = event.target;
-        if (input.files && input.files[0]) {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                document.querySelector('.avatar').src = e.target.result;
-            };
-            reader.readAsDataURL(input.files[0]);
-    }
+
+    function handleAvatarChange(event) {
+        const file = event.target.files[0];
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const avatar = document.querySelector('.user-avatar');
+            avatar.src = e.target.result;
+            uploadAvatar(file);
+        }
+        reader.readAsDataURL(file);
     }
 
+    function uploadAvatar(file) {
+        const formData = new FormData();
+        formData.append('avatar', new Blob([file], { type: file.type }), file.name);
+
+        $.ajax({
+            url: '/avatar/action/uploadAvatar',
+            method: 'POST',
+            data: formData,
+            processData: false,  // add this line
+            contentType: false   // and this line
+        })
+       
+    }
+    
 </script>

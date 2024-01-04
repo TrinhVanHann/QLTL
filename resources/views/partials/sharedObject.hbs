@@ -1,6 +1,7 @@
 <div class="shared-objects">
     <div class="shared-objects-title">Chọn lựa đối tượng chia sẻ</div>
     <label for="shared-department-checkbox" class="shared-objects-type">
+        <i class="fa-solid fa-caret-right"></i>
         Phòng ban
     </label>
     <input type="checkbox" id="shared-department-checkbox" style="display: none" class="shared-objects-checkbox">
@@ -20,6 +21,7 @@
 
 
     <label for="shared-user-checkbox" class="shared-objects-type">
+        <i class="fa-solid fa-caret-right"></i>
         Người dùng
     </label>
 
@@ -30,15 +32,15 @@
             <i class="fa-solid fa-magnifying-glass"></i>
         </div>
         {{#each notSharedUsers}}
-        <li class="shared-objects-item" hidden>
-            <input type="text" class="ready-user-id" style="display: none" data-id="{{this._id}}"
-                data-role="{{this.role}}">
-            <div class="shared-objects-item-info">
-                <h2>{{this.username}}</h2>
-                <p>Phòng ban: {{this.department}}</p>
-            </div>
-            <i class="fa-solid fa-square-plus shared-user-add"></i>
-        </li>
+            <li class="shared-objects-item" hidden>
+                <input type="text" class="ready-user-id" style="display: none" 
+                       data-id="{{this._id}}" data-role="{{this.role}}">
+                <div class="shared-objects-item-info">
+                    <h2>{{this.username}}</h2>
+                    <p>Phòng ban: {{this.department}}</p>
+                </div>
+                <i class="fa-solid fa-square-plus shared-user-add" title = "Thêm vào danh sách"></i>
+            </li>
         {{/each}}
     </ul>
 </div>

@@ -11,13 +11,13 @@
                     <input type="checkbox" id="choose-all">
                     <label for="choose-all">Chọn tất cả </label>
                 </div>
-                <button class="action-btn" id="upload-btn">
+                <button class="action-btn" id="upload-btn" title="Tải lên tài liệu">
                     <i class="fa-solid fa-upload"></i>
                 </button>
-                <button class="action-btn" id="create-folder-btn">
+                <button class="action-btn" id="create-folder-btn" title="Tạo một thư mục">
                     <i class="fa-solid fa-folder-plus"></i>
                 </button>
-                <button class="action-btn multi-btn" id="delete-btn" disabled>
+                <button class="action-btn multi-btn" id="delete-btn" title="Xóa" disabled>
                     <i class="fa-solid fa-trash-can"></i>
                 </button>
 
@@ -153,7 +153,7 @@
             {{#switch renderValue}}
             {{#case 'share'}}
             {{> sharedObject notSharedUsers=notSharedUsers notSharedDepartments=notSharedDepartments}}
-            {{/case}}
+                {{/case}}
             {{/switch}}
         </div>
     </div>
@@ -327,7 +327,7 @@
                 const newRow = $(`<tr>`)
                 newRow.append(`<td>${fileInput.files[i].name}</td>`)
                 newRow.append(`<td>
-                    <select name="documentType[]" class="form-select">
+                    <select name="documentType[]" class="form-select-type">
                         <option value="Hành chính" selected>Hành chính</option>
                         <option value="Báo cáo">Báo cáo</option>
                         <option value="Hợp đồng">Hợp đồng</option>

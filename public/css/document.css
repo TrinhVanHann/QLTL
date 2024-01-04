@@ -7,12 +7,15 @@
 .file {
   border-bottom: 2px solid #eee;
   display: flex;
-  padding: 10px 10px; }
+  padding: 10px 10px; 
+  background-image: linear-gradient(120deg, #fdfbfb 0%, #c4eca6 100%);
+}
 
 .folder:hover,
 .file:hover {
   background-color: #ccc;
-  cursor: pointer; }
+  cursor: pointer; 
+}
 
 .checkbox-folder-file {
   display: flex;
@@ -46,11 +49,18 @@
   display: flex;
   justify-content: center; }
 
-.folder-file-operation a {
-  display: block;
-  font-size: 1.4rem;
-  margin: auto 4px;
-  color: black; }
+  .folder-file-operation a {
+    display: block;
+    font-size: 1.4rem;
+    margin: auto 4px;
+    color: black;
+    transition: background-color 0.2s, color 0.2s, transform 0.2s;
+}
+.folder-file-operation a:hover {
+    color: rgb(200, 90, 90);
+    transform: scale(1.05);
+    cursor: pointer;
+}
 
 .more-action {
   position: relative;
