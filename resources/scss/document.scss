@@ -1,4 +1,3 @@
-// --- Folder
 .folder-list,
 .file-list {
     display: flex;
@@ -10,7 +9,11 @@
     border-bottom: 2px solid #eee;
     display: flex;
     padding: 10px 10px;
+    margin: 2px 0px;
     background-image: linear-gradient(120deg, #fdfbfb 0%, #c4eca6 100%);
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.1);
+    /* Thêm box-shadow vào đây */
+
 }
 
 .folder:hover,
@@ -46,9 +49,6 @@
     line-height: 24px;
     max-height: 48px;
     overflow: hidden;
-    // display: -webkit-box;
-    // -webkit-box-orient: vertical;
-    // -webkit-line-clamp: 2;
 }
 
 .folder-file-description {
@@ -66,12 +66,12 @@
     font-size: 1.4rem;
     margin: auto 4px;
     color: black;
-    transition: background-color 0.3s, color 0.3s, transform 0.3s;
+    transition: background-color 0.2s, color 0.2s, transform 0.2s;
 }
 
 .folder-file-operation a:hover {
     color: rgb(200, 90, 90);
-    transform: scale(1.1);
+    transform: scale(1.05);
     cursor: pointer;
 }
 
@@ -104,7 +104,6 @@
     font-size: 1.4rem;
     line-height: 40px;
     width: 60px;
-
 }
 
 .more-action-item:hover {

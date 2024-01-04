@@ -4,20 +4,24 @@
     padding: 0px 10px;
     background-color: #ddd;
 }
+
 .share-box {
     display: flex;
     justify-content: space-between;
     background-color: #e8e8e8;
     align-items: center;
-} 
+}
+
 .share-box img {
     width: 50px;
     margin: 0px 12px;
 }
+
 .share-file {
     margin: 10px;
     margin-right: auto;
 }
+
 .share-file-name {
     font-size: 1.6rem;
     color: blue;
@@ -25,15 +29,18 @@
     max-height: 48px;
     overflow: hidden;
 }
+
 .share-file-information {
     font-size: 1.4rem;
     line-height: 20px;
 }
+
 .share-permission {
     width: 50%;
     margin: 10px;
     max-width: 300px;
 }
+
 .share-permission-heading {
     font-size: 1.6rem;
     color: blue;
@@ -42,71 +49,91 @@
     overflow: hidden;
     margin-bottom: 10px;
 }
+
 .share-permission-list {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
 }
+
 .share-permission-item {
     line-height: 24px;
     width: 100px;
 }
+
 .share-permission-item label {
     font-size: 1.4rem;
     color: rgb(14, 13, 14);
 }
 
-.shared-user,.shared-department {
+.shared-user,
+.shared-department {
     display: flex;
     justify-content: space-between;
-    background-image: linear-gradient(0, rgb(199, 177, 195),rgb(248, 228, 243));
+    background-image: linear-gradient(120deg, #fdfbfb 0%, #eef3b4 100%);
     align-items: center;
+    margin-bottom: 4px;
+    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.1);
+    /* Thêm box-shadow vào đây */
 }
+
+
 .shared-department {
-    background-image: linear-gradient(0, rgb(165, 197, 190),rgb(137, 141, 142));
+    background-image: linear-gradient(120deg, #fdfbfb 0%, #afedb6 100%);
 }
+
 .shared-article {
     font-weight: 500;
     font-size: 2rem;
     line-height: 40px;
     padding-left: 20px;
-    background-image: linear-gradient(0, rgb(184, 209, 233),rgb(204, 232, 236)) ;
+    background-image: linear-gradient(0, #b8d1e9, #cce8ec);
 }
-.shared-user-info,.shared-department-info {
+
+.shared-user-info,
+.shared-department-info {
     margin: 10px;
     margin-right: auto;
 }
-.shared-user-name,.shared-department-name {
+
+.shared-user-name,
+.shared-department-name {
     font-size: 1.6rem;
-    color: blue; 
+    color: blue;
     line-height: 24px;
     max-height: 48px;
-    overflow: hidden;   
+    overflow: hidden;
 }
+
 .shared-user-information {
     font-size: 1.4rem;
     line-height: 20px;
 }
-.shared-user-remove,.shared-department-remove {
+
+.shared-user-remove,
+.shared-department-remove {
     font-size: 2rem;
     margin: 0 18px;
-    color: rgb(205, 8, 8)
+    color: #cd0808;
 }
+
 .shared--user-remove:hover {
-    font-size: 2rem; 
+    font-size: 2rem;
     margin: 0 18px;
-    color: rgb(165, 14, 14)
+    color: #a50e0e;
 }
+
 .shared-department-remove:hover {
-    font-size: 2rem; 
+    font-size: 2rem;
     margin: 0 18px;
-    color: rgb(165, 14, 14)
+    color: #a50e0e;
 }
-// Share Objects
+
 .shared-objects {
     display: flex;
     flex-direction: column;
 }
+
 .shared-objects-title {
     font-weight: 600;
     font-size: 1.6rem;
@@ -114,20 +141,24 @@
     background-color: #eee;
     text-align: center;
 }
+
 .shared-objects-type {
     line-height: 40px;
     font-size: 1.6rem;
     display: block;
-    background-color: rgb(12, 73, 158);
+    background-color: #0c499e;
     color: white;
     padding-left: 20px;
 }
-.shared-objects-checkbox:checked + ul.shared-objects-list {
+
+.shared-objects-checkbox:checked+ul.shared-objects-list {
     display: block;
 }
+
 .shared-objects-list {
     display: none;
 }
+
 .shared-objects-item {
     background-color: white;
     border-bottom: 2px solid #eee;
@@ -136,22 +167,26 @@
     align-items: center;
     justify-content: space-between;
     padding: 0px 10px 0px 20px;
-} 
+}
+
 .shared-objects-item:hover {
-    background-color: rgba(186, 196, 177, 0.105); 
-} 
+    background-color: aqua;
+}
+
 .shared-objects-item-info {
     display: flex;
     flex-direction: column;
 }
-.shared-objects-item-info h2{
-    color: rgb(21, 95, 214);
+
+.shared-objects-item-info h2 {
+    color: #155fd6;
     font-size: 1.6rem;
     line-height: 20px;
     text-decoration: none;
     display: block;
 }
-.shared-objects-item-info p{
+
+.shared-objects-item-info p {
     color: black;
     height: 20px;
     font-size: 1.2rem;
@@ -159,8 +194,9 @@
     text-decoration: none;
     display: block;
 }
-.shared-objects-item i{
-    color: rgb(84, 219, 100);
+
+.shared-objects-item i {
+    color: #54db64;
     height: 40px;
     font-size: 2rem;
     line-height: 40px;
@@ -168,14 +204,17 @@
     display: block;
     padding-left: 20px;
 }
-.shared-objects-item i:hover{
-    color: rgb(59, 149, 69);
+
+.shared-objects-item i:hover {
+    color: #3b9545;
 }
+
 .search-user {
     position: relative;
     height: 30px;
     margin: 8px 0px;
 }
+
 .search-user-input {
     background-color: white;
     display: block;
@@ -187,6 +226,7 @@
     width: 90%;
     margin: auto;
 }
+
 .search-user i {
     position: absolute;
     font-size: 1.6rem;

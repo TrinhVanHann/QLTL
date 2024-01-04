@@ -1,3 +1,4 @@
+@charset "UTF-8";
 .folder-list,
 .file-list {
   display: flex;
@@ -7,17 +8,16 @@
 .file {
   border-bottom: 2px solid #eee;
   display: flex;
-  padding: 10px 10px; 
+  padding: 10px 10px;
+  margin: 2px 0px;
   background-image: linear-gradient(120deg, #fdfbfb 0%, #c4eca6 100%);
-  box-shadow: 5px 5px 5px 2px rgba(0, 0, 0, 0.2); /* Thêm box-shadow vào đây */
-  
-}
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.1);
+  /* Thêm box-shadow vào đây */ }
 
 .folder:hover,
 .file:hover {
   background-color: #ccc;
-  cursor: pointer; 
-}
+  cursor: pointer; }
 
 .checkbox-folder-file {
   display: flex;
@@ -51,18 +51,17 @@
   display: flex;
   justify-content: center; }
 
-  .folder-file-operation a {
-    display: block;
-    font-size: 1.4rem;
-    margin: auto 4px;
-    color: black;
-    transition: background-color 0.2s, color 0.2s, transform 0.2s;
-}
+.folder-file-operation a {
+  display: block;
+  font-size: 1.4rem;
+  margin: auto 4px;
+  color: black;
+  transition: background-color 0.2s, color 0.2s, transform 0.2s; }
+
 .folder-file-operation a:hover {
-    color: rgb(200, 90, 90);
-    transform: scale(1.05);
-    cursor: pointer;
-}
+  color: #c85a5a;
+  transform: scale(1.05);
+  cursor: pointer; }
 
 .more-action {
   position: relative;

@@ -42,13 +42,11 @@
                         (contains generalShared.permissions 'delete' ) }} checked {{/if}}>
                     <label for="delete-checkbox">Xóa</label>
                 </li>
-                {{#if isFile}}
                 <li class="share-permission-item">
                     <input type="checkbox" class="general-permission-checkbox" id="download-checkbox" value="download"
                         {{#if (contains generalShared.permissions 'download' ) }} checked {{/if}}>
                     <label for="download-checkbox">Tải về</label>
                 </li>
-                {{/if}}
             </ul>
         </div>
     </div>
@@ -74,13 +72,11 @@
                             this.shares.permissions 'delete' ) }} checked {{/if}}>
                         <label>Xóa</label>
                     </li>
-                    {{#if isFile}}
                     <li class="share-permission-item">
                         <input type="checkbox" class="user-permission-checkbox" value="download" {{#if (contains
                             this.shares.permissions 'download' ) }} checked {{/if}}>
                         <label>Tải về</label>
                     </li>
-                    {{/if}}
                 </ul>
             </div>
             <i class="fa-solid fa-circle-minus shared-department-remove"></i>

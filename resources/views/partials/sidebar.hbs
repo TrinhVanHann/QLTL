@@ -1,31 +1,30 @@
 <div class="sidebar">
-    <div class="user">
+    <div class="user info">
         <div class="user-information">
             <img src="/imgs/avatar-user.png" class="user-avatar" alt="..">
             <div class="change-avatar" onclick="openFileExplorer(event)">
-                    <i class="fa-solid fa-pen-to-square"></i>
-                </div>
-                <input type="file" id="avatar-input" style="display: none" accept="image/*"
-                    onchange="handleAvatarChange(event)">
+                <i class="fa-solid fa-pen-to-square"></i>
+            </div>
+            <input type="file" id="avatar-input" style="display: none" accept="image/*"
+                onchange="handleAvatarChange(event)">
         </div>
         <div class="user-text">
-                <div class="user-name">
-                    <label class="user-name-label">User Name</label>: {{user.username}}
-                </div>
-                <div class="user-postion">
+            <div class="user-name">
+                <label class="user-name-label">User Name</label>: {{user.username}}
+            </div>
+            <div class="user-postion">
 
-                    <label class="user-postion-label">Role</label>: {{user.role}}
-                </div>
-                <div class="user-department">
+                <label class="user-postion-label">Role</label>: {{user.role}}
+            </div>
+            <div class="user-department">
 
-                    <label class="user-department-label">Department</label>: {{user.department}}
-                </div>
-                
-                
+                <label class="user-department-label">Department</label>: {{user.department}}
+            </div>
+
+
         </div>
-        {{!-- <a class="user-page" href="/user">
-            <i class="fa-solid fa-user"></i> Trang cá nhân
-        </a> --}}
+    </div>
+    <div class="user">
         <label class="user-logout" for="logout-checkbox">
             <i class="fa-solid fa-right-from-bracket"></i> Đăng xuất
         </label>
@@ -89,7 +88,7 @@
     function handleAvatarChange(event) {
         const file = event.target.files[0];
         const reader = new FileReader();
-        reader.onload = function(e) {
+        reader.onload = function (e) {
             const avatar = document.querySelector('.user-avatar');
             avatar.src = e.target.result;
             uploadAvatar(file);
@@ -108,7 +107,7 @@
             processData: false,  // add this line
             contentType: false   // and this line
         })
-       
+
     }
-    
+
 </script>

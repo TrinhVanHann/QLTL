@@ -1,3 +1,4 @@
+@charset "UTF-8";
 .share-bar {
   display: flex;
   justify-content: space-between;
@@ -53,16 +54,17 @@
 
 .share-permission-item label {
   font-size: 1.4rem;
-  color: rgb(14, 13, 14); }
+  color: #0e0d0e; }
 
-  .shared-user, .shared-department {
-    display: flex;
-    justify-content: space-between;
-    background-image: linear-gradient(120deg, #fdfbfb 0%, #eef3b4 100%);
-    align-items: center;
-    box-shadow: 4px 4px 4px 2px rgba(0, 0, 0, 0.2); /* Thêm box-shadow vào đây */
-}
-
+.shared-user,
+.shared-department {
+  display: flex;
+  justify-content: space-between;
+  background-image: linear-gradient(120deg, #fdfbfb 0%, #eef3b4 100%);
+  align-items: center;
+  margin-bottom: 4px;
+  box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.1);
+  /* Thêm box-shadow vào đây */ }
 
 .shared-department {
   background-image: linear-gradient(120deg, #fdfbfb 0%, #afedb6 100%); }
@@ -74,11 +76,13 @@
   padding-left: 20px;
   background-image: linear-gradient(0, #b8d1e9, #cce8ec); }
 
-.shared-user-info, .shared-department-info {
+.shared-user-info,
+.shared-department-info {
   margin: 10px;
   margin-right: auto; }
 
-.shared-user-name, .shared-department-name {
+.shared-user-name,
+.shared-department-name {
   font-size: 1.6rem;
   color: blue;
   line-height: 24px;
@@ -89,7 +93,8 @@
   font-size: 1.4rem;
   line-height: 20px; }
 
-.shared-user-remove, .shared-department-remove {
+.shared-user-remove,
+.shared-department-remove {
   font-size: 2rem;
   margin: 0 18px;
   color: #cd0808; }

@@ -58,7 +58,6 @@ td:first-child {
     display: none;
 }
 
-
 @keyframes dropdown {
     from {
         transform: scaleY(0);
@@ -69,25 +68,11 @@ td:first-child {
     }
 }
 
-//------------ header css ----------------
-@keyframes gradient {
-    0% { color: rgb(171, 83, 83); }
-    25% { color: orange; }
-    50% { color: rgb(180, 180, 86); }
-    75% { color: green; }
-    100% { color: blue; }
-}
-
 .header {
     background-color: #85b249c2;
     padding: 10px 40px 10px;
-    border: 1px solid rgb(0, 0, 0);
+    border: 1px solid black;
 }
-
-.gradient-text {
-    animation: gradient 5s linear infinite;
-}
-
 
 .container {
     width: 100%;
@@ -95,11 +80,36 @@ td:first-child {
 }
 
 .header-title {
-    color: rgb(113, 12, 12);
+    color: #710c0c;
     font-size: 2rem;
     line-height: 30px;
 }
 
+@keyframes gradient {
+    0% {
+        color: rgb(171, 83, 83);
+    }
+
+    25% {
+        color: rgb(99, 178, 210);
+    }
+
+    50% {
+        color: rgb(180, 180, 86);
+    }
+
+    75% {
+        color: green;
+    }
+
+    100% {
+        color: blue;
+    }
+}
+
+.gradient-text {
+    animation: gradient 5s linear infinite;
+}
 
 .nav-list {
     list-style: none;
@@ -117,7 +127,7 @@ td:first-child {
 .nav-item:first-child .nav-item-link {
     font-size: 1.8rem;
     margin-right: 16px;
-    color: black
+    color: black;
 }
 
 .nav-item-link i {
@@ -145,10 +155,9 @@ td:first-child {
     position: absolute;
     font-size: 1.6rem;
     top: 6px;
-    right: 8px
+    right: 8px;
 }
 
-// -------------- Sidebar --------------
 .sidebar {
     background-color: #a7af62b3;
     display: flex;
@@ -157,13 +166,21 @@ td:first-child {
     height: 100%;
     min-height: 100vh;
     border-right: 1px solid black;
-
 }
 
 .user {
-    margin: 20px;
+    margin: 10px 20px;
     display: flex;
     flex-direction: column;
+}
+
+.user.info {
+    padding: 10px;
+    margin: 12px;
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    background-color: #22ba61;
 }
 
 .user-information {
@@ -174,6 +191,7 @@ td:first-child {
 }
 
 .user-avatar {
+
     margin-right: 20px;
     width: 50px;
     border-top-left-radius: 10px;
@@ -203,6 +221,7 @@ td:first-child {
     font-weight: bold;
     font-size: 1.6rem;
     line-height: 20px;
+    color: blue;
 }
 
 .user-postion {
@@ -214,6 +233,7 @@ td:first-child {
     font-weight: bold;
     font-size: 1.6rem;
     line-height: 20px;
+    color: blue;
 }
 
 .user-department {
@@ -225,6 +245,7 @@ td:first-child {
     font-weight: bold;
     font-size: 1.6rem;
     line-height: 20px;
+    color: blue;
 }
 
 .user-page {
@@ -313,9 +334,8 @@ td:first-child {
 .user-notification {
     font-size: 1.6rem;
     line-height: 20px;
-    margin: 4px
+    margin: 4px;
 }
-
 
 .user-notification i {
     font-size: 1.6rem;
@@ -338,6 +358,11 @@ td:first-child {
     border-top: 0.5px solid black;
 }
 
+.category-article-title:hover {
+    background-color: #2219d8ab;
+    cursor: pointer;
+}
+
 .category-article-list {
     display: none;
 }
@@ -345,7 +370,7 @@ td:first-child {
 .category-article-item {
     background-color: #af8d62;
     height: 40px;
-    border-bottom: 2px solid rgb(0, 0, 0);
+    border-bottom: 2px solid black;
     color: black;
     font-size: 1.8rem;
     line-height: 40px;
@@ -355,7 +380,7 @@ td:first-child {
 }
 
 .category-share-list {
-    background-color: rgb(34, 168, 198);
+    background-color: #22a8c6;
     display: flex;
     flex-direction: column;
     display: none;
@@ -373,11 +398,11 @@ td:first-child {
     padding-left: 60px;
     display: block;
     width: 100%;
-    height: 100%
+    height: 100%;
 }
 
 .category-share-list a:hover {
-    background-color: rgb(23, 136, 159);
+    background-color: #17889f;
     cursor: pointer;
 }
 
@@ -394,19 +419,15 @@ td:first-child {
     display: none;
 }
 
-//hover for checkbox
-.checkbox:hover {
+.checkbox-group:hover {
     cursor: pointer;
-    color: rgb(0, 0, 0);
+    color: rgb(129, 48, 48);
 }
 
 .category-article .checkbox:checked~.category-article-list {
     display: block;
 }
 
-// --------- Content -----------
-
-// --- Action bar
 .action-bar {
     display: flex;
     height: 40px;
@@ -430,7 +451,6 @@ td:first-child {
     padding: 0px 8px;
 }
 
-// --- Filter bar 
 .filter-bar {
     display: flex;
     align-items: center;
@@ -472,8 +492,6 @@ td:first-child {
     min-width: 0px;
 }
 
-
-// --- Upload file form
 .upload-file-form {
     width: 600px;
     padding: 0;
@@ -484,7 +502,7 @@ td:first-child {
     animation: growth linear 0.1s;
     background-color: white;
     border: 1px solid black;
-    border-radius: 5px; 
+    border-radius: 5px;
 }
 
 .form-quit {
@@ -497,7 +515,6 @@ td:first-child {
     top: 0px;
     right: 0px;
 }
-
 
 .form-quit:hover {
     background-color: #c6c5c5;
@@ -576,5 +593,5 @@ td:first-child {
 
 .preview-iframe {
     width: 100%;
-    height: 100vh
+    height: 100vh;
 }
