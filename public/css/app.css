@@ -70,9 +70,9 @@ td:first-child {
   line-height: 30px; }
 
   @keyframes gradient {
-    0% { color: red; }
-    25% { color: rgb(232, 167, 46); }
-    50% { color: rgb(213, 222, 36); }
+    0% { color: rgb(171, 83, 83); }
+    25% { color: rgb(99, 178, 210); }
+    50% { color: rgb(180, 180, 86); }
     75% { color: green; }
     100% { color: blue; }
 }
@@ -360,10 +360,17 @@ td:first-child {
   max-width: 150px;
   min-width: 0px; }
 
-.upload-file-form.standard-form {
+.upload-file-form {
   width: 600px;
   padding: 0;
-  position: relative; }
+  position: relative;
+  margin: auto;
+  --growth-from: 0.7;
+  --growth-to: 1;
+  animation: growth linear 0.1s;
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 5px; }
 
 .form-quit {
   position: absolute;
@@ -383,10 +390,11 @@ td:first-child {
   line-height: 30px;
   font-size: 1.8rem;
   border-bottom: 3px solid #bccacd;
-  position: fixed;
+  position: relative;
   top: 0;
   right: 0;
-  left: 0; }
+  left: 0; 
+}
 
 .drop-container {
   border: 3px dashed gray;
