@@ -153,7 +153,7 @@
             {{#switch renderValue}}
             {{#case 'share'}}
             {{> sharedObject notSharedUsers=notSharedUsers notSharedDepartments=notSharedDepartments}}
-                {{/case}}
+            {{/case}}
             {{/switch}}
         </div>
     </div>
@@ -161,7 +161,8 @@
 
 <div class="modal">
     <div class="modal-overlay">
-        <form method="POST" action="/files/action/upload" enctype="multipart/form-data" class="upload-file-form ">
+        <form method="POST" action="/files/action/upload" enctype="multipart/form-data"
+            class="upload-file-form standard-form">
             <h2 class="form-header">Upload tài liệu</h2>
             <div class="form-quit"><i class="fa-solid fa-xmark"></i></div>
             <div class="drop-container" id="drop-container">
@@ -364,7 +365,7 @@
 
         chooseAllCheckbox.change(function (e) {
             const isCheckedAll = $(this).prop('checked')
-            chooseFileCheckboxes.closest().prop('checked', isCheckedAll)
+            chooseFileCheckboxes.prop('checked', isCheckedAll)
             chooseFolderCheckboxes.prop('checked', isCheckedAll)
             renderCheckMultiBtn()
         })
@@ -396,61 +397,79 @@
             actionForm.submit()
         })
         //----------------- Filter ------------------------------
-        filterSelect.change(function (e) {
+
+        filterSelect.change(function (e) { filter() })
+        fromDateInput.change(function (e) { filter() })
+        toDateInput.change(function (e) { filter() })
+        searchBtn.click(function (e) { filter() })
+        searchInput.keyup(function (e) {
+            if (e.keyCode === 13) filter()
+        })
+
+        function typeFilter() {
             const selected = filterSelect.val()
             const files = fileList[0].querySelectorAll('.file')
-            for (const file of files) {
-                file.style.display = 'flex'
-            }
             for (const file of files) {
                 if (selected === 'all') return
                 else if (selected !== file.dataset.type) file.style.display = 'none'
             }
-
-        })
-
-
-        searchBtn.click(function (e) {
+        }
+        function search() {
             const value = searchInput.val()
             const folders = folderList[0].querySelectorAll('.folder')
             const files = fileList[0].querySelectorAll('.file')
             for (const file of files) {
-                if (file.querySelector('.folder-file-name').innerText.toLowerCase().includes(value.toLowerCase().trim())) {
+                if (!file.querySelector('.folder-file-name').innerText.toLowerCase().includes(value.toLowerCase().trim())) {
                     file.style.display = 'none'
                 }
-                else file.style.display = 'flex'
             }
             for (const folder of folders) {
-                if (folder.querySelector('.folder-file-name').innerText.toLowerCase().includes(value.toLowerCase().trim())) {
+                if (!folder.querySelector('.folder-file-name').innerText.toLowerCase().includes(value.toLowerCase().trim())) {
                     folder.style.display = 'none'
                 }
-                else folder.style.display = 'flex'
             }
 
-        })
-        searchInput.keyup(function (e) {
-            if (e.keyCode === 13) {
-                const value = searchInput.val()
-                const folders = folderList[0].querySelectorAll('.folder')
-                const files = fileList[0].querySelectorAll('.file')
-                for (const file of files) {
-                    if (file.querySelector('.folder-file-name').innerText.toLowerCase().includes(value.toLowerCase().trim())) {
-                        file.style.display = 'none'
-                    }
-                    else file.style.display = 'flex'
-                }
-                for (const folder of folders) {
-                    if (folder.querySelector('.folder-file-name').innerText.toLowerCase().includes(value.toLowerCase().trim())) {
-                        folder.style.display = 'none'
-                    }
-                    else folder.style.display = 'flex'
-                }
+        }
+        function fromDate() {
+            const date = new Date(fromDateInput.val())
+            const folders = folderList[0].querySelectorAll('.folder')
+            const files = fileList[0].querySelectorAll('.file')
+            for (const file of files) {
+                let createDate = new Date(file.dataset.create)
+                console.log(createDate)
+                console.log(date)
+                if (createDate < date) file.style.display = 'none'
             }
-        })
+            for (const folder of folders) {
+                let createDate = new Date(folder.dataset.create)
+                if (createDate < date) folder.style.display = 'none'
+            }
+        }
+        function toDate() {
+            const date = new Date(fromDateInput.val())
+            const folders = folderList[0].querySelectorAll('.folder')
+            const files = fileList[0].querySelectorAll('.file')
+            for (const file of files) {
+                let createDate = new Date(file.dataset.create)
+                if (createDate > date) file.style.display = 'none'
+            }
+            for (const folder of folders) {
+                let createDate = new Date(folder.dataset.create)
+                if (createDate > date) folder.style.display = 'none'
+            }
+        }
 
 
-
-
+        function filter() {
+            const allFolders = folderList[0].querySelectorAll('.folder')
+            const allFiles = fileList[0].querySelectorAll('.file')
+            for (const file of allFiles) file.style.display = 'flex'
+            for (const folder of allFolders) folder.style.display = 'flex'
+            search()
+            typeFilter()
+            fromDate()
+            toDate()
+        }
 
 
 
@@ -467,17 +486,17 @@
         shareUserList.on('click', '.shared-user-remove', function (e) {
             const sharedUser = e.target.closest('.shared-user')
             const user = $(`
-                <li class="shared-objects-item ready-user">
-                    <input type="text" class="ready-user-id" style="display: none" 
-                       data-id="${sharedUser.querySelector('input.shared-user-id').value}" 
-                       data-role="${sharedUser.querySelectorAll('p.shared-user-information')[1].innerText.slice(10)}">
-                    <div class="shared-objects-item-info">
-                        <h2>${sharedUser.querySelector('p.shared-user-name').innerText}</h2>
-                        <p>${sharedUser.querySelectorAll('p.shared-user-information')[0].innerText}</p>
-                    </div>
-                    <i class="fa-solid fa-square-plus shared-user-add"></i>
-                </li>
-            `)
+                    <li class="shared-objects-item ready-user">
+                        <input type="text" class="ready-user-id" style="display: none" 
+                        data-id="${sharedUser.querySelector('input.shared-user-id').value}" 
+                        data-role="${sharedUser.querySelectorAll('p.shared-user-information')[1].innerText.slice(10)}">
+                        <div class="shared-objects-item-info">
+                            <h2>${sharedUser.querySelector('p.shared-user-name').innerText}</h2>
+                            <p>${sharedUser.querySelectorAll('p.shared-user-information')[0].innerText}</p>
+                        </div>
+                        <i class="fa-solid fa-square-plus shared-user-add"></i>
+                    </li>
+                `)
             readyUserList.append(user)
             sharedUser.remove()
         })
@@ -485,13 +504,13 @@
         shareDepartmentList.on('click', '.shared-department-remove', function (e) {
             const sharedDepartment = e.target.closest('.shared-department')
             const department = $(`
-                <li class="shared-objects-item ready-departments">
-                    <div class="shared-objects-item-info">
-                        <h2>${sharedDepartment.querySelector('p.shared-department-name').innerText.toLowerCase()}</h2>
-                    </div>
-                    <i class="fa-solid fa-square-plus shared-department-add"></i>
-                </li>
-            `)
+                    <li class="shared-objects-item ready-departments">
+                        <div class="shared-objects-item-info">
+                            <h2>${sharedDepartment.querySelector('p.shared-department-name').innerText.toLowerCase()}</h2>
+                        </div>
+                        <i class="fa-solid fa-square-plus shared-department-add"></i>
+                    </li>
+                `)
             readyDepartmentList.append(department)
             sharedDepartment.remove()
         })
@@ -499,44 +518,44 @@
         readyUserList.on('click', '.shared-user-add', function (e) {
             const readyUser = e.target.closest('.shared-objects-item')
             const user = $(`
-                <div class="shared-user">
-                    <input class="shared-user-id" type="text" style="display: none" 
-                            value="${readyUser.querySelector('input').getAttribute('data-id')}">
-                    <div class="shared-user-info">
-                        <p class="shared-user-name">
-                            ${readyUser.querySelector('h2').innerText}
-                        </p>
-                        <p class="shared-user-information">
-                            ${readyUser.querySelector('p').innerText}
-                        </p>
-                        <p class="shared-user-information">
-                            Chức vụ: ${readyUser.querySelector('input').getAttribute('data-role')}
-                        </p>
+                    <div class="shared-user">
+                        <input class="shared-user-id" type="text" style="display: none" 
+                                value="${readyUser.querySelector('input').getAttribute('data-id')}">
+                        <div class="shared-user-info">
+                            <p class="shared-user-name">
+                                ${readyUser.querySelector('h2').innerText}
+                            </p>
+                            <p class="shared-user-information">
+                                ${readyUser.querySelector('p').innerText}
+                            </p>
+                            <p class="shared-user-information">
+                                Chức vụ: ${readyUser.querySelector('input').getAttribute('data-role')}
+                            </p>
+                        </div>
+                        <div class="share-permission">
+                            <p class="share-permission-heading">Chia sẻ</p>
+                            <ul class="share-permission-list">
+                                <li class="share-permission-item">
+                                    <input type="checkbox" class="user-permission-checkbox" value="preview">
+                                    <label for="preview-checkbox">Xem</label>
+                                </li>
+                                <li class="share-permission-item">
+                                    <input type="checkbox" class="user-permission-checkbox" value="delete">
+                                    <label for="delete-checkbox">Xóa</label>
+                                </li>
+                                <li class="share-permission-item">
+                                    <input type="checkbox" class="user-permission-checkbox" value="download">
+                                    <label for="download-checkbox">Tải về</label>
+                                </li>
+                                <li class="share-permission-item">
+                                    <input type="checkbox" class="user-all-checkbox">
+                                    <label>Tất cả</label>
+                                </li>
+                            </ul>
+                        </div>
+                        <i class="fa-solid fa-circle-minus shared-user-remove"></i>
                     </div>
-                    <div class="share-permission">
-                        <p class="share-permission-heading">Chia sẻ</p>
-                        <ul class="share-permission-list">
-                            <li class="share-permission-item">
-                                <input type="checkbox" class="user-permission-checkbox" value="preview">
-                                <label for="preview-checkbox">Xem</label>
-                            </li>
-                            <li class="share-permission-item">
-                                <input type="checkbox" class="user-permission-checkbox" value="delete">
-                                <label for="delete-checkbox">Xóa</label>
-                            </li>
-                            <li class="share-permission-item">
-                                <input type="checkbox" class="user-permission-checkbox" value="download">
-                                <label for="download-checkbox">Tải về</label>
-                            </li>
-                            <li class="share-permission-item">
-                                <input type="checkbox" class="user-all-checkbox">
-                                <label>Tất cả</label>
-                            </li>
-                        </ul>
-                    </div>
-                    <i class="fa-solid fa-circle-minus shared-user-remove"></i>
-                </div>
-            `)
+                `)
             shareUserList.append(user)
             readyUser.remove()
         })
@@ -544,39 +563,38 @@
         readyDepartmentList.on('click', '.shared-department-add', function (e) {
             const readyDepartment = e.target.closest('.shared-objects-item')
             const department = $(`
-                <div class="shared-department">
-                    <div class="shared-department-info">
-                        <p class="shared-department-name">
-                            ${readyDepartment.querySelector('h2').innerText.toUpperCase()}
-                        </p>
+                    <div class="shared-department">
+                        <div class="shared-department-info">
+                            <p class="shared-department-name">
+                                ${readyDepartment.querySelector('h2').innerText.toUpperCase()}
+                            </p>
+                        </div>
+                        <div class="share-permission">
+                            <p class="share-permission-heading">Chia sẻ</p>
+                            <ul class="share-permission-list">
+                                <li class="share-permission-item">
+                                    <input type="checkbox" class="department-permission-checkbox" value="preview">
+                                    <label for="preview-checkbox">Xem</label>
+                                </li>
+                                <li class="share-permission-item">
+                                    <input type="checkbox" class="department-permission-checkbox" value="delete">
+                                    <label for="delete-checkbox">Xóa</label>
+                                </li>
+                                <li class="share-permission-item">
+                                    <input type="checkbox" class="department-permission-checkbox" value="download">
+                                    <label for="download-checkbox">Tải về</label>
+                                </li>
+                                <li class="share-permission-item">
+                                    <input type="checkbox" class="department-all-checkbox">
+                                    <label>Tất cả</label>
+                                </li>
+                            </ul>
+                        </div>
+                        <i class="fa-solid fa-circle-minus shared-department-remove"></i>
                     </div>
-                    <div class="share-permission">
-                        <p class="share-permission-heading">Chia sẻ</p>
-                        <ul class="share-permission-list">
-                            <li class="share-permission-item">
-                                <input type="checkbox" class="department-permission-checkbox" value="preview">
-                                <label for="preview-checkbox">Xem</label>
-                            </li>
-                            <li class="share-permission-item">
-                                <input type="checkbox" class="department-permission-checkbox" value="delete">
-                                <label for="delete-checkbox">Xóa</label>
-                            </li>
-                            <li class="share-permission-item">
-                                <input type="checkbox" class="department-permission-checkbox" value="download">
-                                <label for="download-checkbox">Tải về</label>
-                            </li>
-                            <li class="share-permission-item">
-                                <input type="checkbox" class="department-all-checkbox">
-                                <label>Tất cả</label>
-                            </li>
-                        </ul>
-                    </div>
-                    <i class="fa-solid fa-circle-minus shared-department-remove"></i>
-                </div>
-            `)
+                `)
             shareDepartmentList.append(department)
             readyDepartment.remove()
         })
-
     })
 </script>
