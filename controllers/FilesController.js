@@ -178,8 +178,8 @@ class FilesController {
     document = document.toObject()
     notSharedUsers = notSharedUsers.map(user => user.toObject())
     notSharedDepartments = notSharedDepartments.map(department => department.toObject())
-    generalShared = generalShared.toObject()
     user = user.toObject()
+
 
     res.render('home', {
       document, isFile, user,

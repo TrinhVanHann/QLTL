@@ -1,14 +1,14 @@
 <div class="share-page">
     <div class="share-bar">
         <button class="action-btn">
-            <a href="/files/{{document._id}}" style="display: block; color: black">Trở lại</a>
+            <a href="/folders/{{document.parent_id}}" style="display: block; color: black">Trở lại</a>
         </button>
         <button class="action-btn share-btn">Lưu lại</button>
     </div>
     <div class="share-box">
         <input type="text" class="share-document-id" style="display: none" value="{{document._id}}">
         {{#if isFile}}
-        <img src="{{renderIcon document.type}}" alt="..">
+        <img src="{{renderIcon document.type}}" altsrc="/imgs/folder.png">
         {{else}}
         <img src="/imgs/folder.png" alt="..">
         {{/if}}
@@ -25,7 +25,7 @@
             </p>
             {{/if}}
             <p class="share-file-information">
-                Vào lúc: {{document.createAt}}
+                Vào lúc: {{document.createdAt}}
             </p>
         </div>
         <div class="share-permission">

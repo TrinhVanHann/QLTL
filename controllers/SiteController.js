@@ -16,7 +16,6 @@ class SiteController {
             .then(([rootFolder, user]) => {
                 rootFolder = rootFolder.toObject()
                 user = user.toObject()
-                console.log([user])
                 res.render('home', { rootId, user, renderValue })
             })
             .catch(next)

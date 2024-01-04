@@ -26,7 +26,6 @@ class TrashController {
 
     //GET /trash/restore/:id
     restore(req, res, next) {
-        console.log([req.params])
         Promise.all([
             File.restore({ _id: req.params.id }),
             Folder.restore({ _id: req.params.id })

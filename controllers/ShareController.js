@@ -52,7 +52,6 @@ class ShareController {
       ])
     ])
       .then(([shareFiles, shareFolders]) => {
-        console.log(shareFiles)
         const renderValue = 'showShare'
         res.render('home', { shareFiles, shareFolders, renderValue })
       })

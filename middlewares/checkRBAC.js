@@ -10,7 +10,6 @@ module.exports = function checkRBAC(req, res, next) {
         .then(user => {
             curUser = user
             if (req.params.id == null) next()
-            console.log(req.params.id)
             if (url.includes('files')) return File.findOne({ _id: req.params.id })
             else return Folder.findOne({ _id: req.params.id })
         })
@@ -23,9 +22,7 @@ module.exports = function checkRBAC(req, res, next) {
                         document_id: document._id
                     }
                 )
-                console.log(shares)
                 for (const share of shares) {
-                    console.log(share.permissions)
                     if (url[2] !== 'action') {
                         if (share.permissions.includes('preview')) {
                             license = true;
