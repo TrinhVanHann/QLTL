@@ -32,15 +32,15 @@
             <i class="fa-solid fa-magnifying-glass"></i>
         </div>
         {{#each notSharedUsers}}
-            <li class="shared-objects-item" hidden>
-                <input type="text" class="ready-user-id" style="display: none" 
-                       data-id="{{this._id}}" data-role="{{this.role}}">
-                <div class="shared-objects-item-info">
-                    <h2>{{this.username}}</h2>
-                    <p>Phòng ban: {{this.department}}</p>
-                </div>
-                <i class="fa-solid fa-square-plus shared-user-add" title = "Thêm vào danh sách"></i>
-            </li>
+        <li class="shared-objects-item" hidden>
+            <input type="text" class="ready-user-id" style="display: none" data-id="{{this._id}}"
+                data-role="{{this.role}}">
+            <div class="shared-objects-item-info">
+                <h2>{{this.username}}</h2>
+                <p>Phòng ban: {{this.department}}</p>
+            </div>
+            <i class="fa-solid fa-square-plus shared-user-add" title="Thêm vào danh sách"></i>
+        </li>
         {{/each}}
     </ul>
 </div>
@@ -54,9 +54,9 @@
             for (const user of users) {
                 if (user.querySelector('h2').innerText.toLowerCase().includes(value.toLowerCase().trim()) ||
                     user.querySelector('p').innerText.toLowerCase().includes(value.toLowerCase().trim())) {
-                    user.closest('.shared-objects-item').style.display = 'none'
+                    user.closest('.shared-objects-item').style.display = 'flex'
                 }
-                else user.closest('.shared-objects-item').style.display = 'flex'
+                else user.closest('.shared-objects-item').style.display = 'none'
             }
 
         })

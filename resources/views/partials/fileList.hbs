@@ -1,6 +1,6 @@
 <ul class="file-list own">
     {{#each fileList}}
-    <li class="file" data-id="{{this._id}}" data-type="{{this.documentType}}" data-create="{{this.createAt}}">
+    <li class="file" data-id="{{this._id}}" data-type="{{this.documentType}}" data-create="{{this.createdAt}}">
         <div class="checkbox-folder-file">
             <input type="checkbox" name="fileIds[]" value="{{this._id}}">
             <label for="choose-folder-file">
@@ -11,7 +11,9 @@
             <p class="folder-file-name">{{this.name}}</p>
             <input type="text" class="rename-file-input" style="display: none" data-id="{{this._id}}">
             <p class="folder-file-description">Kích cỡ: {{renderSize this.size}}</p>
+            <p class="folder-file-description">Loại: {{this.documentType}}</p>
             <p class="folder-file-description">Sở hữu: {{this.owner}}</p>
+
         </div>
         {{#if this.deleted}}
         <div class="folder-file-operation">

@@ -5,17 +5,20 @@
     flex-direction: column;
 }
 
-.folder, .file {
+.folder,
+.file {
     border-bottom: 2px solid #eee;
     display: flex;
-    padding: 10px 10px; 
+    padding: 10px 10px;
     background-image: linear-gradient(120deg, #fdfbfb 0%, #c4eca6 100%);
-  }
-  
-  .folder:hover, .file:hover {
+}
+
+.folder:hover,
+.file:hover {
     background-color: #ccc;
-    cursor: pointer; 
-  }
+    cursor: pointer;
+}
+
 .checkbox-folder-file {
     display: flex;
     align-items: self-start;
@@ -65,6 +68,7 @@
     color: black;
     transition: background-color 0.3s, color 0.3s, transform 0.3s;
 }
+
 .folder-file-operation a:hover {
     color: rgb(200, 90, 90);
     transform: scale(1.1);
