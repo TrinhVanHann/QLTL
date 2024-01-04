@@ -55,14 +55,17 @@
   font-size: 1.4rem;
   color: rgb(14, 13, 14); }
 
-.shared-user, .shared-department {
-  display: flex;
-  justify-content: space-between;
-  background-image: linear-gradient(0, #a5c5be, #d2efc2);
-  align-items: center; }
+  .shared-user, .shared-department {
+    display: flex;
+    justify-content: space-between;
+    background-image: linear-gradient(120deg, #fdfbfb 0%, #eef3b4 100%);
+    align-items: center;
+    box-shadow: 4px 4px 4px 2px rgba(0, 0, 0, 0.2); /* Thêm box-shadow vào đây */
+}
+
 
 .shared-department {
-  background-image: linear-gradient(0, #a5c5be, #d2efc2); }
+  background-image: linear-gradient(120deg, #fdfbfb 0%, #afedb6 100%); }
 
 .shared-article {
   font-weight: 500;
