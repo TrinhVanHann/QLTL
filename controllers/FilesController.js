@@ -13,7 +13,6 @@ class FilesController {
   async upload(req, res, next) {
     const files = req.files
     const fileType = req.body.documentType
-    console.log(fileType)
     const parentId = req.body.parentId
 
     const fileOwner = req.data.username
@@ -102,7 +101,9 @@ class FilesController {
   download(req, res, next) {
     File.findOne({ _id: req.params.id })
       .then(file => downloadFile(file._id, `C:\\Users\\Administrator\\Downloads\\${file.name}`))
-      .then(() => res.redirect('back'))
+      .then(() => {
+        res.redirect('back')
+      })
       .catch(next)
   }
 

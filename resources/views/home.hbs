@@ -34,13 +34,6 @@
                     </select>
                 </div>
                 <div class="filter-item">
-                    <label class="filter-label">Sắp xếp theo ngày</label>
-                    <select name="sort-by-date" class="filter-select">
-                        <option value="newest">Mới nhất</option>
-                        <option value="oldest" selected>Lâu nhất </option>
-                    </select>
-                </div>
-                <div class="filter-item">
                     <label class="filter-label">Từ ngày</label>
                     <input type="date" id="start-date" class="find-input">
                 </div>
@@ -80,13 +73,6 @@
                     </select>
                 </div>
                 <div class="filter-item">
-                    <label class="filter-label">Sắp xếp theo ngày</label>
-                    <select name="sort-by-date" class="filter-select">
-                        <option value="newest">Mới nhất</option>
-                        <option value="oldest" selected>Lâu nhất </option>
-                    </select>
-                </div>
-                <div class="filter-item">
                     <label class="filter-label">Từ ngày</label>
                     <input type="date" id="start-date" class="find-input">
                 </div>
@@ -114,13 +100,6 @@
                     </select>
                 </div>
                 <div class="filter-item">
-                    <label class="filter-label">Sắp xếp theo ngày</label>
-                    <select name="sort-by-date" class="filter-select">
-                        <option value="newest">Mới nhất</option>
-                        <option value="oldest" selected>Lâu nhất </option>
-                    </select>
-                </div>
-                <div class="filter-item">
                     <label class="filter-label">Từ ngày</label>
                     <input type="date" id="start-date" class="find-input">
                 </div>
@@ -128,7 +107,6 @@
                     <label class="filter-label">Đến ngày</label>
                     <input type="date" id="end-date" class="find-input">
                 </div>
-
                 <input type="text" id="search" class="find-input" placeholder="Tìm theo tên, mô tả">
                 <button class="action-btn" id="search-btn"> <i class="fa-solid fa-magnifying-glass"></i></i></button>
             </div>
@@ -225,7 +203,7 @@
         let searchInput = $('input#search.find-input')
         let searchBtn = $('.action-btn#search-btn')
         let fromDateInput = $('input#start-date')
-        let toDateInput = $('.input#end-date')
+        let toDateInput = $('input#end-date')
 
 
         //----------------Handle event----------------
@@ -431,30 +409,29 @@
 
         }
         function fromDate() {
-            const date = new Date(fromDateInput.val())
+            const date = Date.parse(fromDateInput.val())
             const folders = folderList[0].querySelectorAll('.folder')
             const files = fileList[0].querySelectorAll('.file')
             for (const file of files) {
-                let createDate = new Date(file.dataset.create)
-                console.log(createDate)
-                console.log(date)
+                let createDate = Date.parse(file.dataset.create)
                 if (createDate < date) file.style.display = 'none'
             }
             for (const folder of folders) {
-                let createDate = new Date(folder.dataset.create)
+                let createDate = Date.parse(folder.dataset.create)
                 if (createDate < date) folder.style.display = 'none'
             }
         }
         function toDate() {
-            const date = new Date(fromDateInput.val())
+            const date = Date.parse(toDateInput.val())
+            console.log(date)
             const folders = folderList[0].querySelectorAll('.folder')
             const files = fileList[0].querySelectorAll('.file')
             for (const file of files) {
-                let createDate = new Date(file.dataset.create)
+                let createDate = Date.parse(file.dataset.create)
                 if (createDate > date) file.style.display = 'none'
             }
             for (const folder of folders) {
-                let createDate = new Date(folder.dataset.create)
+                let createDate = Date.parse(folder.dataset.create)
                 if (createDate > date) folder.style.display = 'none'
             }
         }
