@@ -10,7 +10,6 @@ const fileSchema = new Schema({
     name: { type: String },
     parent_id: { type: String, default: 'none' },
     type: { type: String },
-    company_type: { type: String },
     size: { type: Number },
     owner: { type: String },
     owner_id: { type: String },

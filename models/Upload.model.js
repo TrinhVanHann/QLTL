@@ -1,6 +1,6 @@
 require('dotenv').config();
 
-const {google} = require('googleapis');
+const { google } = require('googleapis');
 const fs = require('fs');
 const path = require('path');
 
@@ -10,7 +10,7 @@ const REDIRECT_URI = process.env.REDIRECT_URI;
 const REFRESH_TOKEN = process.env.REFRESH_TOKEN;
 
 const oauth2Client = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI);
-oauth2Client.setCredentials({refresh_token: REFRESH_TOKEN});
+oauth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
 
 const drive = google.drive({
     version: 'v3',
@@ -18,7 +18,7 @@ const drive = google.drive({
 })
 
 var that = module.exports = {
-    setFilePublic: async(fileId) =>{
+    setFilePublic: async (fileId) => {
         try {
             await drive.permissions.create({
                 fileId,
@@ -40,7 +40,7 @@ var that = module.exports = {
     },
     uploadFile: async (file, parentId) => {
         try {
-            file.originalname =  Buffer.from(file.originalname, 'latin1').toString('utf-8')
+            file.originalname = Buffer.from(file.originalname, 'latin1').toString('utf-8')
             const createFile = await drive.files.create({
                 resource: {
                     name: file.originalname,
@@ -69,7 +69,7 @@ var that = module.exports = {
                     body: fs.createReadStream(file.path)
                 }
             })
-            
+
             return fileId
         } catch (error) {
             console.error(error);
@@ -77,11 +77,9 @@ var that = module.exports = {
     },
     deleteFile: async (fileId) => {
         try {
-            console.log('Delete File:::', fileId);
             const deleteFile = await drive.files.delete({
                 fileId: fileId
             })
-            console.log(deleteFile.data, deleteFile.status)
         } catch (error) {
             console.error(error);
         }
@@ -98,10 +96,10 @@ var that = module.exports = {
                 fields: 'id',
             });
             return file.data.id
-            
+
         } catch (err) {
             throw err;
-        }  
+        }
     },
     renameDocument: async function (fileId, newName) {
         try {
@@ -121,31 +119,31 @@ var that = module.exports = {
             const iframeSrc = `https://drive.google.com/file/d/${FILE_ID}/preview`
             return iframeSrc
         }
-        catch (err){
+        catch (err) {
             console.error(err)
         }
     },
-    downloadFile: async function(fileId, destPath) {
+    downloadFile: async function (fileId, destPath) {
         const dest = fs.createWriteStream(destPath);
 
         drive.files.get(
-        { fileId, alt: 'media' },
-        { responseType: 'stream' },
-        (err, res) => {
-            if (err) {
-                console.error(err);
-                return;
-            }
+            { fileId, alt: 'media' },
+            { responseType: 'stream' },
+            (err, res) => {
+                if (err) {
+                    console.error(err);
+                    return;
+                }
 
-            res.data
-            .on('end', () => {
-                console.log('File downloaded');
-            })
-            .on('error', (err) => {
-                console.error('Error downloading file', err);
-            })
-            .pipe(dest);
-        }
+                res.data
+                    .on('end', () => {
+                        console.log('File downloaded');
+                    })
+                    .on('error', (err) => {
+                        console.error('Error downloading file', err);
+                    })
+                    .pipe(dest);
+            }
         );
     },
     downloadFolder: async function (folderId, destPath) {
