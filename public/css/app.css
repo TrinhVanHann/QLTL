@@ -70,9 +70,9 @@ td:first-child {
   line-height: 30px; }
 
   @keyframes gradient {
-    0% { color: red; }
-    25% { color: rgb(232, 167, 46); }
-    50% { color: rgb(213, 222, 36); }
+    0% { color: rgb(171, 83, 83); }
+    25% { color: rgb(99, 178, 210); }
+    50% { color: rgb(180, 180, 86); }
     75% { color: green; }
     100% { color: blue; }
 }
