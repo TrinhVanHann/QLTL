@@ -1,6 +1,6 @@
 <ul class="folder-list own">
     {{#each folderList}}
-    <li class="folder" data-id="{{this._id}}">
+    <li class="folder" data-id="{{this._id}}" data-type="{{this.documentType}}" data-create="{{this.createdAt}}">
         <div class="checkbox-folder-file">
             <input type="checkbox" name="folderIds[]" value="{{this._id}}">
             <label>

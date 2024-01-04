@@ -28,6 +28,7 @@
                 <a class="form-text-passchange" href="/login/change">Đổi tại đây</a>
             </p>
             <div class="form-btn-group">
+                <span class="form-message"></span>
                 <button class="form-btn">Đăng nhập</button>
             </div>
         </div>
@@ -99,7 +100,7 @@
                     setCookie('token', reply.token, 1)
                     window.location.href = '/'
                 })
-                .catch(() => console.log("Đăng nhập thất bại"))
+                .catch(() => alert('Đăng nhập thất bại, hãy kiểm tra lại các thông tin đăng nhập'))
         })
 
         // --------

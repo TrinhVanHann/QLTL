@@ -176,6 +176,8 @@ class FoldersController {
         ])
 
         document = document.toObject()
+        document.createdAt = document.createdAt.toString()
+        console.log(document)
         notSharedUsers = notSharedUsers.map(user => user.toObject())
         notSharedDepartments = notSharedDepartments.map(department => department.toObject())
         if (generalShared) generalShared = generalShared.toObject()

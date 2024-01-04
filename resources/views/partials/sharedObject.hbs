@@ -7,15 +7,14 @@
     <input type="checkbox" id="shared-department-checkbox" style="display: none" class="shared-objects-checkbox">
     <ul class="shared-objects-list ready-departments">
         {{#each notSharedDepartments}}
-            <li class="shared-objects-item">
-                <div class="shared-objects-item-info">
-                    <h2>{{this.name}}</h2>
-                </div>
-                <i class="fa-solid fa-square-plus shared-department-add"></i>
-            </li>
+        <li class="shared-objects-item">
+            <div class="shared-objects-item-info">
+                <h2>{{this.name}}</h2>
+            </div>
+            <i class="fa-solid fa-square-plus shared-department-add"></i>
+        </li>
         {{/each}}
     </ul>
-
 
 
 
@@ -25,7 +24,7 @@
         <i class="fa-solid fa-caret-right"></i>
         Người dùng
     </label>
-    
+
     <input type="checkbox" id="shared-user-checkbox" style="display: none" class="shared-objects-checkbox">
     <ul class="shared-objects-list ready-users">
         <div class="search-user">
@@ -46,38 +45,33 @@
     </ul>
 </div>
 <script>
-    document.addEventListener('DOMContentLoaded',function(e){
+    document.addEventListener('DOMContentLoaded', function (e) {
         let searchInput = $('input.search-user-input')
         let searchBtn = $('.search-user i')
         let users = $('.ready-users .shared-objects-item-info')
-        console.log([users])
-        console.log(searchBtn)
-        console.log(searchInput)
-        searchBtn.click(function(e){
+        searchBtn.click(function (e) {
             const value = searchInput.val()
-            for( const user of users ){
-                console.log([user])
-                if(!user.querySelector('h2').innerText.includes(value) && 
-                   !user.querySelector('p').innerText.includes(value)) {
-                   user.closest('.shared-objects-item').style.display = 'none'
+            for (const user of users) {
+                if (user.querySelector('h2').innerText.toLowerCase().includes(value.toLowerCase().trim()) ||
+                    user.querySelector('p').innerText.toLowerCase().includes(value.toLowerCase().trim())) {
+                    user.closest('.shared-objects-item').style.display = 'none'
                 }
                 else user.closest('.shared-objects-item').style.display = 'flex'
             }
 
         })
-        searchInput.keyup(function(e){
-            if(e.keyCode === 13) {
+        searchInput.keyup(function (e) {
+            if (e.keyCode === 13) {
                 const value = searchInput.val()
-                for( const user of users ){
-                    console.log([user])
-                    if(user.querySelector('h2').innerText.includes(value) || 
-                    user.querySelector('p').innerText.includes(value)) {
+                for (const user of users) {
+                    if (user.querySelector('h2').innerText.toLowerCase().includes(value.toLowerCase().trim()) ||
+                        user.querySelector('p').innerText.toLowerCase().includes(value.toLowerCase().trim())) {
                         user.closest('.shared-objects-item').style.display = 'flex'
                     }
                     else user.closest('.shared-objects-item').style.display = 'none'
                 }
             }
         })
-        
+
     })
 </script>

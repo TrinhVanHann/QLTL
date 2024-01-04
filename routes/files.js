@@ -13,6 +13,5 @@ router.post('/action/rename', authenticateToken, filesController.rename)
 router.post('/action/completeShare', authenticateToken, filesController.completeShare)
 router.post('/action/upload', authenticateToken, upload.array('file'), filesController.upload)
 router.get('/staff/:id', authenticateToken, checkRBAC, filesController.staffShow)
-
 router.get('/:id', authenticateToken, checkRBAC, filesController.show)
 module.exports = router 

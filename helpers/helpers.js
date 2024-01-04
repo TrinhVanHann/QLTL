@@ -47,8 +47,7 @@ Handlebars.registerHelper('default', function (value, options) {
     }
 });
 module.exports = {
-    renderIcon: (type) => {
-        console.log([type])
+    renderIcon: (type = 'application/vnd.google-apps.folder') => {
         const mimeTypeToIcon = {
             'application/vnd.google-apps.folder': 'folder.png',
             'application/pdf': 'PDF.png',
@@ -62,8 +61,7 @@ module.exports = {
             'image/png': 'IMG.png',
             'image/jpeg': 'IMG.png'
         };
-        const url = mimeTypeToIcon[type]
-
+        let url = mimeTypeToIcon[type]
         return '/imgs/' + url
     },
     renderSize: (size) => {

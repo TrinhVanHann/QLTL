@@ -23,20 +23,34 @@
 
             </div>
             <div class="filter-bar">
-                <select name="document-type" class="filter-select">
-                    <option disabled>--Loại tài liệu--</option>
-                    <option value="administrative">Hành chính</option>
-                    <opion value="report">Báo cáo</opion>
-                    <option value="contract">Hợp đồng</option>
-                    <option value="project">Dự án</option>
-                </select>
-                <select name="sort" id="" class="filter-select">
-                    <option value="sort-date" selected>Sắp xếp theo ngày</option>
-                </select>
-                <input type="text" class="find-input" placeholder="Từ ngày">
-                <input type="text" class="find-input" placeholder="Đến ngày">
-                <input type="text" class="find-input" placeholder="Tìm theo tên, mô tả">
-                <button class="action-btn"> <i class="fa-solid fa-magnifying-glass"></i></i></button>
+                <div class="filter-item">
+                    <label class="filter-label">Loại tài liệu</label>
+                    <select name="document-type" class="filter-select">
+                        <option value="Hành chính">Hành chính</option>
+                        <option value="Báo cáo">Báo cáo</opion>
+                        <option value="Hợp đồng">Hợp đồng</option>
+                        <option value="Dự án">Dự án</option>
+                        <option value="all" selected>Tất cả</option>
+                    </select>
+                </div>
+                <div class="filter-item">
+                    <label class="filter-label">Sắp xếp theo ngày</label>
+                    <select name="sort-by-date" class="filter-select">
+                        <option value="newest">Mới nhất</option>
+                        <option value="oldest" selected>Lâu nhất </option>
+                    </select>
+                </div>
+                <div class="filter-item">
+                    <label class="filter-label">Từ ngày</label>
+                    <input type="date" id="start-date" class="find-input">
+                </div>
+                <div class="filter-item">
+                    <label class="filter-label">Đến ngày</label>
+                    <input type="date" id="end-date" class="find-input">
+                </div>
+
+                <input type="text" id="search" class="find-input" placeholder="Tìm theo tên, mô tả">
+                <button class="action-btn" id="search-btn"> <i class="fa-solid fa-magnifying-glass"></i></i></button>
             </div>
             <form class="action-form" method="POST">
                 {{> folderList folderList=folderList}}
@@ -54,10 +68,70 @@
             {{/case}}
 
             {{#case 'showShare'}}
+            <div class="filter-bar">
+                <div class="filter-item">
+                    <label class="filter-label">Loại tài liệu</label>
+                    <select name="document-type" class="filter-select">
+                        <option value="Hành chính">Hành chính</option>
+                        <option value="Báo cáo">Báo cáo</opion>
+                        <option value="Hợp đồng">Hợp đồng</option>
+                        <option value="Dự án">Dự án</option>
+                        <option value="all" selected>Tất cả</option>
+                    </select>
+                </div>
+                <div class="filter-item">
+                    <label class="filter-label">Sắp xếp theo ngày</label>
+                    <select name="sort-by-date" class="filter-select">
+                        <option value="newest">Mới nhất</option>
+                        <option value="oldest" selected>Lâu nhất </option>
+                    </select>
+                </div>
+                <div class="filter-item">
+                    <label class="filter-label">Từ ngày</label>
+                    <input type="date" id="start-date" class="find-input">
+                </div>
+                <div class="filter-item">
+                    <label class="filter-label">Đến ngày</label>
+                    <input type="date" id="end-date" class="find-input">
+                </div>
+
+                <input type="text" id="search" class="find-input" placeholder="Tìm theo tên, mô tả">
+                <button class="action-btn" id="search-btn"> <i class="fa-solid fa-magnifying-glass"></i></i></button>
+            </div>
             {{> showShare shareFiles=shareFiles shareFolders=shareFolders}}
             {{/case}}
 
             {{#case 'trash'}}
+            <div class="filter-bar">
+                <div class="filter-item">
+                    <label class="filter-label">Loại tài liệu</label>
+                    <select name="document-type" class="filter-select">
+                        <option value="Hành chính">Hành chính</option>
+                        <option value="Báo cáo">Báo cáo</opion>
+                        <option value="Hợp đồng">Hợp đồng</option>
+                        <option value="Dự án">Dự án</option>
+                        <option value="all" selected>Tất cả</option>
+                    </select>
+                </div>
+                <div class="filter-item">
+                    <label class="filter-label">Sắp xếp theo ngày</label>
+                    <select name="sort-by-date" class="filter-select">
+                        <option value="newest">Mới nhất</option>
+                        <option value="oldest" selected>Lâu nhất </option>
+                    </select>
+                </div>
+                <div class="filter-item">
+                    <label class="filter-label">Từ ngày</label>
+                    <input type="date" id="start-date" class="find-input">
+                </div>
+                <div class="filter-item">
+                    <label class="filter-label">Đến ngày</label>
+                    <input type="date" id="end-date" class="find-input">
+                </div>
+
+                <input type="text" id="search" class="find-input" placeholder="Tìm theo tên, mô tả">
+                <button class="action-btn" id="search-btn"> <i class="fa-solid fa-magnifying-glass"></i></i></button>
+            </div>
             <form class="action-form" method="POST">
                 {{> folderList folderList=folderList}}
                 {{> fileList fileList=fileList}}
@@ -87,8 +161,7 @@
 
 <div class="modal">
     <div class="modal-overlay">
-        <form method="POST" action="/files/action/upload" enctype="multipart/form-data"
-            class="upload-file-form ">
+        <form method="POST" action="/files/action/upload" enctype="multipart/form-data" class="upload-file-form ">
             <h2 class="form-header">Upload tài liệu</h2>
             <div class="form-quit"><i class="fa-solid fa-xmark"></i></div>
             <div class="drop-container" id="drop-container">
@@ -146,7 +219,14 @@
         let deleteBtn = $('.action-btn#delete-btn')
         let actionForm = document.querySelector('form.action-form')
         let filesCache = document.querySelector('input.cache').files
-        
+        let filterSelect = $('select[name="document-type"]')
+        let filterSort = $('select[name="sort"]')
+        let searchInput = $('input#search.find-input')
+        let searchBtn = $('.action-btn#search-btn')
+        let fromDateInput = $('input#start-date')
+        let toDateInput = $('.input#end-date')
+
+
         //----------------Handle event----------------
 
         //------ Handle upload file button and upload file form ---------
@@ -284,7 +364,7 @@
 
         chooseAllCheckbox.change(function (e) {
             const isCheckedAll = $(this).prop('checked')
-            chooseFileCheckboxes.prop('checked', isCheckedAll)
+            chooseFileCheckboxes.closest().prop('checked', isCheckedAll)
             chooseFolderCheckboxes.prop('checked', isCheckedAll)
             renderCheckMultiBtn()
         })
@@ -315,6 +395,64 @@
             actionForm.action = '/action/delete'
             actionForm.submit()
         })
+        //----------------- Filter ------------------------------
+        filterSelect.change(function (e) {
+            const selected = filterSelect.val()
+            const files = fileList[0].querySelectorAll('.file')
+            for (const file of files) {
+                file.style.display = 'flex'
+            }
+            for (const file of files) {
+                if (selected === 'all') return
+                else if (selected !== file.dataset.type) file.style.display = 'none'
+            }
+
+        })
+
+
+        searchBtn.click(function (e) {
+            const value = searchInput.val()
+            const folders = folderList[0].querySelectorAll('.folder')
+            const files = fileList[0].querySelectorAll('.file')
+            for (const file of files) {
+                if (file.querySelector('.folder-file-name').innerText.toLowerCase().includes(value.toLowerCase().trim())) {
+                    file.style.display = 'none'
+                }
+                else file.style.display = 'flex'
+            }
+            for (const folder of folders) {
+                if (folder.querySelector('.folder-file-name').innerText.toLowerCase().includes(value.toLowerCase().trim())) {
+                    folder.style.display = 'none'
+                }
+                else folder.style.display = 'flex'
+            }
+
+        })
+        searchInput.keyup(function (e) {
+            if (e.keyCode === 13) {
+                const value = searchInput.val()
+                const folders = folderList[0].querySelectorAll('.folder')
+                const files = fileList[0].querySelectorAll('.file')
+                for (const file of files) {
+                    if (file.querySelector('.folder-file-name').innerText.toLowerCase().includes(value.toLowerCase().trim())) {
+                        file.style.display = 'none'
+                    }
+                    else file.style.display = 'flex'
+                }
+                for (const folder of folders) {
+                    if (folder.querySelector('.folder-file-name').innerText.toLowerCase().includes(value.toLowerCase().trim())) {
+                        folder.style.display = 'none'
+                    }
+                    else folder.style.display = 'flex'
+                }
+            }
+        })
+
+
+
+
+
+
 
 
 

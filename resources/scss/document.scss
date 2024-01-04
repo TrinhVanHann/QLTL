@@ -1,4 +1,9 @@
 // --- Folder
+.folder-list,
+.file-list {
+    display: flex;
+    flex-direction: column;
+}
 
 .folder, .file {
     border-bottom: 2px solid #eee;
@@ -15,19 +20,23 @@
     display: flex;
     align-items: self-start;
 }
+
 .checkbox-folder-file input {
     margin-top: 10px;
 }
+
 .checkbox-folder-file label img {
     margin-left: 10px;
     width: 40px;
 }
-.folder-file-information{
+
+.folder-file-information {
     display: block;
     margin-left: 20px;
     margin-right: auto;
     max-width: 400px;
 }
+
 .folder-file-name {
     font-size: 1.6rem;
     color: blue;
@@ -38,14 +47,17 @@
     // -webkit-box-orient: vertical;
     // -webkit-line-clamp: 2;
 }
-.folder-file-description{ 
+
+.folder-file-description {
     font-size: 1.4rem;
     line-height: 20px;
 }
-.folder-file-operation{
+
+.folder-file-operation {
     display: flex;
     justify-content: center;
 }
+
 .folder-file-operation a {
     display: block;
     font-size: 1.4rem;
@@ -58,15 +70,18 @@
     transform: scale(1.1);
     cursor: pointer;
 }
+
 .more-action {
     position: relative;
-    display: flex; 
+    display: flex;
     align-items: center;
 }
+
 .more-action:hover .more-action-list {
     display: block;
-} 
-.more-action-list { 
+}
+
+.more-action-list {
     position: absolute;
     border-radius: 2px;
     top: 20%;
@@ -77,6 +92,7 @@
     z-index: 1;
     box-shadow: 0px 0px 5px #eee;
 }
+
 .more-action-item a {
     text-decoration: none;
     color: black;
@@ -86,6 +102,7 @@
     width: 60px;
 
 }
+
 .more-action-item:hover {
     background-color: #ccc;
 }
