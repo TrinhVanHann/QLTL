@@ -18,8 +18,8 @@ class LoginController {
 
         const user = await User.findOne({ username });
         if (user) {
-            // const isPasswordValid = await bcrypt.compare(password, user.password)
-            const isPasswordValid = user.password === password
+            const isPasswordValid = await bcrypt.compare(password, user.password)
+            // const isPasswordValid = user.password === password
             if (isPasswordValid && role === user.role) {
                 Folder.findOne({ _id: user.folder_id })
                     .then((folder) => {
@@ -52,22 +52,26 @@ class LoginController {
     }
 
     //POST /login/change
-    updateChange(req, res, next) {
+    async updateChange(req, res, next) {
         const { username, oldPassword, newPassword } = req.body;
-        User.findOne({ username: username })
-            .then((user) => {
-                if (user && user.password === oldPassword) {
-                    user.password = newPassword
-                    user.save()
-                }
-                else {
-                    res.status(401).send({ message: 'Tên đăng nhập hoặc mật khẩu của bạn không đúng' });
-                }
-            })
-            .then(() => {
-                res.redirect('/')
-            })
-            .catch(next)
+        const user = await User.findOne({ username: username })
+        if (user) {
+            const isPasswordValid = await bcrypt.compare(oldPassword, user.password)
+            // const isPasswordValid = user.password === oldPassword
+            if (isPasswordValid) {
+                user.password = await bcrypt.hash(newPassword, 10)
+                user.save()
+            }
+            else {
+                res.status(401).send({ message: 'Tên đăng nhập hoặc mật khẩu của bạn không đúng' });
+
+            }
+        }
+        else {
+            res.status(401).send({ message: 'Tên đăng nhập hoặc mật khẩu của bạn không đúng' });
+
+        }
+        res.redirect('/')
     }
 }
 module.exports = new LoginController 

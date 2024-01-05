@@ -84,6 +84,10 @@ td:first-child {
 .gradient-text {
   animation: gradient 5s linear infinite; }
 
+.poster {
+  margin-left: 100px;
+  width: 500px; }
+
 .nav-list {
   list-style: none;
   display: flex;

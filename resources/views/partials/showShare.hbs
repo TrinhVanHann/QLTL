@@ -8,10 +8,10 @@
             </label>
         </div>
         <div class="folder-file-information">
-            <p class="folder-file-name">{{this.name}}</p>
-            <input type="text" class="rename-file-input" style="display: none" data-id="{{this._id}}">
-            <p class="folder-file-description">Kích cỡ: {{this.size}}</p>
-            <p class="folder-file-description">Sở hữu: {{this.owner}}</p>
+            <p class="folder-file-name" title="Đổi tên thư mục">{{this.name}}</p>
+            <input type="text" class="rename-folder-input" style="display: none" data-id="{{this._id}}">
+            <p class="folder-file-description">Hiện có: {{this.folder_childs.length}} thư mục,
+                {{this.file_childs.length}} tệp</p>
         </div>
         <div class="folder-file-operation">
             {{renderPermissions this._id this.shares.permissions 'folder'}}
@@ -31,8 +31,10 @@
         <div class="folder-file-information">
             <p class="folder-file-name">{{this.name}}</p>
             <input type="text" class="rename-file-input" style="display: none" data-id="{{this._id}}">
-            <p class="folder-file-description">Kích cỡ: {{this.size}}</p>
+            <p class="folder-file-description">Kích cỡ: {{renderSize this.size}}</p>
+            <p class="folder-file-description">Loại: {{this.documentType}}</p>
             <p class="folder-file-description">Sở hữu: {{this.owner}}</p>
+
         </div>
         <div class="folder-file-operation">
             {{renderPermissions this._id this.shares.permissions 'file'}}

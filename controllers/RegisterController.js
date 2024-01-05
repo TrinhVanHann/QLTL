@@ -30,7 +30,7 @@ class RegisterController {
 
                 const newUser = new User({
                     username: username,
-                    password: password, //await bcrypt.hash(password, 10),
+                    password: await bcrypt.hash(password, 10),
                     department: department,
                     role: role,
                     folder_id: newFolder._id,

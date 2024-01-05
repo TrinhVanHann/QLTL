@@ -91,7 +91,7 @@
                     <input type="date" id="end-date" class="find-input">
                 </div>
 
-                <input type="text" id="search" class="find-input" placeholder="Tìm theo tên, mô tả">
+                <input type="text" id="search" class="find-input" placeholder="Tìm theo tên">
                 <button class="action-btn" id="search-btn"> <i class="fa-solid fa-magnifying-glass"></i></i></button>
             </div>
             {{> showShare shareFiles=shareFiles shareFolders=shareFolders}}
@@ -117,7 +117,7 @@
                     <label class="filter-label">Đến ngày</label>
                     <input type="date" id="end-date" class="find-input">
                 </div>
-                <input type="text" id="search" class="find-input" placeholder="Tìm theo tên, mô tả">
+                <input type="text" id="search" class="find-input" placeholder="Tìm theo tên">
                 <button class="action-btn" id="search-btn"> <i class="fa-solid fa-magnifying-glass"></i></i></button>
             </div>
             <form class="action-form" method="POST">
@@ -132,7 +132,7 @@
             {{/case}}
 
             {{#case 'none'}}
-            <img src="/imgs/txt.png" alt="">
+            <img src="/imgs/poster1.png" alt=".." class="poster">
             {{/case}}
 
             {{/switch}}
@@ -392,7 +392,6 @@
         searchInput.keyup(function (e) {
             if (e.keyCode === 13) filter()
         })
-
         function typeFilter() {
             const selected = filterSelect.val()
             const files = fileList[0].querySelectorAll('.file')
