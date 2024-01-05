@@ -178,9 +178,11 @@ td:first-child {
     padding: 10px;
     margin: 12px;
     border: 1px solid black;
+    border-top-left-radius: 5px;
+    border-bottom-right-radius: 5px;
     display: flex;
     flex-direction: column;
-    background-color: #22ba61;
+    background-color: #22ba617d;
 }
 
 .user-information {
@@ -505,6 +507,7 @@ td:first-child {
     margin-left: auto;
     max-width: 150px;
     min-width: 0px;
+    padding: 5px;
 }
 
 .upload-file-form {
