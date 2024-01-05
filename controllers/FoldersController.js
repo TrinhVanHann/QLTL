@@ -46,7 +46,6 @@ class FoldersController {
     async create(req, res, next) {
 
 
-        console.log([req.body])
         const parentId = req.body.curFolderId
         let folderName
         const folderOwner = req.data.username
@@ -117,7 +116,7 @@ class FoldersController {
     //GET folders/action/share/:id   ####### HAS SIDEBAR
     async share(req, res, next) {
         const renderValue = 'share'
-        const isFile = true
+        const isFile = false
         const rootId = req.data.root_id
         let user = await User.findOne({ _id: req.data.user_id })
         let document = await Folder.findOne({ _id: req.params.id })
@@ -177,7 +176,6 @@ class FoldersController {
 
         document = document.toObject()
         document.createdAt = document.createdAt.toString()
-        console.log(document)
         notSharedUsers = notSharedUsers.map(user => user.toObject())
         notSharedDepartments = notSharedDepartments.map(department => department.toObject())
         if (generalShared) generalShared = generalShared.toObject()
@@ -239,13 +237,10 @@ class FoldersController {
         const rootId = req.data.root_id
         let user = await User.findOne({ _id: req.data.user_id })
         const staff = await User.find({ department: user.department, role: 'employee' })
-        console.log(staff)
         const staffId = staff.map(staff => staff.folder_id.toString())
-        console.log(staffId)
         let staffFolder = await Folder.find({
             _id: { $in: staffId }
         })
-        console.log(staffFolder)
         if (staffFolder) staffFolder = staffFolder.map(folder => folder.toObject())
         user = user.toObject()
         res.render('home', { rootId, user, staffFlag, staffFolder, renderValue })

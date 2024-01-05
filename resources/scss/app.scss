@@ -337,6 +337,15 @@ td:first-child {
     margin: 4px;
 }
 
+.grid {
+    background-color: #d4e4cc;
+}
+
+.col.l-3.m-3.c-4 {
+    border: 1px solid black;
+    border-top: 0;
+}
+
 .user-notification i {
     font-size: 1.6rem;
     color: black;
@@ -433,6 +442,12 @@ td:first-child {
     height: 40px;
     align-items: center;
     background-color: #ccc;
+}
+
+.action-bar.title {
+    font-size: 1.6rem;
+    color: blue;
+    padding-left: 30px;
 }
 
 .checkbox-group {

@@ -71,10 +71,10 @@
 
 .shared-article {
   font-weight: 500;
-  font-size: 2rem;
-  line-height: 40px;
+  font-size: 1.6rem;
+  line-height: 30px;
   padding-left: 20px;
-  background-image: linear-gradient(0, #b8d1e9, #cce8ec); }
+  background-image: linear-gradient(0, #b8d1e9, #aec6dc); }
 
 .shared-user-info,
 .shared-department-info {

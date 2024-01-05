@@ -20,7 +20,6 @@
                 <button class="action-btn multi-btn" id="delete-btn" title="Xóa" disabled>
                     <i class="fa-solid fa-trash-can"></i>
                 </button>
-
             </div>
             <div class="filter-bar">
                 <div class="filter-item">
@@ -42,7 +41,7 @@
                     <input type="date" id="end-date" class="find-input">
                 </div>
 
-                <input type="text" id="search" class="find-input" placeholder="Tìm theo tên, mô tả">
+                <input type="text" id="search" class="find-input" placeholder="Tìm theo tên">
                 <button class="action-btn" id="search-btn"> <i class="fa-solid fa-magnifying-glass"></i></i></button>
             </div>
             <form class="action-form" method="POST">
@@ -57,10 +56,21 @@
 
             {{#case 'share'}}
             {{> share document=document generalShared=generalShared userShared=userShared
-            departmentShared=departmentShared}}
+            departmentShared=departmentShared isFile=isFile}}
             {{/case}}
 
             {{#case 'showShare'}}
+            {{#switch sharedType}}
+            {{#case 'department'}}
+            <div class="action-bar title">CHIA SẺ TỪ PHÒNG BAN</div>
+            {{/case}}
+            {{#case 'user'}}
+            <div class="action-bar title">CHIA SẺ TỪ CÁ NHÂN</div>
+            {{/case}}
+            {{#case 'general'}}
+            <div class="action-bar title">CHIA SẺ CHUNG</div>
+            {{/case}}
+            {{/switch}}
             <div class="filter-bar">
                 <div class="filter-item">
                     <label class="filter-label">Loại tài liệu</label>
@@ -519,10 +529,12 @@
                                     <input type="checkbox" class="user-permission-checkbox" value="delete">
                                     <label for="delete-checkbox">Xóa</label>
                                 </li>
+                                {{#if isFile}}
                                 <li class="share-permission-item">
                                     <input type="checkbox" class="user-permission-checkbox" value="download">
                                     <label for="download-checkbox">Tải về</label>
                                 </li>
+                                {{/if}}
                             </ul>
                         </div>
                         <i class="fa-solid fa-circle-minus shared-user-remove"></i>
@@ -552,11 +564,14 @@
                                     <input type="checkbox" class="department-permission-checkbox" value="delete">
                                     <label for="delete-checkbox">Xóa</label>
                                 </li>
+                                {{#if isFile}}
                                 <li class="share-permission-item">
                                     <input type="checkbox" class="department-permission-checkbox" value="download">
                                     <label for="download-checkbox">Tải về</label>
                                 </li>
+                                {{/if}}
                             </ul>
+                            
                         </div>
                         <i class="fa-solid fa-circle-minus shared-department-remove"></i>
                     </div>

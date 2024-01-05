@@ -42,16 +42,18 @@
                         (contains generalShared.permissions 'delete' ) }} checked {{/if}}>
                     <label for="delete-checkbox">Xóa</label>
                 </li>
+                {{#if isFile}}
                 <li class="share-permission-item">
                     <input type="checkbox" class="general-permission-checkbox" id="download-checkbox" value="download"
                         {{#if (contains generalShared.permissions 'download' ) }} checked {{/if}}>
                     <label for="download-checkbox">Tải về</label>
                 </li>
+                {{/if}}
             </ul>
         </div>
     </div>
     <div class="shared-department-list">
-        <h2 class="shared-article">Chia sẻ tới phòng ban</h2>
+        <h2 class="shared-article">Phòng ban được chia sẻ</h2>
         {{#each departmentShared}}
         <div class="shared-department">
             <div class="shared-department-info">
@@ -72,11 +74,13 @@
                             this.shares.permissions 'delete' ) }} checked {{/if}}>
                         <label>Xóa</label>
                     </li>
+                    {{#if isFile}}
                     <li class="share-permission-item">
                         <input type="checkbox" class="user-permission-checkbox" value="download" {{#if (contains
                             this.shares.permissions 'download' ) }} checked {{/if}}>
                         <label>Tải về</label>
                     </li>
+                    {{/if}}
                 </ul>
             </div>
             <i class="fa-solid fa-circle-minus shared-department-remove"></i>
@@ -84,7 +88,7 @@
         {{/each}}
     </div>
     <div class="shared-user-list">
-        <h2 class="shared-article">Chia sẻ tới người dùng</h2>
+        <h2 class="shared-article">Người dùng được chia sẻ</h2>
         {{#each userShared}}
         <div class="shared-user">
             <input class="shared-user-id" type="text" style="display: none" value="{{this.username}}">

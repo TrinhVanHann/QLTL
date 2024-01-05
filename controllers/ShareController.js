@@ -11,7 +11,8 @@ class ShareController {
 
   async indexDepartment(req, res, next) {
     const userId = req.data.user_id
-    const user = await User.findOne({ _id: userId })
+    const rootId = req.data.root_id
+    let user = await User.findOne({ _id: userId })
     const userDepartment = user.department
     Promise.all([
       File.aggregate([
@@ -53,7 +54,9 @@ class ShareController {
     ])
       .then(([shareFiles, shareFolders]) => {
         const renderValue = 'showShare'
-        res.render('home', { shareFiles, shareFolders, renderValue })
+        const sharedType = 'department'
+        user = user.toObject()
+        res.render('home', { rootId, user, shareFiles, shareFolders, renderValue, sharedType })
       })
   }
   //GET shares/user   ####### HAS SIDEBAR
@@ -101,8 +104,9 @@ class ShareController {
     ])
       .then(([user, shareFiles, shareFolders]) => {
         const renderValue = 'showShare'
+        const sharedType = 'user'
         user = user.toObject()
-        res.render('home', { rootId, user, shareFiles, shareFolders, renderValue })
+        res.render('home', { rootId, user, shareFiles, shareFolders, renderValue, sharedType })
       })
   }
 
@@ -151,8 +155,9 @@ class ShareController {
     ])
       .then(([user, shareFiles, shareFolders]) => {
         const renderValue = 'showShare'
+        const sharedType = 'general'
         user = user.toObject()
-        res.render('home', { rootId, user, shareFiles, shareFolders, renderValue })
+        res.render('home', { rootId, user, shareFiles, shareFolders, renderValue, sharedType })
       })
   }
 
