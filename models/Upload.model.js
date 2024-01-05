@@ -90,7 +90,8 @@ var that = module.exports = {
                 name: name,
                 mimeType: 'application/vnd.google-apps.folder',
                 parents: [parentId]
-            };
+            }
+
             const file = await drive.files.create({
                 resource: fileMetadata,
                 fields: 'id',

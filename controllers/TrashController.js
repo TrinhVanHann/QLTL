@@ -34,12 +34,18 @@ class TrashController {
             .catch(next)
     }
     //GET /trash/trueDelete/:id
-    trueDelete(req, res, next) {
+    async trueDelete(req, res, next) {
+        let doc = await File.findOneDeleted({ _id: req.params.id })
+        if (doc === null) doc = await Folder.findOneDeleted({ _id: req.params.id })
+        let parFolder = await Folder.findOne({ _id: doc.parent_id })
+        parFolder.file_childs.remove(req.params.id)
+        parFolder.folder_childs.remove(req.params.id)
+        await parFolder.save()
         Promise.all([
             File.deleteOne({ _id: req.params.id }),
             Folder.deleteOne({ _id: req.params.id })
         ])
-            .then(() => res.redirect('/trash'))
+            .then(() => res.redirect('back'))
             .catch(next)
     }
 }

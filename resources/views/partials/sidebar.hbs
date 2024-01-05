@@ -58,8 +58,20 @@
             </label>
             <input type="checkbox" id="category-checkbox" class="checkbox">
             <div class="category-article-list">
+                {{#switch user.role}}
+                {{#case 'user'}}
+                {{/case}}
+
+                {{#case 'employee'}}
                 <a href="/folders/{{rootId}}" class="category-article-item"><i class="fa-solid fa-folder"> </i> Tài liệu
                     của tôi </a>
+                {{/case}}
+
+                {{#case 'manager'}}
+                <a href="/folders/{{rootId}}" class="category-article-item"><i class="fa-solid fa-folder"> </i> Tài liệu
+                    của tôi </a>
+                {{/case}}
+                {{/switch}}
                 <label for="checkbox" class="category-article-item category-share"> <i
                         class="fa-solid fa-share-from-square"> </i> Chia sẻ </i></label>
                 <input type="checkbox" id="checkbox" class="checkbox">
@@ -74,10 +86,23 @@
                     Tài liệu nhân viên</a>
                 {{/case}}
                 {{/switch}}
+
+                {{#switch user.role}}
+                {{#case 'user'}}
+                {{/case}}
+
+                {{#case 'employee'}}
                 <a href="/trash" class="category-article-item"> <i class="fa-solid fa-trash-can"></i> Thùng rác </a>
+                {{/case}}
+
+                {{#case 'manager'}}
+                <a href="/trash" class="category-article-item"> <i class="fa-solid fa-trash-can"></i> Thùng rác </a>
+                {{/case}}
+                {{/switch}}
             </div>
         </div>
     </div>
+
 </div>
 <script>
     function openFileExplorer(event) {

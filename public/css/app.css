@@ -138,16 +138,15 @@ td:first-child {
   display: flex;
   flex-direction: column; }
 
-  .user.info {
-    padding: 10px;
-    margin: 12px;
-    border: 0.5px solid black;
-    border-top-left-radius: 5px;
-    border-bottom-right-radius: 5px;
-    display: flex;
-    flex-direction: column;
-    background-color: #22ba617d;
-}
+.user.info {
+  padding: 10px;
+  margin: 12px;
+  border: 1px solid black;
+  border-top-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  background-color: #22ba617d; }
 
 .user-information {
   height: 60px;
@@ -180,7 +179,7 @@ td:first-child {
   font-weight: bold;
   font-size: 1.6rem;
   line-height: 20px;
-  color: #710c0c; }
+  color: blue; }
 
 .user-postion {
   font-size: 1.6rem;
@@ -190,7 +189,7 @@ td:first-child {
   font-weight: bold;
   font-size: 1.6rem;
   line-height: 20px;
-  color: #710c0c; }
+  color: blue; }
 
 .user-department {
   font-size: 1.6rem;
@@ -200,9 +199,7 @@ td:first-child {
   font-weight: bold;
   font-size: 1.6rem;
   line-height: 20px;
-  color: #710c0c; 
-
-}
+  color: blue; }
 
 .user-page {
   font-size: 1.6rem;
@@ -398,15 +395,13 @@ td:first-child {
   max-width: 150px;
   min-width: 90px; }
 
-  .find-input#search {
-    height: 30px;
-    font-size: 1.4rem;
-    margin-left: auto;
-    max-width: 150px;
-    min-width: 0px;
-    padding: 5px; /* Điều chỉnh giá trị này theo nhu cầu */
-}
-
+.find-input#search {
+  height: 30px;
+  font-size: 1.4rem;
+  margin-left: auto;
+  max-width: 150px;
+  min-width: 0px;
+  padding: 5px; }
 
 .upload-file-form {
   width: 600px;

@@ -17,22 +17,29 @@ class LoginController {
         const secretKey = process.env.SECRET_KEY
 
         const user = await User.findOne({ username });
-        if (user && password === user.password && role === user.role) {
-            Folder.findOne({ _id: user.folder_id })
-                .then((folder) => {
-                    const token = jwt.sign(
-                        {
-                            user_id: user._id,
-                            username: user.username,
-                            root_id: folder._id
-                        },
-                        secretKey,
-                        { expiresIn: "2h" }
-                    )
-                    return res.json({
-                        token: token
+        if (user) {
+            // const isPasswordValid = await bcrypt.compare(password, user.password)
+            const isPasswordValid = user.password === password
+            if (isPasswordValid && role === user.role) {
+                Folder.findOne({ _id: user.folder_id })
+                    .then((folder) => {
+                        const token = jwt.sign(
+                            {
+                                user_id: user._id,
+                                username: user.username,
+                                root_id: folder._id
+                            },
+                            secretKey,
+                            { expiresIn: "2h" }
+                        )
+                        return res.json({
+                            token: token
+                        })
                     })
-                })
+            }
+            else {
+                res.status(401).send({ message: 'Đăng nhập không thành công' });
+            }
         }
         else {
             res.status(401).send({ message: 'Đăng nhập không thành công' });

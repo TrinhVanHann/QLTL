@@ -27,7 +27,7 @@
   justify-content: center; }
 
 .modal-overlay.modal-login {
-  background-color: #b3d685 }
+  background-color: #b3d685; }
 
 .login-img {
   height: 600px;
@@ -43,12 +43,12 @@
   animation: growth linear 0.1s;
   background-color: #d1dc8ebd;
   border: 1px solid black;
-  padding: 20px 30px 7.5px; 
-  }
-  .standard-form.form-change-pass{
-    animation: none;
-    border-radius: 8px;
-  }
+  padding: 20px 30px 7.5px; }
+
+.standard-form.form-change-pass {
+  animation: none;
+  border-radius: 8px; }
+
 .standard-form.form-login {
   animation: none;
   border-radius: 8px; }
@@ -57,8 +57,7 @@
   font-size: 1.8rem;
   text-decoration: bold;
   text-align: center;
-  margin-bottom: 30px; 
-}
+  margin-bottom: 30px; }
 
 .form-group {
   margin-bottom: 20px;
@@ -67,77 +66,75 @@
 .form-group i {
   display: none;
   position: absolute;
-  top: 8px;
-  right: 4px;
+  top: 12px;
+  right: 8px;
   width: 30px;
   height: 24px;
   text-align: center;
-  font-size: 1.3rem;
-  color: #edf2f5; 
-  padding-left: 10px;
-}
+  font-size: 1.5rem;
+  color: #edf2f5;
+  padding-left: 10px; }
 
 .form-group i.active {
-  display: block; }
+  display: block;
+  color: #353535; }
 
 .form-group i:hover {
-  color: #353535;
   cursor: pointer; }
 
 .form-label {
   font-size: 1.6rem;
-    line-height: 25px;
-    display: block;
-    text-decoration: bold; }
+  line-height: 25px;
+  display: block;
+  text-decoration: bold; }
 
 .form-control {
-    width: 100%;
-    height: 56px;
-    font-size: 1.9rem;
-    border: 1px solid #808080;
-    border-radius:8px
-    
-  }
-    .form-control::placeholder {
-      font-size: 1.9rem;
-      color: #808080;
-      padding-left: 10px;
-      transition: font-size 0.5s, transform 0.5s;
-    }
-    
-    .form-control:focus::placeholder,
-    .form-control:not(:placeholder-shown)::placeholder {
-      font-size: 1.3rem;
-      transform: translateY(-100%) scale(0.8);
-      transform-origin: left top;
-    }
-.form-select {
   width: 100%;
   height: 40px;
-    font-size: 1.7rem;
-    border: 1px solid #808080;
-    border-radius:8px
-}
-.form-select-type{
+  font-size: 1.9rem;
+  border: 1px solid #808080;
+  border-radius: 8px;
+  padding: 10px; }
+
+.form-control::placeholder {
+  font-size: 1.9rem;
+  color: #808080;
+  padding-left: 10px;
+  transition: font-size 0.5s, transform 0.5s; }
+
+.form-control:focus::placeholder,
+.form-control:not(:placeholder-shown)::placeholder {
+  font-size: 1.3rem;
+  transform: translateY(-100%) scale(0.8);
+  transform-origin: left top; }
+
+.form-select {
+  width: 100%;
+  height: 30px;
+  font-size: 1.7rem;
+  border: 1px solid #808080;
+  border-radius: 8px; }
+
+.form-select-type {
   width: 100%;
   height: 25px;
   font-size: 1.6rem;
   border: 1px solid #808080;
-  border-radius:5px
-}
-.form-select-type:hover{
+  border-radius: 5px; }
+
+.form-select-type:hover {
   cursor: pointer;
-  color: #1b1a1a;
-}
+  color: #1b1a1a; }
+
 .form-text {
   margin-top: 10px;
   text-align: left;
-  font-size: 1.4rem; 
-}
-.form-text-passchange:hover{
+  font-size: 1.4rem; }
+
+.form-text-passchange:hover {
   cursor: pointer;
-  color: #ba6a02;
-}
+  color: #ba6a02; }
+
 .form-btn-group {
   display: flex;
   justify-content: end;
