@@ -1,41 +1,23 @@
 require('dotenv').config()
 const jwt = require('jsonwebtoken')
 const User = require('../models/Users')
-const Folder = require('../models/Folders')
-const { createFolder } = require('../models/Upload.model')
 const bcrypt = require('bcrypt')
 
 class RegisterController {
     //GET /register
-    index(req, res, next) {
-        res.render('Login/register')
-    }
 
     //POST /register
     async auth(req, res, next) {
-        const { username, password, department, role } = req.body;
-        const secretKey = process.env.SECRET_KEY
+        try {
+            const { username, email, password } = req.body;
+            const secretKey = process.env.SECRET_KEY
 
-        const user = await User.findOne({ username: username });
-        if (!user) {
-            try {
-                const folderId = await createFolder(username)
-                console.log(folderId)
-                const newFolder = new Folder({
-                    _id: folderId,
-                    name: username,
-                    owner: username,
-                })
-                await newFolder.save()
-
+            const user = await User.findOne({ username: username });
+            if (!user) {
                 const newUser = new User({
                     username: username,
-                    password: await bcrypt.hash(password, 10),
-                    department: department,
-                    role: role,
-                    folder_id: newFolder._id,
-                    //path to the avatar
-                    avatar: null
+                    email: email,
+                    password: await bcrypt.hash(password, 10)
                 })
                 await newUser.save()
 
@@ -49,15 +31,16 @@ class RegisterController {
                     { expiresIn: "24h" }
                 )
 
-                return res.json({
+                res.send({
+                    msg: 'success',
                     token: token
                 })
+            } else {
+                res.status(401).json({ msg: 'failure' });
             }
-            catch (err) {
-                console.error(err)
-            }
-        } else {
-            res.status(401).json({ message: 'Tài khoản đã tồn tại' });
+
+        } catch (err) {
+            console.error(err)
         }
     }
 }
